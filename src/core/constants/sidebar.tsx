@@ -10,7 +10,8 @@ import {
   FileSpreadsheet,
   Flower,
   SquareLibrary,
-  Coins
+  Coins,
+  BringToFront
 } from "lucide-react";
 
 export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'SUB_ADMIN';
@@ -24,7 +25,7 @@ export interface MenuItem {
 }
 
 export const PERMISSIONS = {
-    SUPER_ADMIN: ['dashboard', 'schools', 'users', 'analytics', 'sub-admins', 'notifications', 'newsletters', 'subscription', 'customization', 'exam-type', 'subjects', 'questions', 'exam'],
+    SUPER_ADMIN: ['dashboard', 'schools', 'users', 'analytics', 'sub-admins', 'notifications', 'newsletters', 'subscription', 'customization', 'exam-type', 'subjects', 'questions', 'exam', "categories", "codes"],
     ADMIN: ['dashboard', 'schools', 'users', 'analytics'],
     SUB_ADMIN: ['dashboard', 'schools']
 } as const;
@@ -47,7 +48,7 @@ export const MENU_ITEMS: MenuItem[] = [
       group: 'management'
     },
     {
-      href: '/schools',
+      href: '/categories',
       label: 'Categories',
       icon: AlignHorizontalJustifyCenter,
       permission: 'categories',
@@ -105,6 +106,13 @@ export const MENU_ITEMS: MenuItem[] = [
       group: 'communication'
     },
     // Settings Group
+    {
+      href: '/codes',
+      label: 'Codes',
+      icon: BringToFront,
+      permission: 'codes',
+      group: 'management'
+    },
     {
       href: '/customization',
       label: 'Customization',

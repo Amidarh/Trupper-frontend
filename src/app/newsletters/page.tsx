@@ -1,14 +1,15 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { Newsletter } from "@/modules/newletters/layouts/newletters";
 
 const NewsletterPage = () => {
     return (
         <DashboardLayout
-            pageTitle="Newsletter Center"
-            subHeading="Manage newsletter here"
+            pageTitle="Newsletters"
+            subHeading="Manage newsletter sent to your users mails here"
         >
-            <h1>Newsletter page Section</h1>
+            <Newsletter/>
         </DashboardLayout>
     )
 };

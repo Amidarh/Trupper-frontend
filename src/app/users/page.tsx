@@ -1,6 +1,7 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { UserTable } from "@/modules/users/components/tables/userMainTable";
 
 const DashboardPage = () => {
     return (
@@ -8,7 +9,7 @@ const DashboardPage = () => {
             pageTitle="My Users"
             subHeading="Manage your users here"
         >
-            <h1>User Section</h1>
+            <UserTable/>
         </DashboardLayout>
     )
 };

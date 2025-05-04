@@ -1,5 +1,6 @@
 "use client"
 
+import { Settings } from "@/modules/dashboard/layouts/settings/settings";
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
 
 const SettingsPage = () => {
@@ -8,7 +9,7 @@ const SettingsPage = () => {
             pageTitle="Settings Center"
             subHeading="Manage settings here"
         >
-            <h1>Setting page Section</h1>
+            <Settings/>
         </DashboardLayout>
     )
 };

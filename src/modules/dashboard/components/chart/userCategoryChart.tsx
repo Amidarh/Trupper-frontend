@@ -45,27 +45,27 @@ const chartConfig = {
   },
   january: {
     label: "January",
-    color: "hsl(var(--chart-1))",
+    color: "oklch(0.488 0.243 264.376)",
   },
   february: {
     label: "February",
-    color: "hsl(var(--chart-2))",
+    color: "oklch(0.696 0.17 162.48)",
   },
   march: {
     label: "March",
-    color: "hsl(var(--chart-3))",
+    color: "oklch(0.769 0.188 70.08)",
   },
   april: {
     label: "April",
-    color: "hsl(var(--chart-4))",
+    color: "oklch(0.627 0.265 303.9)",
   },
   may: {
     label: "May",
-    color: "hsl(var(--chart-5))",
+    color: "oklch(0.645 0.246 16.439)",
   },
 } satisfies ChartConfig
 
-export function DailyActivityBarChart() {
+export function UserCategoryChart() {
   const id = "pie-interactive"
   const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month)
 

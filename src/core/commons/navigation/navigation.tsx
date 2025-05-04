@@ -17,7 +17,7 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
         >
             <AppSidebar userRole="SUPER_ADMIN"/>
            <main className="flex justify-between items-center w-full relative backdrop-blur-md max-lg:hidden">
-                <div>
+                <div className="relative -left-2">
                     <h1 className="text-xl font-bold">{title}</h1>
                     <p className="text-[12px] text-gray-600 dark:text-gray-300">{subHeading}</p>
                 </div>
@@ -59,7 +59,7 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
             className="w-full justify-between items-center flex flex-row lg:hidden"
            >
                 <MobileSidebar userRole="SUPER_ADMIN"/>
-                <h1 className="text-xl">Learnza</h1>
+                <h1 className="text-xl">Trupper</h1>
                 <Bell className="cursor-pointer"/>
            </main>
         </nav>

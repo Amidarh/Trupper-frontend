@@ -1,6 +1,7 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { ExamTypes } from "@/modules/examTypes/layouts/examTypes";
 
 const DashboardPage = () => {
     return (
@@ -8,7 +9,7 @@ const DashboardPage = () => {
             pageTitle="Exam Types"
             subHeading="Manage your exam types here"
         >
-            <h1>Exam Type Section</h1>
+            <ExamTypes/>
         </DashboardLayout>
     )
 };

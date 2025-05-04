@@ -1,6 +1,7 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { Notifications } from "@/modules/notifications/layouts/notifications";
 
 const NotificationsPage = () => {
     return (
@@ -8,7 +9,7 @@ const NotificationsPage = () => {
             pageTitle="Notifications Center"
             subHeading="Manage notification here"
         >
-            <h1>Notifications page Section</h1>
+            <Notifications/>
         </DashboardLayout>
     )
 };

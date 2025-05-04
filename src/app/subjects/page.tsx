@@ -1,6 +1,7 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { Subject } from "@/modules/subjects/layouts/subjects";
 
 const SubjectPage = () => {
     return (
@@ -8,7 +9,7 @@ const SubjectPage = () => {
             pageTitle="Subjects"
             subHeading="Manage subjects here"
         >
-            <h1>Subject page Section</h1>
+            <Subject/>
         </DashboardLayout>
     )
 };

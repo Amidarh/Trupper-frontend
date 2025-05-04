@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, } from "@/components/ui/card";
 import { IconType } from "react-icons"
 
-export const StatsCard = ({ title, stat, Icon }: { title: string, stat: number, Icon:IconType }) => {
+export const StatsCard = ({ title, stat, Icon }: { title: string, stat: number | string, Icon:IconType }) => {
     return (
         <Card className="w-full p-0 gap-0">
             <CardHeader className="p-3 flex items-center justify-between">

@@ -1,6 +1,7 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { Customization } from "@/modules/customization/layouts/customization";
 
 const CustomizationPage = () => {
     return (
@@ -8,7 +9,7 @@ const CustomizationPage = () => {
             pageTitle="Customization Center"
             subHeading="Manage customization here"
         >
-            <h1>Customization page Section</h1>
+            <Customization/>
         </DashboardLayout>
     )
 };

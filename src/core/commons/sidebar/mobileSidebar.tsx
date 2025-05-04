@@ -85,7 +85,7 @@ export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
                 <div className="flex flex-col h-full">
                     {/* Header */}
                     <div className="p-4 border-b">
-                        <h1 className="text-2xl text-center">Lernza</h1>
+                        <h1 className="text-2xl text-center">Trupper</h1>
                     </div>
 
                     {/* Menu Items */}

@@ -1,6 +1,7 @@
 "use client"
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { Questions } from "@/modules/questions/layouts/questions";
 
 const QuestionsPage = () => {
     return (
@@ -8,7 +9,7 @@ const QuestionsPage = () => {
             pageTitle="Question Bank"
             subHeading="Manage question here"
         >
-            <h1>Questions page Section</h1>
+            <Questions/>
         </DashboardLayout>
     )
 };

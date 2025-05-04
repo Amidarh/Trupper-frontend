@@ -3,6 +3,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/themeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import 'remixicon/fonts/remixicon.css';
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
