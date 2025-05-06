@@ -17,6 +17,8 @@ export const getStatusBadge = (status: string) => {
             return <span className={`${baseClass} bg-green-100 text-green-800`}>Approved</span>;
         case "blocked":
             return <span className={`${baseClass} bg-red-100 text-red-800`}>Blocked</span>;
+        case "suspended":
+            return <span className={`${baseClass} bg-red-100 text-red-800`}>Suspended</span>;
         default:
             return <span className={`${baseClass} bg-red-100 text-red-800`}>Unknown</span>;
     }

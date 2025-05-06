@@ -13,9 +13,9 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
     const { setTheme } = useTheme()
     return (
         <nav 
-            className="h-14 border-b flex justify-between items-center w-full px-4 fixed backdrop-blur-md"
+            className="h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md"
         >
-            <AppSidebar userRole="SUPER_ADMIN"/>
+            <AppSidebar userRole="USER"/>
            <main className="flex justify-between items-center w-full relative backdrop-blur-md max-lg:hidden">
                 <div className="relative -left-2">
                     <h1 className="text-xl font-bold">{title}</h1>
@@ -58,7 +58,7 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
            <main
             className="w-full justify-between items-center flex flex-row lg:hidden"
            >
-                <MobileSidebar userRole="SUPER_ADMIN"/>
+                <MobileSidebar userRole="USER"/>
                 <h1 className="text-xl">Trupper</h1>
                 <Bell className="cursor-pointer"/>
            </main>

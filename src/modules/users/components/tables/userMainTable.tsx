@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { Plus, EllipsisVertical } from "lucide-react";
+import { getStatusBadge } from "@/core/commons/components/badge/badge";
 
 import {
   Table,
@@ -13,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { useRouter } from "next/navigation";
 import {
     DropdownMenu,
@@ -59,92 +60,80 @@ export const UserTable = () => {
 
                 </div>
             </CardHeader>
-            <Table>
-                <TableHeader className="bg-muted">
-                    <TableRow>
-                        <TableHead>Full Name</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>Date Joined</TableHead>
-                        <TableHead>Last Login</TableHead>
-                        <TableHead align="right">Action</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                        <TableCell>Wisdom woke</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>HLC</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell>10 April 2025 : 20:24</TableCell>
-                        <TableCell>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                        <TableCell>Wisdom woke</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>HLC</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell>10 April 2025 : 20:24</TableCell>
-                        <TableCell>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                        <TableCell>Wisdom woke</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>HLC</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell>10 April 2025 : 20:24</TableCell>
-                        <TableCell>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                        <TableCell>Wisdom woke</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>HLC</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell>10 April 2025 : 20:24</TableCell>
-                        <TableCell>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+            <CardContent>
+                <Table>
+                    <TableHeader className="bg-muted">
+                        <TableRow>
+                            <TableHead>Full Name</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Category</TableHead>
+                            <TableHead>Date Joined</TableHead>
+                            <TableHead>Last Login</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead align="right" className="text-right">Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
+                            <TableCell>Wisdom woke</TableCell>
+                            <TableCell>Active</TableCell>
+                            <TableCell>HLC</TableCell>
+                            <TableCell>10 April 2025</TableCell>
+                            <TableCell>10 April 2025 : 20:24</TableCell>
+                            <TableCell>{getStatusBadge("active")}</TableCell>
+                            <TableCell align="right" className="flex justify-end">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <div><EllipsisVertical/></div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56">
+                                        <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
+                                        <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
+                            <TableCell>Wisdom woke</TableCell>
+                            <TableCell>Active</TableCell>
+                            <TableCell>HLC</TableCell>
+                            <TableCell>10 April 2025</TableCell>
+                            <TableCell>10 April 2025 : 20:24</TableCell>
+                            <TableCell>{getStatusBadge("suspended")}</TableCell>
+                            <TableCell align="right" className="flex justify-end">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <div><EllipsisVertical/></div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56">
+                                        <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
+                                        <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
+                            <TableCell>Wisdom woke</TableCell>
+                            <TableCell>Active</TableCell>
+                            <TableCell>HLC</TableCell>
+                            <TableCell>10 April 2025</TableCell>
+                            <TableCell>10 April 2025 : 20:24</TableCell>
+                            <TableCell>{getStatusBadge("suspended")}</TableCell>
+                            <TableCell align="right" className="flex justify-end">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <div><EllipsisVertical/></div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56">
+                                        <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
+                                        <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </CardContent>
         </Card>
     )
 }

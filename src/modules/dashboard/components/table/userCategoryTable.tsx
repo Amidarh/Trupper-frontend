@@ -10,21 +10,11 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { UserCategoryData } from "@/constants/data";
 import { SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { getStatusBadge } from "@/core/commons/components/badge/badge";
 
 export function UserCategoryTable() {
-    const getStatusBadge = (status: string) => {
-        const baseClass = "px-2 py-1 rounded text-sm font-medium";
-        switch (status.toLowerCase()) {
-            case "active":
-                return <span className={`${baseClass} bg-green-100 text-green-800`}>Active</span>;
-            case "inactive":
-                return <span className={`${baseClass} bg-gray-100 text-red-500`}>Inactive</span>;
-            case "pending":
-                return <span className={`${baseClass} bg-yellow-100 text-yellow-800`}>Pending</span>;
-            default:
-                return <span className={`${baseClass} bg-red-100 text-red-800`}>Unknown</span>;
-        }
-    };
+    const router = useRouter()
 
     return (
         <Card className="w-full">
@@ -50,7 +40,9 @@ export function UserCategoryTable() {
                             <TableCell>{category.noUsers}</TableCell>
                             <TableCell>{getStatusBadge(category.status)}</TableCell>
                             <TableCell>
-                                <button className="text-blue-500 hover:text-blue-700 cursor-pointer">
+                                <button className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                                    onClick={() => router.push("/categories/1")}
+                                >
                                     view
                                 </button>
                             </TableCell>

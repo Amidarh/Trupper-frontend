@@ -11,10 +11,16 @@ import {
   Flower,
   SquareLibrary,
   Coins,
-  BringToFront
+  BringToFront,
+  Sparkles,
+  PenSquare,
+  BookAudio,
+  Clock11,
+  ChartLine,
+  LibrarySquare
 } from "lucide-react";
 
-export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'SUB_ADMIN';
+export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'SUB_ADMIN' | 'USER';
 
 export interface MenuItem {
   href: string;
@@ -27,7 +33,8 @@ export interface MenuItem {
 export const PERMISSIONS = {
     SUPER_ADMIN: ['dashboard', 'schools', 'users', 'analytics', 'sub-admins', 'notifications', 'newsletters', 'subscription', 'customization', 'exam-type', 'subjects', 'questions', 'exam', "categories", "codes"],
     ADMIN: ['dashboard', 'schools', 'users', 'analytics'],
-    SUB_ADMIN: ['dashboard', 'schools']
+    SUB_ADMIN: ['dashboard', 'schools'],
+    USER: ["my-dashboard", "ai-examiner", "my-profile", "my-exams", "result", "mock-exams", "performance", "my-notifications"]
 } as const;
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -38,6 +45,13 @@ export const MENU_ITEMS: MenuItem[] = [
       icon: LayoutDashboard,
       permission: 'dashboard',
       group: 'overview'
+    },
+    {
+      href: '/my-dashboard',
+      label: 'Dashboard',
+      icon: LayoutDashboard,
+      permission: 'my-dashboard',
+      group: ''
     },
     // User Management Group
     {
@@ -126,6 +140,35 @@ export const MENU_ITEMS: MenuItem[] = [
       icon: Coins,
       permission: 'subscription',
       group: 'settings'
+    },
+    // Organization User Group
+    {
+      href: '/my-exams',
+      label: 'My Exams',
+      icon: LibrarySquare,
+      permission: 'my-exams',
+      group: ''
+    },
+    {
+      href: '/mock-exams',
+      label: 'Mock Exam',
+      icon: PenSquare,
+      permission: 'mock-exams',
+      group: ''
+    },
+    {
+      href: '/ai-examiner',
+      label: 'AI Examiner',
+      icon: Sparkles,
+      permission: 'ai-examiner',
+      group: ''
+    },
+    {
+      href: '/my-performance',
+      label: 'My Performance',
+      icon: ChartLine,
+      permission: 'performance',
+      group: ''
     },
 ];
 

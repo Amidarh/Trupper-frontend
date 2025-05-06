@@ -57,7 +57,7 @@ export const CategoryOneTable = () => {
                         <TableHead>Status</TableHead>
                         <TableHead>created by</TableHead>
                         <TableHead>Date Created</TableHead>
-                        <TableHead align="right">Action</TableHead>
+                        <TableHead align="right" className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -67,7 +67,7 @@ export const CategoryOneTable = () => {
                         <TableCell onClick={() => router.push('/categories/1')}>{getStatusBadge("active")}</TableCell>
                         <TableCell>Me</TableCell>
                         <TableCell>10 April 2025</TableCell>
-                        <TableCell>
+                        <TableCell align="right" className="text-right flex justify-end">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <div><EllipsisVertical/></div>
@@ -85,7 +85,7 @@ export const CategoryOneTable = () => {
                         <TableCell onClick={() => router.push('/categories/1')}>{getStatusBadge("inactive")}</TableCell>
                         <TableCell onClick={() => router.push('/categories/1')}>Me</TableCell>
                         <TableCell>10 April 2025</TableCell>
-                        <TableCell>
+                        <TableCell align="right" className="text-right flex justify-end">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <div><EllipsisVertical/></div>
@@ -103,7 +103,7 @@ export const CategoryOneTable = () => {
                         <TableCell>{getStatusBadge("active")}</TableCell>
                         <TableCell>Me</TableCell>
                         <TableCell>10 April 2025</TableCell>
-                        <TableCell>
+                        <TableCell align="right" className="text-right flex justify-end">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <div><EllipsisVertical/></div>
@@ -121,7 +121,7 @@ export const CategoryOneTable = () => {
                         <TableCell>{getStatusBadge("active")}</TableCell>
                         <TableCell>Me</TableCell>
                         <TableCell>10 April 2025</TableCell>
-                        <TableCell>
+                        <TableCell align="right" className="text-right flex justify-end">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <div><EllipsisVertical/></div>
@@ -139,7 +139,7 @@ export const CategoryOneTable = () => {
                         <TableCell>{getStatusBadge("inactive")}</TableCell>
                         <TableCell>Me</TableCell>
                         <TableCell>10 April 2025</TableCell>
-                        <TableCell>
+                        <TableCell align="right" className="text-right flex justify-end">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <div><EllipsisVertical/></div>

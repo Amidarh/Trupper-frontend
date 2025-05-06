@@ -10,8 +10,10 @@ import { Card, CardHeader } from "@/components/ui/card"
 import { ExamData } from "@/constants/data"
 import Link from "next/link"
 import { SquareArrowOutUpRight } from "lucide-react"
+import { useRouter } from "next/navigation"
 
   export function ExamTable() {
+    const router = useRouter()
     return (
         <Card className="w-full">
             <CardHeader
@@ -40,7 +42,9 @@ import { SquareArrowOutUpRight } from "lucide-react"
                     <TableCell>{invoice.fullName}</TableCell>
                     <TableCell>{invoice.examType}</TableCell>
                     <TableCell>
-                        <button className="text-blue-500 hover:text-blue-700 cursor-pointer">
+                        <button className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                            onClick={() => router.push('/exams/1')}
+                        >
                             view
                         </button>
                     </TableCell>
