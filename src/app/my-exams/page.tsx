@@ -1,14 +1,15 @@
 import DashboardLayout from "@/core/commons/layout/dashboardLayout"
+import { MyExams } from "@/modules/my-exams/layouts/myExams";
 
-const MyExams = () => {
+const MyExamsPage = () => {
     return (
         <DashboardLayout
             pageTitle="My Exams"
             subHeading="Explore the exams you've saved for yourself"
         >
-            <h1>My Exams</h1>
+            <MyExams/>
         </DashboardLayout>
     )
 };
 
-export default MyExams;
+export default MyExamsPage;
