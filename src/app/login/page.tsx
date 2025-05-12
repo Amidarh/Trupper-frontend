@@ -9,9 +9,21 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { useLogin } from "@/modules/login/services/login";
 
 const LoginPage = () => {
-        const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const {
+        form: {
+          register,
+          handleSubmit,
+          formState: { errors, isSubmitting },
+        },
+        login,
+        serverError,
+      } = useLogin();
+
     return (
         <ScrollArea className="w-full">
             <div className="flex pt-10 sm:items-center justify-center pb-5">
@@ -19,11 +31,21 @@ const LoginPage = () => {
                     <div className="flex flex-col items-center justify-center mb-4">
                         <h2 className="text-2xl font-bold mb-1">Trupper</h2>
                         <h2 className="text-md font-bold">Login Your Account</h2>
+                        {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}
                     </div>
-                    <form>
+                    <form onSubmit={handleSubmit(login)}>
                         <div className="mb-4">
                             <Label htmlFor="email" className="mb-2">Email</Label>
-                            <Input type="email" id="email" placeholder="Enter your email" className="h-12" />
+                            <Input
+                                type="email" 
+                                id="email"
+                                placeholder="Enter your email"
+                                className="h-12"
+                                { ...register("email") }
+                            />
+                            {errors.email && (
+                                <p className="text-red-500 text-sm">{errors.email.message}</p>
+                            )}
                         </div>
                         <div className="mb-4">
                             <Label htmlFor="password" className="mb-2">Password</Label>
@@ -33,6 +55,7 @@ const LoginPage = () => {
                                     id="password" 
                                     placeholder="Enter your password" 
                                     className="h-12 pr-10" 
+                                    {...register("password")}
                                 />
                                 <button
                                     type="button"
@@ -46,10 +69,14 @@ const LoginPage = () => {
                                     )}
                                 </button>
                             </div>
+                            {errors.password && (
+                                <p className="text-red-500 text-sm">{errors.password.message}</p>
+                            )}
                         </div>
-
                         <div className="mt-6">
-                            <Button type="submit" className="w-full cursor-pointer h-10">Login</Button>
+                            <Button type="submit" className="w-full cursor-pointer h-10">
+                                {isSubmitting ? "Logging in..." : "Login"}
+                            </Button>
                         </div>
 
                         <div className="mt-8 flex items-center gap-5 justify-center">

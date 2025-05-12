@@ -1,14 +1,15 @@
 import DashboardLayout from "@/core/commons/layout/dashboardLayout"
+import { MockExams } from "@/modules/mock-exams/layouts/mock-exams";
 
-const MockExams = () => {
+const MockExamsPage = () => {
     return (
         <DashboardLayout
             pageTitle="Mock Exams"
             subHeading="Practice to score High in your exams"
         >
-            <h1>Mock Exams</h1>
+            <MockExams/>
         </DashboardLayout>
     )
 };
 
-export default MockExams;
+export default MockExamsPage;

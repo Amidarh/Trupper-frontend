@@ -10,12 +10,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 
 export default function NavBar ({ title, subHeading }: { title: string, subHeading?: string }) {
-    const { setTheme } = useTheme()
+    const { setTheme } = useTheme();
     return (
         <nav 
             className="h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md"
         >
-            <AppSidebar userRole="USER"/>
+            <AppSidebar userRole="SUPER_ADMIN"/>
            <main className="flex justify-between items-center w-full relative backdrop-blur-md max-lg:hidden">
                 <div className="relative -left-2">
                     <h1 className="text-xl font-bold">{title}</h1>

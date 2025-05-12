@@ -1,3 +1,5 @@
+"use client"
+
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
 import { BackButton } from "@/core/commons/navigation/backButton";
 import { Button } from "@/components/ui/button";
@@ -10,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { DurationData } from "@/constants/data";
 import { Trash2 } from "lucide-react";
 
-export const ViewCategoryPage = () => {
+const ViewCategoryPage = () => {
     return (
         <DashboardLayout 
             pageTitle="LL category"

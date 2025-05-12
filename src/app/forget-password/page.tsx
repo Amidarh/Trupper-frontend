@@ -1,11 +1,24 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { useForgetPassword } from "@/modules/forget-password/services/forgetPassword";
 
 const ForgottenPasswordPage = () => {
+    const {
+        form: {
+            register,
+            handleSubmit,
+            formState: { errors, isSubmitting }
+        },
+        forgetPassword,
+        serverError,
+        successMessage
+    } = useForgetPassword()
     return (
         <div className="flex pt-10 sm:items-center justify-center h-screen w-full">
             <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
@@ -13,15 +26,28 @@ const ForgottenPasswordPage = () => {
                     <h2 className="text-2xl font-bold mb-1">Trupper</h2>
                     <h2 className="text-md font-bold">Can't Login</h2>
                     <p className="text-sm">Enter the email you used to create account</p>
+                    {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}
+                    {successMessage && <p className="text-green-600 text-sm text-center">{successMessage}</p>}
                 </div>
-                <form>
+                <form onSubmit={handleSubmit(forgetPassword)}>
                     <div className="mb-4">
                         <Label htmlFor="email" className="mb-2">Email</Label>
-                        <Input type="email" id="email" placeholder="Enter your email" className="h-12" />
+                        <Input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            className="h-12"
+                            { ...register("email") }
+                        />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm">{errors.email.message}</p>
+                        )}
                     </div>
 
                     <div className="mt-8 flex">
-                        <Button type="submit" className="w-full cursor-pointer h-10">Send Link</Button>
+                        <Button type="submit" className="w-full cursor-pointer h-10">
+                            { isSubmitting ? "Send Link..." : "Send Link" }
+                        </Button>
                     </div>
 
                     <div

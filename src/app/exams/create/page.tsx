@@ -16,7 +16,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { DurationData } from "@/constants/data";
 
-export const CreateExam = () => {
+const CreateExam = () => {
     return (
         <DashboardLayout
             pageTitle="Create an exam"

@@ -8,9 +8,9 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSignup } from "@/modules/signup/services/signup";
+import { usePasswordReset } from "@/modules/password-reset/services/passwordReset";
 
-const SignUpPage = () => {
+const PasswordResetPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -20,64 +20,27 @@ const SignUpPage = () => {
             handleSubmit,
             formState: { errors, isSubmitting }
         },
-        signup,
+        passwordReset,
         serverError
-    } = useSignup()
+    } = usePasswordReset()
 
     return (
         <ScrollArea className="w-full">
-            <div className="flex pt-10 sm:items-center justify-center pb-12">
+            <div className="flex pt-10 sm:items-center justify-center pb-12 w-full">
                 <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                     <div className="flex flex-col items-center justify-center mb-4">
                         <h2 className="text-2xl font-bold mb-1">Trupper</h2>
-                        <h2 className="text-md font-bold">Create a new account</h2>
+                        <h2 className="text-md font-bold">Reset Your Password</h2>
                         {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}
                     </div>
-                    <form  onSubmit={handleSubmit(signup)}>
+                    <form  onSubmit={handleSubmit(passwordReset)}>
                         <div className="mb-4">
-                            <Label htmlFor="email" className="mb-2">First Name</Label>
-                            <Input
-                                id="firstName"
-                                placeholder="Enter your First Name"
-                                className="h-12"
-                                { ...register("firstName") }
-                            />
-                            {errors.firstName && (
-                                <p className="text-red-500 text-sm">{errors.firstName.message}</p>
-                            )}
-                        </div>
-                        <div className="mb-4">
-                            <Label htmlFor="email" className="mb-2">Last Name</Label>
-                            <Input
-                                id="lastName"
-                                placeholder="Enter your Last Name"
-                                className="h-12"
-                                { ...register("lastName") }
-                            />
-                            {errors.lastName && (
-                                <p className="text-red-500 text-sm">{errors.lastName.message}</p>
-                            )}
-                        </div>
-                        <div className="mb-4">
-                            <Label htmlFor="email" className="mb-2">Email</Label>
-                            <Input
-                                type="email"
-                                id="email"
-                                placeholder="Enter your email"
-                                className="h-12"
-                                { ...register("email") }
-                            />
-                            {errors.email && (
-                                <p className="text-red-500 text-sm">{errors.email.message}</p>
-                            )}
-                        </div>
-                        <div className="mb-4">
-                            <Label htmlFor="password" className="mb-2">Password</Label>
+                            <Label htmlFor="password" className="mb-2">New Password</Label>
                             <div className="relative">
                                 <Input 
                                     type={showPassword ? "text" : "password"} 
                                     id="password"
-                                    placeholder="Enter your password" 
+                                    placeholder="Enter new password" 
                                     className="h-12 pr-10"
                                     { ...register("password") }
                                 />
@@ -126,24 +89,14 @@ const SignUpPage = () => {
 
                         <div className="mt-6">
                             <Button type="submit" className="w-full cursor-pointer h-10">
-                                {isSubmitting ? "Creating account..." : "Create Account"}
+                                {isSubmitting ? "Resetting Password..." : "Reset Password"}
                             </Button>
-                        </div>
-
-                        <div className="mt-8 flex items-center gap-5 justify-center">
-                            <Separator className="w-full max-w-30"/>
-                            <p>OR</p>
-                            <Separator className="w-full max-w-30"/>
-                        </div>
-
-                        <div className="flex justify-center mt-6">
-                            <Button className="cursor-pointer">Sign in with Google</Button>
                         </div>
 
                         <div
                             className="flex flex-row justify-center items-center mt-4 gap-2"
                         >
-                            <p>Already have an account?</p>
+                            <p>Remembered password?</p>
                             <Link href="/login" className="hover:underline">
                                 Login
                             </Link>
@@ -160,4 +113,4 @@ const SignUpPage = () => {
     )
 }
 
-export default SignUpPage;
+export default PasswordResetPage;

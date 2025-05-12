@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 // import { Switch } from "@/components/ui/switch";
 // import { DurationData } from "@/constants/data";
 
-export const CreateCategoryPage = () => {
+const CreateCategoryPage = () => {
     return (
         <DashboardLayout 
             pageTitle="Create a new category"

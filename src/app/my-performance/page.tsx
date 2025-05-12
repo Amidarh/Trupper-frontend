@@ -1,14 +1,15 @@
-import DashboardLayout from "@/core/commons/layout/dashboardLayout"
+import DashboardLayout from "@/core/commons/layout/dashboardLayout";
+import { MyPerformance } from "@/modules/my-performnace/layouts/my-performance";
 
-const MyPerformance = () => {
+const MyPerformancePage = () => {
     return (
         <DashboardLayout
             pageTitle="My Performance"
             subHeading="Track your growth through your performance"
         >
-            <h1>My Performance</h1>
+            <MyPerformance/>
         </DashboardLayout>
     )
 };
 
-export default MyPerformance;
+export default MyPerformancePage;

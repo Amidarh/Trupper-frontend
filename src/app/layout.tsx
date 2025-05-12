@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/themeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import 'remixicon/fonts/remixicon.css';
+import { Toaster } from "@/components/ui/sonner";
 
 // const bricolage = Bricolage_Grotesque({
 //   variable: "--font-bricolage-grotesque",
@@ -32,8 +33,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <SidebarProvider>
-              {children}
+                {children}
             </SidebarProvider>
+            <Toaster/>
           </ThemeProvider>
       </body>
     </html>
