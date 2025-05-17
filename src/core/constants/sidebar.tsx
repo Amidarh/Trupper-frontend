@@ -20,13 +20,13 @@ import {
   LibrarySquare
 } from "lucide-react";
 
-export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'SUB_ADMIN' | 'USER';
+export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'SUB_ADMIN' | 'USER' | 'user' | 'admin' | 'sub-admin';
 
 export interface MenuItem {
   href: string;
   label: string;
   icon: any;
-  permission: string;
+  permission: string | null ;
   group: string;
 }
 
@@ -173,6 +173,6 @@ export const MENU_ITEMS: MenuItem[] = [
 ];
 
 export interface AppSidebarProps {
-    userRole: UserRole;
+    userRole: UserRole | undefined | null;
     className?: string;
 }

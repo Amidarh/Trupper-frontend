@@ -1,3 +1,4 @@
+import { UserRole } from "@/core/constants/sidebar";
 export interface IUser {
   firstName?: string;
   lastName?: string;
@@ -12,7 +13,7 @@ export interface IUser {
   mobile?: string;
   school?: string;
   isBlocked?: boolean;
-  role?: 'user';
+  role: 'user' | 'admin' | 'sub-admin' | UserRole | null |  undefined;
   twoFactor?: boolean;
   twoFactorVerificationCode?: number;
   queryId?: string;
@@ -45,7 +46,7 @@ export interface IOrganization {
 }
 
 export interface AltStore {
-  user: IUser | null;
+  user: IUser | null | undefined;
   organization: IOrganization | null;
   organizationId: string | null;
   setUser: (user: IUser) => void;

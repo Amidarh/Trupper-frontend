@@ -8,7 +8,6 @@ const useInitialDataFetch = () => {
   const { organization,setOrganization } = useAltStore()
 
   useEffect(() => {
-    console.log("Hahahahaha")
     const fetchOrganizationData = async () => {
       if (!organization) {
         try {

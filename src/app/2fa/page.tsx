@@ -32,11 +32,11 @@ const TwoFactorAuthPage = () => {
       } = useTwoFactor();
 
      // Watch OTP value for controlled input
-    const otpValue = watch("verificationCode");
+    const otpValue = watch("twoFactorVerificationCode");
 
     // Update form value when OTP changes
     const handleOtpChange = (value: string) => {
-        setValue("verificationCode", value, { shouldValidate: true });
+        setValue("twoFactorVerificationCode", value, { shouldValidate: true });
     };
     return (
         <ScrollArea className="w-full">
@@ -60,7 +60,7 @@ const TwoFactorAuthPage = () => {
                                 pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
                                 value={otpValue}
                                 onChange={handleOtpChange}
-                                id="verificationCode"
+                                id="twoFactorVerificationCode"
                             >
                                 <InputOTPGroup className="w-full flex gap-1">
                                 {[...Array(6)].map((_, index) => (
@@ -68,7 +68,7 @@ const TwoFactorAuthPage = () => {
                                     key={index}
                                     index={index}
                                     className="w-full h-[52px] border rounded-md text-center text-lg"
-                                    {...register("verificationCode", {
+                                    {...register("twoFactorVerificationCode", {
                                         required: "OTP is required",
                                         pattern: {
                                         value: /^[0-9]{6}$/,
@@ -79,9 +79,9 @@ const TwoFactorAuthPage = () => {
                                 ))}
                                 </InputOTPGroup>
                             </InputOTP>
-                            {errors.verificationCode && (
+                            {errors.twoFactorVerificationCode && (
                                 <p className="text-red-500 text-sm mt-2">
-                                {errors.verificationCode.message}
+                                {errors.twoFactorVerificationCode.message}
                                 </p>
                             )}
                         </div>

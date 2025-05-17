@@ -12,12 +12,13 @@ import { useAltStore } from "@/lib/zustand/userStore";
 
 export default function NavBar ({ title, subHeading }: { title: string, subHeading?: string }) {
     const { setTheme } = useTheme();
-    const { organization } = useAltStore()
+    const { organization, user } = useAltStore()
+    console.log(user)
     return (
         <nav 
             className="h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md"
         >
-            <AppSidebar userRole="SUPER_ADMIN"/>
+            <AppSidebar userRole={(user?.role?.toUpperCase() as any) || null}/>
            <main className="flex justify-between items-center w-full relative backdrop-blur-md max-lg:hidden">
                 <div className="relative -left-2">
                     <h1 className="text-xl font-bold">{title}</h1>
@@ -28,14 +29,14 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Avatar className="cursor-pointer">
-                                <AvatarFallback>SA</AvatarFallback>
+                            <AvatarFallback>{user?.firstName?.slice(0,1)}{user?.lastName?.slice(0,1)}</AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <div className="border-b p-1 w-full min-w-[180px]">
                             <div className="flex flex-col text-sm">
-                                <span className="font-medium">John Doe</span>
-                                <span className="text-xs text-muted-foreground">Platform Admin</span>
+                                <span className="font-medium">{user?.firstName}</span>
+                                <span className="text-xs text-muted-foreground">{user?.email}</span>
                             </div>
                             </div>
                             <DropdownMenuItem>
@@ -60,7 +61,7 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
            <main
             className="w-full justify-between items-center flex flex-row lg:hidden"
            >
-                <MobileSidebar userRole="USER"/>
+                <MobileSidebar userRole={(user?.role)?.toUpperCase as any || null}/>
                 <h1 className="text-xl">{organization?.name}</h1>
                 <Bell className="cursor-pointer"/>
            </main>

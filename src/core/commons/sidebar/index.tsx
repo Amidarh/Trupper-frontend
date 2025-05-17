@@ -19,11 +19,11 @@ import { useAltStore } from "@/lib/zustand/userStore";
 
 export default function AppSidebar({ userRole, className }: AppSidebarProps) {
   const pathname = usePathname();
-  const { organization } = useAltStore()
+  const { organization, user } = useAltStore()
   
-  const allowedPermissions = PERMISSIONS[userRole] || [];
+  const allowedPermissions = userRole ? PERMISSIONS[userRole] || [] : [];
   const accessibleMenuItems = MENU_ITEMS.filter(item => 
-    allowedPermissions.includes(item.permission as string)
+    allowedPermissions.includes(item.permission)
   );
 
   // Group menu items
@@ -100,10 +100,10 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
         <div className="flex items-center gap-2">
           <Avatar className="h-8 w-8">
             <AvatarImage src="/placeholder-user.jpg" alt="User" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarFallback>{user?.firstName?.slice(0,1)}{user?.lastName?.slice(0,1)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col text-sm">
-            <span className="font-medium">John Doe</span>
+            <span className="font-medium">{user?.firstName}</span>
             <span className="text-xs text-muted-foreground">{userRole}</span>
           </div>
           <Button variant="ghost" size="icon" className="ml-auto">

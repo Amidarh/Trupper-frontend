@@ -32,11 +32,11 @@ import { useAltStore } from "@/lib/zustand/userStore";
 export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
       const pathname = usePathname();
       const { setTheme } = useTheme()
-      const { organization } = useAltStore()
+      const { organization, user } = useAltStore()
       
       const allowedPermissions = PERMISSIONS[userRole] || [];
       const accessibleMenuItems = MENU_ITEMS.filter(item => 
-        allowedPermissions.includes(item.permission as string)
+        allowedPermissions.includes(item.permission)
       );
     
       // Group menu items
@@ -133,8 +133,8 @@ export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
                             <DropdownMenuContent>
                                 <div className="border-b p-1 w-full min-w-[180px]">
                                 <div className="flex flex-col text-sm">
-                                    <span className="font-medium">John Doe</span>
-                                    <span className="text-xs text-muted-foreground">Platform Admin</span>
+                                  <span className="font-medium">{user?.firstName}</span>
+                                    {/* <span className="text-xs text-muted-foreground">Platform Admin</span> */}
                                 </div>
                                 </div>
                                 <DropdownMenuItem>
@@ -153,8 +153,8 @@ export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
                             </DropdownMenuContent>
                         </DropdownMenu>
                         <div className="flex flex-col text-sm">
-                            <span className="font-medium">John Doe</span>
-                            <span className="text-xs text-muted-foreground">Platform Admin</span>
+                          <span className="font-medium">{user?.firstName}</span>
+                            {/* <span className="text-xs text-muted-foreground">Platform Admin</span> */}
                         </div>
                         <Button variant="ghost" size="icon" className="ml-auto">
                             <LogOut className="h-4 w-4" />
