@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme/themeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import 'remixicon/fonts/remixicon.css';
 import { Toaster } from "@/components/ui/sonner";
+import ClientWrapper from "@/core/commons/layout/clientLayout";
 
 // const bricolage = Bricolage_Grotesque({
 //   variable: "--font-bricolage-grotesque",
@@ -26,17 +27,19 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
-                {children}
-            </SidebarProvider>
-            <Toaster/>
-          </ThemeProvider>
+        <ClientWrapper>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider>
+                  {children}
+              </SidebarProvider>
+              <Toaster/>
+            </ThemeProvider>
+        </ClientWrapper>
       </body>
     </html>
   );

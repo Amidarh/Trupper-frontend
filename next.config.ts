@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   sassOptions: {
     additionalData: `$var: red;`,
   },
+  experimental: {
+    nodeMiddleware: true,
+  },
 };
 
 export default nextConfig;

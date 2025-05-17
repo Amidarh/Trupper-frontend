@@ -8,9 +8,11 @@ import { useTheme } from "next-themes";
 import { MobileSidebar } from "../sidebar/mobileSidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 export default function NavBar ({ title, subHeading }: { title: string, subHeading?: string }) {
     const { setTheme } = useTheme();
+    const { organization } = useAltStore()
     return (
         <nav 
             className="h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md"
@@ -59,7 +61,7 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
             className="w-full justify-between items-center flex flex-row lg:hidden"
            >
                 <MobileSidebar userRole="USER"/>
-                <h1 className="text-xl">Trupper</h1>
+                <h1 className="text-xl">{organization?.name}</h1>
                 <Bell className="cursor-pointer"/>
            </main>
         </nav>

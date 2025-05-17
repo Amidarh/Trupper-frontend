@@ -27,10 +27,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { PERMISSIONS, AppSidebarProps, MENU_ITEMS, MenuItem } from "@/core/constants/sidebar";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
       const pathname = usePathname();
       const { setTheme } = useTheme()
+      const { organization } = useAltStore()
       
       const allowedPermissions = PERMISSIONS[userRole] || [];
       const accessibleMenuItems = MENU_ITEMS.filter(item => 
@@ -85,7 +87,7 @@ export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
                 <div className="flex flex-col h-full">
                     {/* Header */}
                     <div className="p-4 border-b">
-                        <h1 className="text-2xl text-center">Trupper</h1>
+                        <h1 className="text-2xl text-center">{organization?.name}</h1>
                     </div>
 
                     {/* Menu Items */}

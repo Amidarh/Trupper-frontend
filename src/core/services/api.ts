@@ -1,37 +1,38 @@
 // src/lib/api.ts
 import axios from "axios";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 // Create Axios instance
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_BASE_API_URL : "",
+  baseURL: process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_BASE_API_URL
+    : "",
   headers: {
     "Content-Type": "application/json",
-  }
+  },
 });
 
 // Request interceptor: Attach token and add organization data to the body
 api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("trupper-accessToken");
+      const organization = useAltStore.getState().organization;
+      const key = `${(organization?.name || "").replace(/\s+/g, "_")}-accessToken`;
+      const token = localStorage.getItem(key);
+
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`; // Corrected header setting
+        config.headers["Authorization"] = `Bearer ${token}`;
       }
     }
 
     if (config.data) {
-      const organizationData = "6809685429ee99bca506a729"; // This is already a string, no need for JSON.parse()
-      console.log("Adding organization data to request:", organizationData);
-
-      if (organizationData) {
-        // Add the organization data to the request body
-        config.data = {
-          ...config.data,
-          organization: organizationData, // Adding the organization ID to the request body
-        };
-      }
+      const organization = useAltStore.getState().organization;
+      const organizationData = organization?.id;
+      config.data = {
+        ...config.data,
+        organization: organizationData,
+      };
     }
-    console.log("Request body with organization data:", config.data);
 
     return config;
   },
@@ -53,25 +54,31 @@ api.interceptors.response.use(
       try {
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/token`,
-          {}, // empty body (if refresh is cookie-based)
+          {},
           { withCredentials: true }
         );
 
         const newAccessToken = res.data.accessToken;
-        if (typeof window !== "undefined") {
-          localStorage.setItem("trupper-accessToken", newAccessToken);
-        }
 
-        originalRequest.headers = {
-          ...originalRequest.headers,
-          Authorization: `Bearer ${newAccessToken}`,
-        };
+        if (typeof window !== "undefined") {
+          const organization = useAltStore.getState().organization;
+          const key = `${(organization?.name || "").replace(/\s+/g, "_")}-accessToken`;
+
+          localStorage.setItem(key, newAccessToken);
+
+          originalRequest.headers = {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${newAccessToken}`,
+          };
+        }
 
         return api(originalRequest);
       } catch (refreshError) {
         console.error("Token refresh failed", refreshError);
         if (typeof window !== "undefined") {
-          localStorage.removeItem("trupper-accessToken");
+          const organization = useAltStore.getState().organization;
+          const key = `${(organization?.name || "").replace(/\s+/g, "_")}-accessToken`;
+          localStorage.removeItem(key);
           window.location.href = "/login";
         }
         return Promise.reject(refreshError);

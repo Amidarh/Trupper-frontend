@@ -7,8 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useForgetPassword } from "@/modules/forget-password/services/forgetPassword";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 const ForgottenPasswordPage = () => {
+    const { organization } = useAltStore()
     const {
         form: {
             register,
@@ -19,11 +21,12 @@ const ForgottenPasswordPage = () => {
         serverError,
         successMessage
     } = useForgetPassword()
+
     return (
         <div className="flex pt-10 sm:items-center justify-center h-screen w-full">
             <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                 <div className="flex flex-col items-center justify-center mb-4">
-                    <h2 className="text-2xl font-bold mb-1">Trupper</h2>
+                    <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
                     <h2 className="text-md font-bold">Can't Login</h2>
                     <p className="text-sm">Enter the email you used to create account</p>
                     {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}
@@ -60,7 +63,7 @@ const ForgottenPasswordPage = () => {
 
                     <div className="mt-5 flex flex-col justify-center gap-5 items-center">
                         <Separator/>
-                        <p className="text-center max-w-90 text-xs dark:text-gray-300 text-gray-800">By loging in you agree to all <b>Amidarh</b> terms and conditions @ Trupper 2025</p>
+                        <p className="text-center max-w-90 text-xs dark:text-gray-300 text-gray-800">By loging in you agree to all <b>Amidarh</b> terms and conditions @ {organization?.name} 2025</p>
                     </div>
                 </form>
             </Card>

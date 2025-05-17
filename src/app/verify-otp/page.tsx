@@ -12,8 +12,10 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useVerifyOtp } from "@/modules/verify-otp/services/verifyOtp";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 const VerifyAccountPage = () => {
+  const { organization } = useAltStore()
   const {
     form: {
       register,
@@ -41,7 +43,7 @@ const VerifyAccountPage = () => {
       <div className="flex pt-10 sm:items-center justify-center pb-5 min-h-[calc(100vh-80px)]">
         <Card className="max-w-[480px] w-full p-2 max-sm:bg-transparent sm:border sm:p-8">
           <div className="flex flex-col items-center justify-center mb-6">
-            <h2 className="text-2xl font-bold mb-1">Trupper</h2>
+            <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
             <h3 className="text-md font-semibold">Account Verification</h3>
             <p className="text-sm text-center text-gray-600">
               Enter the OTP code sent to your email to continue
@@ -109,7 +111,7 @@ const VerifyAccountPage = () => {
             <div className="text-center">
               <p className="text-xs text-gray-600 dark:text-gray-300">
                 By creating this account you agree to all <b>Amidarh</b> terms and
-                conditions @ Trupper 2025
+                conditions @ {organization?.name} 2025
               </p>
             </div>
           </form>

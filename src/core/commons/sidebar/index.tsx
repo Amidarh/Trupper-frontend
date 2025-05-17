@@ -15,9 +15,11 @@ import {
   SidebarMenuButton
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 export default function AppSidebar({ userRole, className }: AppSidebarProps) {
   const pathname = usePathname();
+  const { organization } = useAltStore()
   
   const allowedPermissions = PERMISSIONS[userRole] || [];
   const accessibleMenuItems = MENU_ITEMS.filter(item => 
@@ -63,7 +65,7 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
   return (
     <Sidebar className={`w-60 ${className || ''}`}>
       <SidebarHeader className="p-0 pl-5">
-        <h1 className="text-xl mt-4">Trupper</h1>
+        <h1 className="text-xl mt-4">{organization?.name}</h1>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu className="p-3 flex flex-col gap-4">

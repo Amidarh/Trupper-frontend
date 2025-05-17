@@ -9,10 +9,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { usePasswordReset } from "@/modules/password-reset/services/passwordReset";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 const PasswordResetPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const { organization } = useAltStore()
 
     const {
         form: {
@@ -29,7 +31,7 @@ const PasswordResetPage = () => {
             <div className="flex pt-10 sm:items-center justify-center pb-12 w-full">
                 <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                     <div className="flex flex-col items-center justify-center mb-4">
-                        <h2 className="text-2xl font-bold mb-1">Trupper</h2>
+                        <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
                         <h2 className="text-md font-bold">Reset Your Password</h2>
                         {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}
                     </div>
@@ -104,7 +106,7 @@ const PasswordResetPage = () => {
 
                         <div className="mt-5 flex flex-col justify-center gap-5 items-center">
                             <Separator/>
-                            <p className="text-center max-w-90 text-xs dark:text-gray-300 text-gray-800">By creating this account you agree to all <b>Amidarh</b> terms and conditions @ Trupper 2025</p>
+                            <p className="text-center max-w-90 text-xs dark:text-gray-300 text-gray-800">By creating this account you agree to all <b>Amidarh</b> terms and conditions @ {organization?.name} 2025</p>
                         </div>
                     </form>
                 </Card>

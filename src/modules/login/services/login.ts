@@ -5,10 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { loginSchema, LoginFormData } from "../schema/loginSchema";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 export function useLogin() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
+  const setUser = useAltStore(state => state.setUser);
+  const organization = useAltStore(state => state.organization);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -20,15 +23,21 @@ export function useLogin() {
     try {
       const res = await api.post("/auth/login", data);
       
-      let accessToken;
       if(res.status === 203){
         router.push(`/2fa?token=${res.data.doc.token}`)
       }
-      
-      // localStorage.setItem("trupper-accessToken", accessToken);
-      
+      let userData = res.data.doc.user;
+      console.log({userData})
+      let accessToken = res.data.doc.token;
+      let refreshToken = res.data.doc.refreshToken      
+      localStorage.setItem(`{(organization?.name || '').replace(/\s+/g, '_')}-accessToken`, accessToken);
+      localStorage.setItem(`{(organization?.name || '').replace(/\s+/g, '_')}-refreshToken`, refreshToken);
+
+      setUser(userData)
+      if(userData.role === "user"){
+        router.push("/my-dashboard");
+      }
       // Redirect on success
-      router.push("/dashboard");
     } catch (err: any) {
       console.log(err)
             if(err.status === 406){
