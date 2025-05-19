@@ -1,102 +1,84 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { useAltStore } from '@/lib/zustand/userStore';
-import { UserRole } from './core/constants/sidebar';
 
-// Define valid roles as a runtime constant
 const VALID_ROLES = {
   USER: 'USER',
   ADMIN: 'ADMIN',
   SUB_ADMIN: 'SUB_ADMIN',
-  SUPPER_ADMIN: 'SUPER_ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN',
 } as const;
 
-// Extract role values for runtime checks
-const VALID_ROLE_VALUES = Object.values(VALID_ROLES);
+const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
+  USER: ['my-dashboard', 'my-exams', 'mock-exams', 'ai-examiner', 'my-performance', 'my-notifications', 'my-profile', 'result'],
+  ADMIN: ['dashboard', 'users', 'categories', 'sub-admins', 'exam-type', 'exams', 'subjects', 'questions', 'notifications', 'newsletters', 'codes', 'customization', 'subscription'],
+  SUB_ADMIN: ['dashboard', 'users', 'categories', 'exam-type', 'exams', 'subjects', 'questions'],
+  SUPER_ADMIN: ['dashboard', 'users', 'categories', 'sub-admins', 'exam-type', 'exams', 'subjects', 'questions', 'notifications', 'newsletters', 'codes', 'customization', 'subscription'],
+};
 
-export async function middleware(request: NextRequest) {
+const ROUTE_PERMISSIONS: Record<string, string> = {
+  '/dashboard': 'dashboard',
+  '/my-dashboard': 'my-dashboard',
+  '/users': 'users',
+  '/categories': 'categories',
+  '/sub-admins': 'sub-admins',
+  '/exam-type': 'exam-type',
+  '/exams': 'exams',
+  '/subjects': 'subjects',
+  '/questions': 'questions',
+  '/notifications': 'notifications',
+  '/newsletters': 'newsletters',
+  '/codes': 'codes',
+  '/customization': 'customization',
+  '/subscription': 'subscription',
+  '/my-exams': 'my-exams',
+  '/mock-exams': 'mock-exams',
+  '/ai-examiner': 'ai-examiner',
+  '/my-performance': 'my-performance',
+  '/my-notifications': 'my-notifications',
+  '/my-profile': 'my-profile',
+  '/result': 'result',
+};
+
+const AUTH_ROUTES = [
+  '/login', '/register', '/sign-up', '/2fa', '/forget-password',
+  '/password-reset', '/verify-otp', '/password', '/',
+];
+
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const userRole = request.cookies.get('role')?.value as keyof typeof VALID_ROLES | undefined;
 
-  const userRoutes = ['/dashboard', '/profile'];
-  const adminRoutes = ['/admin', '/admin/settings'];
-  const superAdminRoutes = ['/super-admin', '/super-admin/users'];
-
-  // Get user role from store
-  let userRole: UserRole | null = null;
-  try {
-    const { user } = useAltStore.getState();
-    userRole = user?.role && VALID_ROLE_VALUES.includes(user.role as typeof VALID_ROLE_VALUES[number]) ? user.role as typeof VALID_ROLE_VALUES[number] : null;
-  } catch (error) {
-    console.error('Failed to access user store:', error);
-  }
-
-  // Redirect unauthenticated users to login
-  if (!userRole) {
-    if (
-      userRoutes.includes(pathname) ||
-      adminRoutes.includes(pathname) ||
-      superAdminRoutes.includes(pathname)
-    ) {
-      const url = new URL('/login', request.url);
-      url.searchParams.set('callbackUrl', encodeURI(request.url));
-      return NextResponse.redirect(url);
+  // Redirect unauthenticated users on protected routes
+  const isProtected = Object.keys(ROUTE_PERMISSIONS).some(route => pathname.startsWith(route));
+  if (!userRole || !VALID_ROLES[userRole]) {
+    if (isProtected) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('callbackUrl', encodeURIComponent(request.url));
+      return NextResponse.redirect(loginUrl);
     }
     return NextResponse.next();
   }
 
-  // Role-based access control
-  if (userRoutes.includes(pathname) && !VALID_ROLE_VALUES.includes(userRole)) {
-    return NextResponse.redirect(new URL('/403', request.url));
+  // Redirect authenticated users away from auth routes
+  if (AUTH_ROUTES.includes(pathname)) {
+    const isAdmin = ['ADMIN', 'SUB_ADMIN', 'SUPER_ADMIN'].includes(userRole);
+    const redirectPath = isAdmin ? '/dashboard' : '/my-dashboard';
+    return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 
-  if (adminRoutes.includes(pathname) && ![VALID_ROLES.ADMIN, VALID_ROLES.SUB_ADMIN].includes(userRole as 'ADMIN' | 'SUB_ADMIN')) {
-    return NextResponse.redirect(new URL('/403', request.url));
-  }
-
-  if (superAdminRoutes.includes(pathname) && userRole !== VALID_ROLES.ADMIN) {
-    return NextResponse.redirect(new URL('/403', request.url));
-  }
-
-  // Redirect authenticated users from login/register pages
-  if (['/login', '/register', '/sign-up', '/2fa'].includes(pathname)) {
-    return NextResponse.redirect(
-      new URL(
-        userRole === VALID_ROLES.ADMIN || userRole === VALID_ROLES.SUB_ADMIN ? '/admin' : '/dashboard',
-        request.url
-      )
-    );
+  // Authorization check
+  const permissionKey = Object.keys(ROUTE_PERMISSIONS).find(route => pathname.startsWith(route));
+  if (permissionKey) {
+    const requiredPermission = ROUTE_PERMISSIONS[permissionKey];
+    const allowedPermissions = PERMISSIONS[userRole] || [];
+    if (!allowedPermissions.includes(requiredPermission)) {
+      const forbiddenUrl = new URL('/403', request.url);
+      return NextResponse.rewrite(forbiddenUrl); // FIXED: Use rewrite for 403, not redirect
+    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    '/dashboard/:path*',
-    '/profile',
-    '/admin/:path*',
-    '/super-admin/:path*',
-    '/login',
-    '/register',
-    '/2fa',
-    '/ai-examiner',
-    '/codes',
-    '/dashboard',
-    '/my-dashboard',
-    '/exams',
-    '/forget-password',
-    '/mock-exams',
-    '/notifications',
-    '/newsletters',
-    '/subjects',
-    '/password-reset',
-    '/categories',
-    '/exam-type',
-    '/users',
-    '/subscription',
-    '/verify-otp',
-    '/sub-admins',
-    '/sign-up',
-    '/question',
-    '/password'
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

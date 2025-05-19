@@ -1,5 +1,6 @@
 import { UserRole } from "@/core/constants/sidebar";
 export interface IUser {
+  id: string;
   firstName?: string;
   lastName?: string;
   email: string;
@@ -35,6 +36,7 @@ export interface IUser {
   loginTokens?: string[];
   loginDetails?: any[]; 
   cbt?: string;
+  status: 'active' | 'inactive',
   createdAt?: Date;
   updatedAt?: Date;
 }

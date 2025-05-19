@@ -10,7 +10,6 @@ export function useLogin() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
   const setUser = useAltStore(state => state.setUser);
-  // const setOrganization = useAltStore(state => state.setOrganization);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -34,7 +33,7 @@ export function useLogin() {
       const orgName = (user.organization?.name || "default").replace(/\s+/g, "_");
       document.cookie = `${orgName}-accessToken=${token}; path=/; secure; SameSite=Strict`;
       document.cookie = `${orgName}-refreshToken=${refreshToken}; path=/; secure; SameSite=Strict`;
-      document.cookie = `role=${user.role}; path=/; secure; SameSite=Strict`;
+      document.cookie = `role=${(user.role).toUpperCase()}; path=/; secure; SameSite=Strict`;
       document.cookie = `organizationId=${user.organization?.id || "default"}; path=/; secure; SameSite=Strict`;
 
       // Update Zustand store

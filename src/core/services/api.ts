@@ -26,11 +26,11 @@ api.interceptors.request.use(
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
       }
-
       if (config.data && organization?.id) {
+        console.log('org',organization?.id)
         config.data = {
           ...config.data,
-          organization: organization.id,
+          organization: organization?.id,
         };
       }
     }

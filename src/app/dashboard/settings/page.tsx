@@ -1,6 +1,6 @@
 "use client"
 
-import { Settings } from "@/modules/dashboard/layouts/settings/settings";
+import { Settings } from "@/modules/dashboard/layouts/settings";
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
 
 const SettingsPage = () => {

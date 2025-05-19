@@ -5,7 +5,8 @@ import api from '@/core/services/api';
 import { useAltStore } from '@/lib/zustand/userStore';
 
 const useInitialDataFetch = () => {
-  const { organization,setOrganization } = useAltStore()
+  const organization = useAltStore(state => state.organization)
+  const setOrganization = useAltStore(state => state.setOrganization)
 
   useEffect(() => {
     const fetchOrganizationData = async () => {

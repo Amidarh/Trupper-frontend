@@ -14,7 +14,7 @@ import { useAltStore } from "@/lib/zustand/userStore";
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { organization } = useAltStore()
+    const organization = useAltStore(state => state.organization)
 
     const {
         form: {

@@ -3,8 +3,12 @@ export const getStatusBadge = (status: string) => {
     switch (status.toLowerCase()) {
         case "active":
             return <span className={`${baseClass} bg-green-100 text-green-800`}>Active</span>;
+        case "verified":
+            return <span className={`${baseClass} bg-green-100 text-green-800`}>Verified</span>;
         case "inactive":
             return <span className={`${baseClass} bg-gray-100 text-red-500`}>Inactive</span>;
+        case "not verified":
+            return <span className={`${baseClass} bg-gray-100 text-red-500`}>Not Verified</span>;
         case "pending":
             return <span className={`${baseClass} bg-yellow-100 text-yellow-800`}>Pending</span>;
         case "draft":

@@ -4,6 +4,8 @@ import * as React from "react"
 
 import { Plus, EllipsisVertical } from "lucide-react";
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
+import { useUserService } from "../../services/user";
+import moment from 'moment'
 
 import {
   Table,
@@ -35,6 +37,7 @@ import {
 
 export const UserTable = () => {
     const router = useRouter();
+    const { data } = useUserService()
     return (
         <Card>
             <CardHeader>
@@ -65,7 +68,7 @@ export const UserTable = () => {
                     <TableHeader className="bg-muted">
                         <TableRow>
                             <TableHead>Full Name</TableHead>
-                            <TableHead>Status</TableHead>
+                            <TableHead>verified</TableHead>
                             <TableHead>Category</TableHead>
                             <TableHead>Date Joined</TableHead>
                             <TableHead>Last Login</TableHead>
@@ -74,13 +77,15 @@ export const UserTable = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                            <TableCell>Wisdom woke</TableCell>
-                            <TableCell>Active</TableCell>
+                        {data?.map((user) => (
+                            <TableRow key={user.queryId} onClick={() => router.push(`/users/${user.id}`)} className="cursor-pointer">
+                            <TableCell>{user.firstName} {user.lastName}</TableCell>
+                            <TableCell>{getStatusBadge(user.isVerified ? "verified" : "not verified")}</TableCell>
+                            {/* <TableCell>{user.status}</TableCell> */}
                             <TableCell>HLC</TableCell>
-                            <TableCell>10 April 2025</TableCell>
-                            <TableCell>10 April 2025 : 20:24</TableCell>
-                            <TableCell>{getStatusBadge("active")}</TableCell>
+                            <TableCell>{moment(user.createdAt).format("MMMM D, YYYY")}</TableCell>
+                            <TableCell>{moment(user.lastLogin).format('MMMM D, YYYY, h:mm A')}</TableCell>
+                            <TableCell>{getStatusBadge(user.isBlocked ? "blocked" : "active")}</TableCell>
                             <TableCell align="right" className="flex justify-end">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -93,44 +98,8 @@ export const UserTable = () => {
                                 </DropdownMenu>
                             </TableCell>
                         </TableRow>
-                        <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                            <TableCell>Wisdom woke</TableCell>
-                            <TableCell>Active</TableCell>
-                            <TableCell>HLC</TableCell>
-                            <TableCell>10 April 2025</TableCell>
-                            <TableCell>10 April 2025 : 20:24</TableCell>
-                            <TableCell>{getStatusBadge("suspended")}</TableCell>
-                            <TableCell align="right" className="flex justify-end">
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <div><EllipsisVertical/></div>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="w-56">
-                                        <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                        <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow onClick={() => router.push('/users/1')} className="cursor-pointer">
-                            <TableCell>Wisdom woke</TableCell>
-                            <TableCell>Active</TableCell>
-                            <TableCell>HLC</TableCell>
-                            <TableCell>10 April 2025</TableCell>
-                            <TableCell>10 April 2025 : 20:24</TableCell>
-                            <TableCell>{getStatusBadge("suspended")}</TableCell>
-                            <TableCell align="right" className="flex justify-end">
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <div><EllipsisVertical/></div>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="w-56">
-                                        <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                        <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </TableCell>
-                        </TableRow>
+                        ))
+                        }
                     </TableBody>
                 </Table>
             </CardContent>

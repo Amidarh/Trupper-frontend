@@ -3,6 +3,7 @@
 import AppSidebar from "../sidebar";
 // import ModeToggle from "../theme";
 import { Bell } from "lucide-react";
+import { useLogout } from "@/hooks/auth/logOut";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent, DropdownMenuSubTrigger, DropdownMenuSub, DropdownMenuPortal, DropdownMenuSubContent } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { MobileSidebar } from "../sidebar/mobileSidebar";
@@ -12,8 +13,10 @@ import { useAltStore } from "@/lib/zustand/userStore";
 
 export default function NavBar ({ title, subHeading }: { title: string, subHeading?: string }) {
     const { setTheme } = useTheme();
-    const { organization, user } = useAltStore()
-    console.log(user)
+    const user = useAltStore(state => state.user);
+    const organization = useAltStore(state => state.organization);
+    const { isLoading, logout, serverError } = useLogout()
+
     return (
         <nav 
             className="h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md"
@@ -52,6 +55,15 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
                                 </DropdownMenuSubContent>
                                 </DropdownMenuPortal>
                             </DropdownMenuSub>
+                            {isLoading ? <DropdownMenuItem className="bg-red-400"
+                            >
+                                logging out...
+                            </DropdownMenuItem> :
+                            <DropdownMenuItem className="bg-red-400 cursor-pointer"
+                                onClick={() => logout()}
+                            >
+                                logout
+                            </DropdownMenuItem>}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

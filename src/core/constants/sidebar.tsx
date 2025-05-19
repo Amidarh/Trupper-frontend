@@ -32,7 +32,7 @@ export interface MenuItem {
 
 export const PERMISSIONS = {
     SUPER_ADMIN: ['dashboard', 'schools', 'users', 'analytics', 'sub-admins', 'notifications', 'newsletters', 'subscription', 'customization', 'exam-type', 'subjects', 'questions', 'exam', "categories", "codes"],
-    ADMIN: ['dashboard', 'schools', 'users', 'analytics'],
+    ADMIN: ['dashboard', 'schools', 'users', 'analytics', 'sub-admins', 'notifications', 'newsletters', 'subscription', 'customization', 'exam-type', 'subjects', 'questions', 'exam', "categories", "codes"],
     SUB_ADMIN: ['dashboard', 'schools'],
     USER: ["my-dashboard", "ai-examiner", "my-profile", "my-exams", "result", "mock-exams", "performance", "my-notifications"]
 } as const;

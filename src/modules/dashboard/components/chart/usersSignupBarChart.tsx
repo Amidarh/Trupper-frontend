@@ -2,6 +2,7 @@
 
 import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, XAxis } from "recharts"
+import { userSignupAnalytics } from "../../types/dashboard.types"
 
 import {
   Card,
@@ -15,31 +16,17 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-const chartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
-    { month: "July", desktop: 192 },
-    { month: "August", desktop: 256 },
-    { month: "September", desktop: 178 },
-    { month: "October", desktop: 310 },
-    { month: "November", desktop: 245 },
-    { month: "December", desktop: 289 },
-]
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "oklch(0.488 0.243 264.376)",
-  },
-} satisfies ChartConfig
-
-export function UserSignupChart() {
+export function UserSignupChart({ chartData } : { chartData: userSignupAnalytics[] | undefined }) {
+  const chartConfig = {
+    signups: {
+      label: "signups",
+      color: "oklch(0.488 0.243 264.376)",
+    },
+  } satisfies ChartConfig
+  console.log(chartData);
   return (
     <Card className="w-full">
       <CardHeader>

@@ -32,7 +32,8 @@ import { useAltStore } from "@/lib/zustand/userStore";
 export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
       const pathname = usePathname();
       const { setTheme } = useTheme()
-      const { organization, user } = useAltStore()
+      const user = useAltStore(state => state.user);
+      const organization = useAltStore(state => state.organization)
       
       const allowedPermissions = PERMISSIONS[userRole] || [];
       const accessibleMenuItems = MENU_ITEMS.filter(item => 

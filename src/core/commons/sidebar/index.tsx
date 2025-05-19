@@ -19,7 +19,8 @@ import { useAltStore } from "@/lib/zustand/userStore";
 
 export default function AppSidebar({ userRole, className }: AppSidebarProps) {
   const pathname = usePathname();
-  const { organization, user } = useAltStore()
+  const user = useAltStore(state => state.user);
+  const organization = useAltStore(state => state.organization);
   
   const allowedPermissions = userRole ? PERMISSIONS[userRole] || [] : [];
   const accessibleMenuItems = MENU_ITEMS.filter(item => 

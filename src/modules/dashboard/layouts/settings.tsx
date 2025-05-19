@@ -1,8 +1,8 @@
 
-import { PreferenceSettings } from "../../components/tabs/preference"
+import { PreferenceSettings } from "../components/tabs/preference"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SecuritySettings } from "../../components/tabs/security"
+import { SecuritySettings } from "../components/tabs/security"
 
 export const Settings = () => {
     return (

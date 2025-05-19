@@ -1,33 +1,36 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { IUser } from "@/types/user.types";
+import { getStatusBadge } from "@/core/commons/components/badge/badge";
+import moment from "moment";
 
-export const UserProfile = () => {
+export const UserProfile = ({ user }: { user:IUser | null }) => {
     return (
         <main className="flex flex-col gap-5">
             <Card className="mt-5 px-5">
                 <div>
                     <div className="flex flex-row max-lg:justify-center">
                         <Avatar className="size-24 md:size-30">
-                            <AvatarFallback className="text-2xl md:text-6xl font-bold">WI</AvatarFallback>
+                            <AvatarFallback className="text-2xl md:text-6xl font-bold">{user?.firstName?.slice(0,1)}{user?.lastName?.slice(0,1)}</AvatarFallback>
                         </Avatar>
                     </div>
 
                     <div className="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-2 w-full">
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">First Name :</p>
-                            <p>Wisdom</p>
+                            <p>{user?.firstName}</p>
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Last Name :</p>
-                            <p>Woke</p>
+                            <p>{user?.lastName}</p>
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Email :</p>
-                            <p>Wisdomwokedev@gmail.com</p>
+                            <p>{user?.email}</p>
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Date joined :</p>
-                            <p>12 Jan, 2025</p>
+                            <p>{moment(user?.createdAt).format("MMMM D, YYYY")}</p>
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Category One:</p>
@@ -39,11 +42,13 @@ export const UserProfile = () => {
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Authenticated :</p>
-                            <p className="text-green-800 text-sm bg-green-200 rounded-lg px-2">verified</p>
+                            {user?.isVerified ? <p className="text-green-800 text-sm bg-green-200 rounded-lg px-2">verified</p>
+                            :
+                            <p className="text-red-800 text-sm bg-red-200 rounded-lg px-2">Not Verified</p>}
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Status :</p>
-                            <p className="text-green-500">Active</p>
+                            <p className="text-green-500">{user?.status}</p>
                         </div>
                     </div>
                 </div>
