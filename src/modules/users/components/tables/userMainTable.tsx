@@ -68,6 +68,7 @@ export const UserTable = () => {
                     <TableHeader className="bg-muted">
                         <TableRow>
                             <TableHead>Full Name</TableHead>
+                            <TableHead>email</TableHead>
                             <TableHead>verified</TableHead>
                             <TableHead>Category</TableHead>
                             <TableHead>Date Joined</TableHead>
@@ -80,6 +81,7 @@ export const UserTable = () => {
                         {data?.map((user) => (
                             <TableRow key={user.queryId} onClick={() => router.push(`/users/${user.id}`)} className="cursor-pointer">
                             <TableCell>{user.firstName} {user.lastName}</TableCell>
+                            <TableCell>{user.email}</TableCell>
                             <TableCell>{getStatusBadge(user.isVerified ? "verified" : "not verified")}</TableCell>
                             {/* <TableCell>{user.status}</TableCell> */}
                             <TableCell>HLC</TableCell>

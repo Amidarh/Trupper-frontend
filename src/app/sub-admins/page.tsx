@@ -6,8 +6,8 @@ import { AdminTable } from "@/modules/subAdmin/components/table/adminTable";
 const DashboardPage = () => {
     return (
         <DashboardLayout
-            pageTitle="My Users"
-            subHeading="Manage your users here"
+            pageTitle="My Sub Admins"
+            subHeading="Manage your sub admins here"
         >
             <AdminTable/>
         </DashboardLayout>

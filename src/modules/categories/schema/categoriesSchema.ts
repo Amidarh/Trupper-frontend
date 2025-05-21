@@ -7,3 +7,11 @@ export const categorySchema = z.object({
 });
 
 export type CategoryFormData = z.infer<typeof categorySchema>;
+
+export const subCategorySchema = z.object({
+    name: z.string().min(1, { message: "Enter category name" }),
+    userCategory: z.string().min(1, { message: "Select a category" }) ,
+    status: z.boolean().optional()
+});
+
+export type SubCategoryFormData = z.infer<typeof subCategorySchema>;

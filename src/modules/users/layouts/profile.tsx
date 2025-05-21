@@ -41,14 +41,12 @@ export const UserProfile = ({ user }: { user:IUser | null }) => {
                             <p>Taptip</p>
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
-                            <p className="font-bold">Authenticated :</p>
-                            {user?.isVerified ? <p className="text-green-800 text-sm bg-green-200 rounded-lg px-2">verified</p>
-                            :
-                            <p className="text-red-800 text-sm bg-red-200 rounded-lg px-2">Not Verified</p>}
+                            <p className="font-bold">Verification :</p>
+                             {getStatusBadge(user?.isVerified ? "verified" : "not verified")}
                         </div>
                         <div className="flex flex-row items-center justify-between gap-2 w-full">
                             <p className="font-bold">Status :</p>
-                            <p className="text-green-500">{user?.status}</p>
+                            {user?.isBlocked ? <p className="text-red-500">Blocked</p> : <p className="text-green-500">Active</p> }
                         </div>
                     </div>
                 </div>

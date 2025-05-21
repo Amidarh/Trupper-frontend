@@ -57,4 +57,5 @@ export interface AltStore {
   setOrganizationId: (id: string) => void;
   isAuthenticated: boolean,
   logout: () => void;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
 }

@@ -1,29 +1,29 @@
 export const getStatusBadge = (status: string) => {
-    const baseClass = "px-2 py-1 rounded text-sm font-medium";
+    const baseClass = "px-2 py-1 rounded-lg px-2 text-[13px]";
     switch (status.toLowerCase()) {
         case "active":
-            return <span className={`${baseClass} bg-green-100 text-green-800`}>Active</span>;
+            return <span className={`${baseClass} bg-green-200 text-green-800`}>Active</span>;
         case "verified":
-            return <span className={`${baseClass} bg-green-100 text-green-800`}>Verified</span>;
+            return <span className={`${baseClass} bg-green-200 text-green-800`}>Verified</span>;
         case "inactive":
-            return <span className={`${baseClass} bg-gray-100 text-red-500`}>Inactive</span>;
+            return <span className={`${baseClass} bg-gray-200 text-red-500`}>Inactive</span>;
         case "not verified":
-            return <span className={`${baseClass} bg-gray-100 text-red-500`}>Not Verified</span>;
+            return <span className={`${baseClass} bg-gray-200 text-red-500`}>Not Verified</span>;
         case "pending":
-            return <span className={`${baseClass} bg-yellow-100 text-yellow-800`}>Pending</span>;
+            return <span className={`${baseClass} bg-yellow-200 text-yellow-800`}>Pending</span>;
         case "draft":
-            return <span className={`${baseClass} bg-yellow-100 text-yellow-800`}>Draft</span>;
+            return <span className={`${baseClass} bg-yellow-200 text-yellow-800`}>Draft</span>;
         case "used":
-            return <span className={`${baseClass} bg-yellow-100 text-yellow-800`}>used</span>;
+            return <span className={`${baseClass} bg-yellow-200 text-yellow-800`}>used</span>;
         case "sent":
-            return <span className={`${baseClass} bg-green-100 text-green-800`}>Sent</span>;
+            return <span className={`${baseClass} bg-green-200 text-green-800`}>Sent</span>;
         case "approved":
-            return <span className={`${baseClass} bg-green-100 text-green-800`}>Approved</span>;
+            return <span className={`${baseClass} bg-green-200 text-green-800`}>Approved</span>;
         case "blocked":
-            return <span className={`${baseClass} bg-red-100 text-red-800`}>Blocked</span>;
+            return <span className={`${baseClass} bg-red-200 text-red-800`}>Blocked</span>;
         case "suspended":
-            return <span className={`${baseClass} bg-red-100 text-red-800`}>Suspended</span>;
+            return <span className={`${baseClass} bg-red-200 text-red-800`}>Suspended</span>;
         default:
-            return <span className={`${baseClass} bg-red-100 text-red-800`}>Unknown</span>;
+            return <span className={`${baseClass} bg-red-200 text-red-800`}>Unknown</span>;
     }
 };

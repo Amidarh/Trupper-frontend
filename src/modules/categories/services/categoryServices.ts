@@ -3,20 +3,18 @@ import useSWR from "swr";
 import { useAltStore } from "@/lib/zustand/userStore";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
-import { useParams } from "next/navigation";
 import { CategoryDataTypes, CategoryTypes } from "@/types/categories.types";
 import { categorySchema, CategoryFormData } from "../schema/categoriesSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent } from "@/components/ui/alert-dialog";
+// import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent } from "@/components/ui/alert-dialog";
 
 export const useCategoryService = () => {
     const organization = useAltStore(state => state.organization)
     const [ singleCategory, setSingleCategory ] = useState<CategoryTypes | null>(null);
     const [ singleCategoryLoading, setSingleCategoryLoading ] = useState<boolean>(false);
-    const [ createLoading, setCreateLoading ] = useState<boolean>(false)
     const [serverError, setServerError] = useState("");
     const router = useRouter()
 

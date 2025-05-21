@@ -16,17 +16,32 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/ui/chart"
 
-
-export function UserSignupChart({ chartData } : { chartData: userSignupAnalytics[] | undefined }) {
+export function UserSignupChart({ chartData }: { chartData: userSignupAnalytics[] | undefined }) {
   const chartConfig = {
     signups: {
       label: "signups",
       color: "oklch(0.488 0.243 264.376)",
     },
   } satisfies ChartConfig
-  console.log(chartData);
+
+  // Handle undefined chartData
+  if (!chartData) {
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>User Signup Chart Data</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[400px] p-6">
+          <div className="flex items-center justify-center h-full text-muted-foreground">
+            No data available
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -51,7 +66,7 @@ export function UserSignupChart({ chartData } : { chartData: userSignupAnalytics
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
+              <Bar dataKey="signups" fill="var(--color-signups)" radius={8}>
                 <LabelList
                   position="top"
                   offset={12}

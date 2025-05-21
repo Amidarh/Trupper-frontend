@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, ArrowUpRightSquare, Trash2 } from "lucide-react";
 
 import {
   Table,
@@ -20,10 +20,13 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
+import { useSubCategoryService } from "../../services/subCategoryServices";
+import { SubCategoryTypes } from "@/types/categories.types";
+import moment from "moment";
 
-
-export const SubCategoryTable = () => {
+export const SubCategoryTable = ({ subCategories }: { subCategories: SubCategoryTypes[] | undefined }) => {
     const router = useRouter();
+    const { deleteSubCategory } = useSubCategoryService()
     return (
         <div>
             {/* <CardHeader>
@@ -53,7 +56,7 @@ export const SubCategoryTable = () => {
                 <TableHeader className="bg-muted">
                     <TableRow>
                         <TableHead>Name</TableHead>
-                        <TableHead>Sub Category</TableHead>
+                        <TableHead>Category</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>created by</TableHead>
                         <TableHead>Date Created</TableHead>
@@ -61,96 +64,36 @@ export const SubCategoryTable = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow className="cursor-pointer">
-                        <TableCell onClick={() => router.push('/categories/1')}>O level</TableCell>
-                        <TableCell onClick={() => router.push('/categories/1')}>Note</TableCell>
-                        <TableCell onClick={() => router.push('/categories/1')}>{getStatusBadge("active")}</TableCell>
-                        <TableCell>Me</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell align="right" className="text-right flex justify-end">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
+                    {subCategories?.map((subCategory) => (
+                         <TableRow className="cursor-pointer" key={subCategory.id}>
+                         <TableCell onClick={() => router.push(`/categories/sub/${subCategory.id}`)}>{subCategory.name}</TableCell>
+                         <TableCell onClick={() => router.push(`/categories/sub/${subCategory.id}`)}>{subCategory.userCategory.name}</TableCell>
+                         <TableCell onClick={() => router.push(`/categories/sub/${subCategory.id}`)}>{getStatusBadge(subCategory.status === true ? "active" : "inactive")}</TableCell>
+                         <TableCell>Me</TableCell>
+                         <TableCell>{moment(subCategory.createdAt).format("MMMM D, YYYY")}</TableCell>
+                         <TableCell align="right" className="text-right flex justify-end">
+                             <DropdownMenu>
+                                 <DropdownMenuTrigger asChild>
+                                     <div><EllipsisVertical/></div>
+                                 </DropdownMenuTrigger>
+                                 <DropdownMenuContent className="w-fit">
+                                    <DropdownMenuItem className="cursor-pointer"
+                                        onClick={() => router.push(`/categories/sub/${subCategory.id}`)}
+                                    >
+                                        <ArrowUpRightSquare/>
+                                        <p>Open</p>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer bg-red-800"
+                                        onClick={() => deleteSubCategory(subCategory.id)}
+                                    >
+                                            <Trash2 />
+                                            <p>Delete Category</p>
+                                    </DropdownMenuItem>
                                 </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="cursor-pointer">
-                        <TableCell onClick={() => router.push('/categories/1')}>O level</TableCell>
-                        <TableCell onClick={() => router.push('/categories/1')}>Note</TableCell>
-                        <TableCell onClick={() => router.push('/categories/1')}>{getStatusBadge("inactive")}</TableCell>
-                        <TableCell onClick={() => router.push('/categories/1')}>Me</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell align="right" className="text-right flex justify-end">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="cursor-pointer">
-                        <TableCell>O level</TableCell>
-                        <TableCell>Note</TableCell>
-                        <TableCell>{getStatusBadge("active")}</TableCell>
-                        <TableCell>Me</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell align="right" className="text-right flex justify-end">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="cursor-pointer">
-                        <TableCell>O level</TableCell>
-                        <TableCell>Note</TableCell>
-                        <TableCell>{getStatusBadge("active")}</TableCell>
-                        <TableCell>Me</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell align="right" className="text-right flex justify-end">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="cursor-pointer">
-                        <TableCell>O level</TableCell>
-                        <TableCell>Note</TableCell>
-                        <TableCell>{getStatusBadge("inactive")}</TableCell>
-                        <TableCell>Me</TableCell>
-                        <TableCell>10 April 2025</TableCell>
-                        <TableCell align="right" className="text-right flex justify-end">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <div><EllipsisVertical/></div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56">
-                                    <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </TableCell>
-                    </TableRow>
+                             </DropdownMenu>
+                         </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </div>

@@ -3,7 +3,7 @@
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
 import { BackButton } from "@/core/commons/navigation/backButton";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +23,7 @@ const CreateCategoryPage = () => {
     serverError,
   } = useCategoryService();
 
-  const [isActive, setIsActive] = useState(false); // Local state to manage Switch
+  const [isActive, setIsActive] = useState(false);
 
   return (
     <DashboardLayout

@@ -92,6 +92,14 @@ const ViewCategoryPage = () => {
         <div className="flex justify-between items-center mb-4">
           <BackButton title="Categories" />
           <div className="flex gap-2 flex-row">
+            {edit  && (
+              <Button type="submit" form="categoryForm" disabled={isSubmitting}>
+                {isSubmitting ? "Updating..." : "Update Category"}
+              </Button>
+            ) }
+              {!edit && <Button onClick={handleEditState} disabled={singleCategoryLoading}>
+                Edit Category
+              </Button>}
             {edit ? (
               <Button variant="destructive" onClick={handleEditState}>
                 Cancel
@@ -102,14 +110,6 @@ const ViewCategoryPage = () => {
                 <p>Delete Category</p>
               </Button>
             )}
-            {edit  && (
-              <Button type="submit" form="categoryForm" disabled={isSubmitting}>
-                {isSubmitting ? "Updating..." : "Update Category"}
-              </Button>
-            ) }
-              {!edit && <Button onClick={handleEditState} disabled={singleCategoryLoading}>
-                Edit Category
-              </Button>}
           </div>
         </div>
         <form id="categoryForm" onSubmit={handleSubmit(onSubmit)}>

@@ -40,11 +40,11 @@ export function useLogin() {
       setUser(user);
       // setOrganization(user.organization || { id: "default", name: "default" });
 
-      router.push("/my-dashboard");
-      // if (user.role === "USER") {
-      // } else if (user.role === "ADMIN" || user.role === "SUB_ADMIN") {
-      //   router.push("/admin");
-      // }
+      if (user.role === "USER" || user.role === "user") {
+        router.push("/my-dashboard");
+      } else if (user.role === "ADMIN" || user.role === "SUB_ADMIN" || user.role === "admin") {
+        router.push("/dashboard");
+      }
     } catch (err: any) {
       console.error(err);
       if (err.response?.status === 406) {

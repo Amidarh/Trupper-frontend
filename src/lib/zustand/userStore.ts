@@ -13,7 +13,8 @@ export const useAltStore = create<AltStore>()(
             setOrganization: (organization: IOrganization) => set({organization}),
             setOrganizationId: (organizationId: string) => set({ organizationId }) ,
             logout: (() => set({ user: null })),
-            isAuthenticated: false
+            isAuthenticated: false,
+            setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated })
         }),{
             name: "Alt-store"
         }

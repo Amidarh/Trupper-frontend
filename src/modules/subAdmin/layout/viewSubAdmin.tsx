@@ -3,8 +3,9 @@ import { AdminProfile } from "../components/tabs/profile";
 import { AdminPermissions } from "../components/tabs/permissions";
 import { BackButton } from "@/core/commons/navigation/backButton";
 import { Button } from "@/components/ui/button";
+import { IAdmin } from "@/types/admin.types";
 
-export const AdminDetail = () => {
+export const AdminDetail = ({adminData }: { adminData: IAdmin | null }) => {
     return (
         <main>
             <div className="flex flex-row justify-between mb-3">
@@ -19,7 +20,7 @@ export const AdminDetail = () => {
                     <TabsTrigger value="permissions">Permissions</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile">
-                    <AdminProfile />
+                    <AdminProfile admin={adminData} />
                 </TabsContent>
                 <TabsContent value="permissions">
                     <AdminPermissions />
