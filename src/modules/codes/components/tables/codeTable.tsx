@@ -8,6 +8,7 @@ import { codeType } from "../../types";
 import { Copy } from "lucide-react";
 import moment from "moment"
 import { toast } from "sonner";
+import DeleteCodeModal from "../modals/deleteModal";
 
 export const CodeTable = ({ codes }: { codes: codeType[] | undefined }) => {
     const router = useRouter()
@@ -35,7 +36,7 @@ export const CodeTable = ({ codes }: { codes: codeType[] | undefined }) => {
                     <TableRow
                         key={code.code}
                         className="cursor-pointer"
-                        onClick={() => router.push(`/codes/${code.code}`)}
+                        // onClick={() => router.push(`/codes/${code.code}`)}
                     >
                         <TableCell>{code.code}</TableCell>
                         <TableCell>Authentication</TableCell>
@@ -48,7 +49,7 @@ export const CodeTable = ({ codes }: { codes: codeType[] | undefined }) => {
                             {moment(code.createdAt).format("YYYY-MM-DD")}
                         </TableCell>
                         <TableCell className="flex justify-end gap-2 items-end">
-                            <Button variant="destructive" className="cursor-pointer">Delete</Button>
+                            <DeleteCodeModal id={code.id} code={code.code}/>
                             <Button className="cursor-pointer bg-green-700 text-white"
                                 onClick={(e) => {
                                     e.stopPropagation()

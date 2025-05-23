@@ -9,7 +9,7 @@ import { useAltStore } from "@/lib/zustand/userStore";
 export function useLogin() {
   const router = useRouter();
   const [serverError, setServerError] = useState("");
-  const setUser = useAltStore(state => state.setUser);
+  const setUser = useAltStore((state) => state.setUser);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -20,25 +20,28 @@ export function useLogin() {
 
     try {
       const res = await api.post("/auth/login", data);
-      
+
       if (res.status === 203) {
         router.push(`/2fa?token=${res.data.doc.token}`);
         return;
       }
 
       const { user, token, refreshToken } = res.data.doc;
-      // console.log({ userData: user });
+      const isProduction = process.env.NODE_ENV === "production";
+      const secureFlag = isProduction ? "; secure" : "";
+      const orgName = (user.organization?.name || "default").replace(/\s+/g, "_");
 
       // Set cookies client-side
-      const orgName = (user.organization?.name || "default").replace(/\s+/g, "_");
-      document.cookie = `${orgName}-accessToken=${token}; path=/; secure; SameSite=Strict`;
-      document.cookie = `${orgName}-refreshToken=${refreshToken}; path=/; secure; SameSite=Strict`;
-      document.cookie = `role=${(user.role).toUpperCase()}; path=/; secure; SameSite=Strict`;
-      document.cookie = `organizationId=${user.organization?.id || "default"}; path=/; secure; SameSite=Strict`;
+      document.cookie = `${orgName}-accessToken=${token}; path=/${secureFlag}; SameSite=Strict`;
+      document.cookie = `${orgName}-refreshToken=${refreshToken}; path=/${secureFlag}; SameSite=Strict`;
+      document.cookie = `role=${user.role.toUpperCase()}; path=/${secureFlag}; SameSite=Strict`;
+      document.cookie = `organizationId=${user.organization?.id || "default"}; path=/${secureFlag}; SameSite=Strict`;
+
+      // Debug cookies
+      console.log("Cookies after setting:", document.cookie);
 
       // Update Zustand store
       setUser(user);
-      // setOrganization(user.organization || { id: "default", name: "default" });
 
       if (user.role === "USER" || user.role === "user") {
         router.push("/my-dashboard");

@@ -7,13 +7,13 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
+  // AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { X } from "lucide-react"
+import { X, ChevronLeftCircle } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -29,6 +29,8 @@ import { useSubCategoryService } from "@/modules/categories/services/subCategory
 import { useCategoryService } from "@/modules/categories/services/categoryServices"
 import { CategoryTypes, SubCategoryTypes } from "@/types/categories.types"
 import { CodeFormData } from "../../schemas";
+import { toast } from "sonner";
+import { handleExport } from "@/utils/exports/codes";
 
 export function GenerateCodeModal() {
   const {
@@ -40,6 +42,11 @@ export function GenerateCodeModal() {
     },
     generateCode,
     serverError,
+    generateCodeLoading,
+    generatedCodeCount,
+    generatedCode,
+    setGeneratedCodeCount,
+    bulkCode,
   } = useCodeService()
   const { data: categories, isLoading: categoriesLoading } = useCategoryService()
   const { getSubCategoryByCategory, subCategory, subCategoryLoading } = useSubCategoryService()
@@ -47,15 +54,18 @@ export function GenerateCodeModal() {
   const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategoryTypes | undefined>(undefined)
 
   const onSubmit = useCallback(
-    async (data: CodeFormData) => {
+    async (data: CodeFormData, exportCodes: boolean) => {
       try {
         await generateCode(data)
+        if(exportCodes && bulkCode.length > 0){
+          handleExport("pdf", bulkCode)
+        }
       } catch (error) {
         console.error("Failed to generate codes:", error)
       }
     },
-    [generateCode]
-  )
+    [generateCode, bulkCode]
+  );
 
   return (
     <AlertDialog>
@@ -63,7 +73,40 @@ export function GenerateCodeModal() {
         <Button disabled={categoriesLoading}>Generate Code</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
-        <form onSubmit={(e) => e.preventDefault()}>
+       {generateCodeLoading ? 
+        <div className="flex items-center justify-center">
+          <p>Generating Codes...</p>
+          </div>
+       : 
+       generatedCodeCount === 1 ? 
+        <AlertDialogDescription>
+          <div className="flex flex-row justify-between items-center">
+              <Button variant="ghost" onClick={() => setGeneratedCodeCount(0)}>
+                <ChevronLeftCircle className="h-6 w-6" />
+                Back
+              </Button>
+              <AlertDialogCancel className="bg-transparent border-0 p-0"
+                onClick={() => setGeneratedCodeCount(0)}
+              >
+                <X className="h-6 w-6" />
+              </AlertDialogCancel>
+            </div>
+          <div className="flex items-center justify-center flex-col">
+            <p>Code Generated Successfully</p>
+            <h1 className="text-green-500 font-bold text-3xl">{generatedCode}</h1>
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => {
+                navigator.clipboard.writeText(generatedCode || "")
+                toast.success("Code copied to clipboard")
+              }}>
+                Copy Code
+              </Button>
+          </div>
+        </AlertDialogDescription>
+        :
+       <form onSubmit={(e) => e.preventDefault()}>
           <AlertDialogHeader>
             <div className="flex flex-row justify-between items-center">
               <AlertDialogTitle>Generate Code Settings</AlertDialogTitle>
@@ -168,22 +211,22 @@ export function GenerateCodeModal() {
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="mt-5">
+          <div className="mt-5 flex flex-row justify-between">
             <AlertDialogAction
-              onClick={handleSubmit((data) => onSubmit(data))}
+              onClick={handleSubmit((data) => onSubmit(data, false))}
               disabled={isSubmitting || subCategoryLoading || categoriesLoading}
             >
               Generate Code(s)
             </AlertDialogAction>
             <AlertDialogAction
-              onClick={handleSubmit((data) => onSubmit(data))}
+              onClick={handleSubmit((data) => onSubmit(data, true))}
               disabled={isSubmitting || subCategoryLoading || categoriesLoading}
               className="bg-green-800 text-white hover:bg-green-900"
             >
               Generate and Export
             </AlertDialogAction>
-          </AlertDialogFooter>
-        </form>
+          </div>
+        </form>}
       </AlertDialogContent>
     </AlertDialog>
   )

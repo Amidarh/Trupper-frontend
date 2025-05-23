@@ -13,8 +13,12 @@ import { toast } from "sonner";
 export const useCodeService = () => {
     const organization = useAltStore(state => state.organization);
     const [ singleCode, setSingleCode ] = useState<codeType | null>(null);
+    const [ bulkCode, setBulkCode ] = useState<codeType[]>([]);
     const [ singleCodeLoading, setSingleCodeLoading ] = useState<boolean>(false);
     const [serverError, setServerError] = useState("");
+    const [ generateCodeLoading, setGenerateCodeLoading ] = useState<boolean>(false);
+    const [ generatedCodeCount, setGeneratedCodeCount ] = useState<number>(0)
+    const [ generatedCode, setGeneratedCode ] = useState<string | null>(null);
     const router = useRouter();
 
     const { data, error, isLoading, mutate } = useSWR<CodeDataTypes>(`/code/organization/${organization?.id}`, fetcher);
@@ -25,13 +29,23 @@ export const useCodeService = () => {
 
     const generateCode = async (data: CodeFormData) => {
         setServerError("")
+        setGenerateCodeLoading(true);
         try{
             const res = await api.post('/code/generate-bulk-code', data)
             if(res.status === 201){
+                setBulkCode(res.data.doc)
                 mutate();
+                if(Array.from(res.data.doc).length === 1){
+                    setGeneratedCodeCount((res.data.doc).length)
+                    setGeneratedCode(res.data.doc[0].code)
+                }
+                setBulkCode(res.data.doc)
                 router.push("/codes")
             }
+            toast.success("Code(s) generated successfully")
+            setGenerateCodeLoading(false)
         } catch(error : any ) {
+            setGenerateCodeLoading(false)
             const errorMessage =
                 error.response?.data?.message || error.message || "Could not create Code";
                 setServerError(errorMessage);
@@ -45,8 +59,10 @@ export const useCodeService = () => {
             const res = await api.delete(`/code/${id}`);
             if(res.status === 200){
                 setSingleCode(res.data.doc)
+                mutate()
             }
             setSingleCodeLoading(false)
+            toast.success("Code deleted successfully")
         } catch(error : any ) {
             setSingleCodeLoading(false)
             const errorMessage =
@@ -66,6 +82,11 @@ export const useCodeService = () => {
         singleCode,
         serverError,
         singleCodeLoading,
-        deleteCode
+        deleteCode,
+        generateCodeLoading,
+        generatedCodeCount,
+        generatedCode,
+        setGeneratedCodeCount,
+        bulkCode
     }
 }

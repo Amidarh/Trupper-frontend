@@ -50,6 +50,7 @@ export function middleware(request: NextRequest) {
   // Redirect unauthenticated users on protected routes
   const isProtected = Object.keys(ROUTE_PERMISSIONS).some(route => pathname.startsWith(route));
   if (!userRole || !VALID_ROLES[userRole]) {
+    console.log(userRole);
     if (isProtected) {
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('callbackUrl', encodeURIComponent(request.url));
