@@ -77,8 +77,8 @@ export const MENU_ITEMS: MenuItem[] = [
     },
     // Exam Management Group
     {
-      href: '/exam-type',
-      label: 'Exam Type',
+      href: '/exam-types',
+      label: 'Exam Types',
       icon: Newspaper,
       permission: 'exam-type',
       group: 'exams'

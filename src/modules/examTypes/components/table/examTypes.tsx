@@ -4,17 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
 import { useRouter } from "next/navigation";
+import { ExamTypes } from "@/types/examTypes.types";
+import moment from "moment";
 
-export const ExamTypesTable = () => {
+export const ExamTypesTable = ({ data }: { data: ExamTypes[] | undefined }) => {
     const router = useRouter()
     return (
         <Table className="w-full rounded-sm">
             <TableHeader className="bg-muted rounded-sm">
                 <TableRow>
-                    <TableHead className="w-[100px]">Name</TableHead>
-                    <TableHead>Exams</TableHead>
-                    <TableHead>No Of Exams</TableHead>
+                    <TableHead>Name</TableHead>
                     <TableHead>Status</TableHead>
+                    <TableHead>Created At</TableHead>
                     <TableHead align="right" className="text-right">Action</TableHead>
                 </TableRow>
             </TableHeader>
@@ -25,48 +26,21 @@ export const ExamTypesTable = () => {
             </TableBody>
             <TableBody>
                 {/* Add your table rows here */}
-                <TableRow
-                    onClick={() => router.push("/exam-type/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>O Level</TableCell>
-                    <TableCell>Waec, Neco, JAMB ...</TableCell>
-                    <TableCell>5</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow
-                    onClick={() => router.push("/exam-type/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>O Level</TableCell>
-                    <TableCell>Waec, Neco, JAMB ...</TableCell>
-                    <TableCell>5</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow
-                    onClick={() => router.push("/exam-type/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>O Level</TableCell>
-                    <TableCell>Waec, Neco, JAMB ...</TableCell>
-                    <TableCell>5</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
+                {data?.map(examtype => (
+                    <TableRow
+                        onClick={() => router.push(`/exam-types/${examtype.id}`)}
+                        className="cursor-pointer"
+                    > 
+                        <TableCell>{examtype.name}</TableCell>
+                        <TableCell>
+                            {getStatusBadge(examtype.status ? 'active' : 'inactive')}
+                        </TableCell>
+                        <TableCell>{moment(examtype.createdAt).format("YYYY-MM-DD")}</TableCell>
+                        <TableCell className="flex justify-end items-end">
+                            <Button className="cursor-pointer">Edit</Button>
+                        </TableCell>
+                 </TableRow>
+                ))}
             </TableBody>
         </Table>
     )

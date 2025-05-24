@@ -36,7 +36,7 @@ export interface IUser {
   loginTokens?: string[];
   loginDetails?: any[]; 
   cbt?: string;
-  status: 'active' | 'inactive',
+  status: 'active' | 'inactive';
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -44,7 +44,9 @@ export interface IUser {
 export interface IOrganization {
   id: string;
   name: string;
-  email: string
+  email: string;
+  codeSignUp: boolean;
+  enableSignup: boolean
 }
 
 export interface AltStore {

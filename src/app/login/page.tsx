@@ -97,10 +97,10 @@ const LoginPage = () => {
                             <Link href="/forget-password" className="hover:underline mt-4">
                                 Can't Login
                             </Link>
-                            <div className="border h-5 relative top-2"/>
-                            <Link href="/sign-up" className="line mt-4">
+                            {organization?.enableSignup && <div className="border h-5 relative top-2"/>}
+                            {organization?.enableSignup && <Link href="/sign-up" className="line mt-4">
                                 Create Account
-                            </Link>
+                            </Link>}
                         </div>
 
                         <div className="mt-5 flex flex-col justify-center gap-5 items-center">

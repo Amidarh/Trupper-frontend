@@ -67,8 +67,8 @@ export const useCategoryService = () => {
         } catch(error: any){
             const errorMessage =
                 error.response?.data?.message || error.message || "Could not delete Category";
-                setServerError(errorMessage);
-                toast.error(errorMessage)
+            setServerError(errorMessage);
+            toast.error(errorMessage)
         }
     }
 

@@ -6,15 +6,17 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSignup } from "@/modules/signup/services/signup";
 import { useAltStore } from "@/lib/zustand/userStore";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { organization } = useAltStore()
+    const router = useRouter()
 
     const {
         form: {
@@ -25,6 +27,12 @@ const SignUpPage = () => {
         signup,
         serverError
     } = useSignup()
+
+    useEffect(() => {
+        if(organization && !organization.enableSignup){
+            router.push("/login")
+        }
+    }, [organization])
 
     return (
         <ScrollArea className="w-full">
@@ -125,6 +133,16 @@ const SignUpPage = () => {
                                 <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
                             )}
                         </div>
+
+                        {organization?.codeSignUp && <div className="mb-4">
+                            <Label htmlFor="code" className="mb-2">Code</Label>
+                            <Input
+                                id="code"
+                                placeholder="Enter signup code"
+                                className="h-12"
+                                { ...register("code") }
+                            />
+                        </div>}
 
                         <div className="mt-6">
                             <Button type="submit" className="w-full cursor-pointer h-10">
