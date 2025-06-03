@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import RichTextEditor from "@/core/commons/components/richTextEditor";
+import ImageUploadTwo from "@/core/commons/components/imageUpload/imageUploadTwo";
 
 import { useExamService } from "@/modules/exam/services";
 import { useSubjectService } from "@/modules/subjects/services";
@@ -36,6 +37,7 @@ export const CreateQuestion = () => {
     createQuestion,
     serverError,
   } = useQuestionService();
+  const image = watch("image");
 
   const section = watch("section");
   const question = watch("question");
@@ -51,6 +53,10 @@ export const CreateQuestion = () => {
   const onSubmit = useCallback(
     async (data: QuestionFormData) => {
       try {
+         if (!image) {
+            toast.error("Please select an image");
+            return;
+        }
         const formData = new FormData();
         formData.append("exam", data.exam);
         formData.append("subject", data.subject);
@@ -63,6 +69,7 @@ export const CreateQuestion = () => {
         formData.append("c", data.c);
         formData.append("d", data.d);
         formData.append("reason", data.reason);
+        formData.append("image", image);
         await createQuestion(formData);
       } catch (error: any) {
         console.error("Failed to create question:", error);
@@ -200,11 +207,25 @@ export const CreateQuestion = () => {
         <Separator className="my-5" />
 
         {/* Rich Text Fields */}
-        <div className="mb-4">
-          <Label className="mb-2">Section</Label>
-          <RichTextEditor content={section} onChange={(e) => setValue("section", e, { shouldValidate: true })} />
-          {errors.section && <p className="text-red-500 text-sm">{errors.section.message}</p>}
-        </div>
+        <main className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="mb-4">
+            <Label className="mb-2">Section</Label>
+            <RichTextEditor content={section} onChange={(e) => setValue("section", e, { shouldValidate: true })} />
+            {errors.section && <p className="text-red-500 text-sm">{errors.section.message}</p>}
+            </div>
+
+            <div className="mb-4">
+                <ImageUploadTwo
+                    value={image}
+                    onChange={(file) => {
+                    if (file) {
+                        setValue("image", file, { shouldValidate: true });
+                    }
+                    }}
+                    error={errors.image?.message}
+                />
+            </div>
+        </main>
 
         <div className="mb-4">
           <Label className="mb-2">Question</Label>
