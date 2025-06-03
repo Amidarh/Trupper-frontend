@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
 import { useRouter } from "next/navigation";
+import { SubjectType } from "@/types/subject.types";
 
-export const SubjectsByExamsTable = () => {
+export const SubjectsByExamsTable = ({ data } : { data:SubjectType[] | null }) => {
     const router = useRouter()
     return (
         <Table className="w-full rounded-sm">
@@ -18,51 +19,22 @@ export const SubjectsByExamsTable = () => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-
-                </TableRow>
-            </TableBody>
-            <TableBody>
                 {/* Add your table rows here */}
-                <TableRow
-                    onClick={() => router.push("/subjects/edit/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>Maths</TableCell>
-                    <TableCell>wisdomwokedev@gmail.com</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow
-                    onClick={() => router.push("/subjects/edit/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>Maths</TableCell>
-                    <TableCell>wisdomwokedev@gmail.com</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow
-                    onClick={() => router.push("/subjects/edit/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>Maths</TableCell>
-                    <TableCell>wisdomwokedev@gmail.com</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
+                {data?.map(subject => (
+                    <TableRow
+                        onClick={() => router.push(`/subjects/edit/${subject.id}`)}
+                        className="cursor-pointer"
+                    > 
+                        <TableCell>{subject.name}</TableCell>
+                        <TableCell>wisdomwokedev@gmail.com</TableCell>
+                        <TableCell>
+                            {getStatusBadge(subject.status ? 'active' : 'inactive')}
+                        </TableCell>
+                        <TableCell className="flex justify-end items-end">
+                            <Button className="cursor-pointer">Edit</Button>
+                        </TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
     )

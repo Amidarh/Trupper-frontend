@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
-import { PERMISSIONS, MENU_ITEMS, AppSidebarProps, MenuItem } from "@/core/constants/sidebar";
+import { PERMISSIONS, MENU_ITEMS, AppSidebarProps, MenuItem } from "../../constants/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sidebar,

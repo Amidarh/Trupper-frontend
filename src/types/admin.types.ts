@@ -1,4 +1,4 @@
-import { UserRole } from "@/core/constants/sidebar";
+import { UserRole } from "../core/constants/sidebar";
 import { IUser } from "./user.types";
 
 export interface IAdmin {

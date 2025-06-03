@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { useAltStore } from "@/lib/zustand/userStore";
 import { fetcher } from "@/lib/fetcher";
 import { useState } from "react";
-import { examTypeSchema, ExamTypeFormData } from "../../exam/schema";
+import { examTypeSchema, ExamTypeFormData } from "../schema";
 import { ExamTypes, ExamDataTypes } from "@/types/examTypes.types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

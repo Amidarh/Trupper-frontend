@@ -11,45 +11,45 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-import { useExamTypeService } from "../../services";
+  } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { useExamService } from "../../services";
 import { Trash2 } from "lucide-react";
 
 
-export default function DeleteExamTypeButton({id}: { id: string | undefined }) {
-    const { deleteExamType, singleExamTypeLoading } = useExamTypeService();
+export default function DeleteExamButton({id}: { id: string | undefined }) {
+    const { deleteExam, singleExamLoading } = useExamService();
 
     const handleDelete = useCallback(async () => {
-            await deleteExamType(id);
-    }, [deleteExamType, id]);
+            await deleteExam(id);
+    }, [deleteExam, id]);
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button variant="destructive" className="cursor-pointer">
                     <Trash2 />
-                    <p>Delete Exam Type</p>
+                    <p>Delete Exam</p>
                 </Button>
             </AlertDialogTrigger>
-            {singleExamTypeLoading ? 
+            {singleExamLoading ? 
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Deleting...</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Please wait while we delete the exam type.
+                        Please wait while we delete this exam.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
             </AlertDialogContent> 
             :<AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to delete this Exam Type?</AlertDialogTitle>
+                    <AlertDialogTitle>Are you sure you want to delete this Exam?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete this Exam Type.
+                        This action cannot be undone. This will permanently delete this Exam.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction className="bg-red-600 hover:bg-red-700"
+                    <AlertDialogAction className="bg-red-800 hover:bg-red-700"
                         onClick={handleDelete}
                     >Delete</AlertDialogAction>
                 </AlertDialogFooter>

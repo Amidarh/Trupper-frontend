@@ -26,7 +26,7 @@ import {
     DropdownMenuSubContent 
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { PERMISSIONS, AppSidebarProps, MENU_ITEMS, MenuItem } from "@/core/constants/sidebar";
+import { PERMISSIONS, AppSidebarProps, MENU_ITEMS, MenuItem } from "../../constants/sidebar";
 import { useAltStore } from "@/lib/zustand/userStore";
 
 export function MobileSidebar({ userRole, className  }: AppSidebarProps) {

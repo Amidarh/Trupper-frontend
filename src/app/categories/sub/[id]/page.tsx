@@ -43,7 +43,7 @@ const ViewSubCategoryPage = () => {
     singleSubCategoryLoading,
   } = useSubCategoryService();
 
-  const { id } = useParams<{ id: string }>(); // Type `id` as string
+  const { id } = useParams<{ id: string }>();
   const [edit, setEdit] = useState(false);
   const status = watch("status");
   const { data: categories } = useCategoryService();

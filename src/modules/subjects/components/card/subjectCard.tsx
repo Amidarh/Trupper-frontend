@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-export const SubjectCard = ({exam} : { exam: string }) => {
+export const SubjectCard = ({exam, id} : { exam: string, id:string }) => {
     const router = useRouter()
     return (
         <Card className="p-2 gap-0 w-full max-w-[280px] flex flex-col justify-between">
@@ -20,7 +20,7 @@ export const SubjectCard = ({exam} : { exam: string }) => {
             </div>
             <CardFooter className="p-0 mt-2">
                 <Button className="w-full cursor-pointer"
-                    onClick={() => router.push("/subjects/1")}
+                    onClick={() => router.push(`/subjects/${id}`)}
                 >View</Button>
             </CardFooter>
         </Card>

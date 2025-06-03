@@ -84,7 +84,7 @@ import {
     ];
   
     return (
-      <div className="border rounded-md p-1 mb-1 space-x-2 z-50 dark:bg-black">
+      <div className="border-b p-1 mb-1 space-x-2 z-50">
         {Options.map((option, index) => (
           <Toggle
             key={index}

@@ -1,4 +1,4 @@
-import { UserRole } from "@/core/constants/sidebar";
+import { UserRole } from "../core/constants/sidebar";
 export interface IUser {
   id: string;
   firstName?: string;

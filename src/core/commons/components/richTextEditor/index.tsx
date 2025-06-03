@@ -41,7 +41,7 @@ export default function RichTextEditor({
     content: content,
     editorProps: {
       attributes: {
-        class: "min-h-[156px] border rounded-md bg-slate-50 py-2 px-3",
+        class: "min-h-[156px] dark:bg-transparent bg-white outline-none rounded-md py-2 px-3",
       },
     },
     onUpdate: ({ editor }) => {
@@ -51,9 +51,9 @@ export default function RichTextEditor({
   });
 
   return (
-    <div>
+    <div className="border rounded-md">
       <MenuBar editor={editor} />
-      <EditorContent className={cn("dark:bg-gray-900 dark:text-gray-900", className)} editor={editor} />
+      <EditorContent className={className} editor={editor} />
     </div>
   );
 }

@@ -6,15 +6,11 @@ const api = axios.create({
   baseURL: process.env.NODE_ENV === 'development'
     ? process.env.NEXT_PUBLIC_BASE_API_URL2 || process.env.NEXT_PUBLIC_BASE_API_URL
     : '',
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
-// Request interceptor: Attach token and add organization data
+// Request interceptor: Attach token, organization data, and handle form data safely
 api.interceptors.request.use(
   async (config) => {
-    // Client-side: Use Zustand store
     if (typeof window !== 'undefined') {
       const { organization } = useAltStore.getState();
       const key = `${(organization?.name || '').replace(/\s+/g, '_')}-accessToken`;
@@ -26,11 +22,28 @@ api.interceptors.request.use(
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
       }
-      if (config.data && organization?.id) {
-        console.log('org',organization?.id)
+
+      // Handle FormData
+      if (config.data instanceof FormData) {
+        const formCopy = new FormData();
+        for (const [k, v] of config.data.entries()) {
+          formCopy.append(k, v);
+        }
+
+        if (organization?.id) {
+          formCopy.append('organization', organization.id);
+        }
+
+        config.data = formCopy;
+
+        // Let browser handle Content-Type with proper boundary
+        delete config.headers['Content-Type'];
+      } else if (config.data && organization?.id) {
+        // JSON payload
+        config.headers['Content-Type'] = 'application/json';
         config.data = {
           ...config.data,
-          organization: organization?.id,
+          organization: organization.id,
         };
       }
     }
@@ -72,6 +85,14 @@ api.interceptors.response.use(
           document.cookie = `${key}=${newAccessToken}; path=/; secure; HttpOnly`;
 
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+          // Let the browser handle multipart Content-Type on retry
+          if (originalRequest.data instanceof FormData) {
+            delete originalRequest.headers['Content-Type'];
+          } else {
+            originalRequest.headers['Content-Type'] = 'application/json';
+          }
+
           return api(originalRequest);
         }
       } catch (refreshError) {

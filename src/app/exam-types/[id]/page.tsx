@@ -11,8 +11,7 @@ import { Switch } from "@/components/ui/switch"
 import { useExamTypeService } from "@/modules/examTypes/services"
 import { useParams } from "next/navigation"
 import { useState, useEffect } from "react"
-import { ExamTypeFormData } from "@/modules/exam/schema"
-import { Trash2 } from "lucide-react"
+import { ExamTypeFormData } from "@/modules/examTypes/schema"
 import DeleteExamTypeButton from "@/modules/examTypes/components/modal/deleteModal"
 
 const ViewExamType = () => {
@@ -62,17 +61,6 @@ const ViewExamType = () => {
         }
         setEdit(!edit);
       };
-
-        const handleDelete = async () => {
-          if (window.confirm("Are you sure you want to delete this category?")) {
-            try {
-              await deleteExamType(singleExamType?.id);
-              // Optionally redirect
-            } catch (error) {
-              console.error("Delete failed:", error);
-            }
-          }
-        };
       
         const onSubmit = async (data: ExamTypeFormData) => {
           try {
@@ -109,11 +97,7 @@ const ViewExamType = () => {
                                 Cancel
                             </Button>
                             ) : (
-                            // <Button variant="destructive" onClick={handleDelete} disabled={singleExamTypeLoading}>
-                            //     <Trash2 />
-                            //     <p>Delete Category</p>
-                            // </Button>
-                            <DeleteExamTypeButton id={id}/>
+                            <DeleteExamTypeButton id={singleExamType?.id}/>
                             )}
                         </div>
                     </div>
