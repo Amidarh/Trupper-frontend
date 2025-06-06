@@ -15,8 +15,8 @@ export const useSubCategoryService = () => {
     const [ singleSubCategory, setSingleSubCategory ] = useState<SubCategoryTypes | null>(null);
     const [ singleSubCategoryLoading, setSingleSubCategoryLoading ] = useState<boolean>(false);
     const [serverError, setServerError] = useState("");
-        const [ subCategory, setSubCategory ] = useState<SubCategoryTypes[] | null | undefined>(null);
-        const [ subCategoryLoading, setSubCategoryLoading ] = useState<boolean>(false);
+    const [ subCategory, setSubCategory ] = useState<SubCategoryTypes[] | null | undefined>(null);
+    const [ subCategoryLoading, setSubCategoryLoading ] = useState<boolean>(false);
     const router = useRouter()
 
     const { data, error, isLoading, mutate } = useSWR<SubCategoryDataTypes>(`/category/category-two-by-organization/${organization?.id}`, fetcher);

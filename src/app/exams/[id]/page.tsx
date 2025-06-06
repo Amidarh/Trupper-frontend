@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { DurationData } from "@/constants/data";
-import { Trash2 } from "lucide-react";
 import { useExamService } from "@/modules/exam/services";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";

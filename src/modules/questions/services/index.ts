@@ -31,9 +31,9 @@ export const useQuestionService = () => {
                 "Content-Type": "multipart/form-data",
                 }
             });
-            console.log({data})
             if(res.status === 201){
                 mutate()
+                toast.success("Question added successfully!");
                 router.push('/questions')
             }
         } catch(error: any){
@@ -47,7 +47,7 @@ export const useQuestionService = () => {
     const getQuestion = async (id: string | undefined) => {
         try{
             setSingleQuestionLoading(true);
-            const res = await api.post(`/questions/${id}`);
+            const res = await api.get(`/questions/${id}`);
             if(res.status === 200){
                 setSingleQuestion(res.data.doc)
             }
@@ -61,7 +61,7 @@ export const useQuestionService = () => {
         }
     };
 
-    const deleteQuestion = async (id:string) => {
+    const deleteQuestion = async (id:string | undefined) => {
         try{
             const res = await api.delete(`/questions/${id}`);
             if(res.status === 200){
@@ -77,7 +77,7 @@ export const useQuestionService = () => {
         }
     }
 
-    const editQuestion = async (id: string | undefined, data: QuestionType) => {
+    const editQuestion = async (id: string | undefined, data: QuestionFormData) => {
         setServerError(null);
         setSingleQuestionLoading(true)
         try{

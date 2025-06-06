@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
 import { useRouter } from "next/navigation";
+import { useQuestionService } from "../../services";
 
 export const QuestionTable = () => {
     const router = useRouter()
+    const { data, isLoading } = useQuestionService()
     return (
         <Table className="w-full rounded-sm">
             <TableHeader className="bg-muted rounded-sm">
@@ -24,45 +26,23 @@ export const QuestionTable = () => {
             </TableBody>
             <TableBody>
                 {/* Add your table rows here */}
-                <TableRow
-                    onClick={() => router.push("/questions/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>Objective</TableCell>
-                    <TableCell>Mathematics</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow
-                    onClick={() => router.push("/questions/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>Objective</TableCell>
-                    <TableCell>Mathematics</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
-                <TableRow
-                    onClick={() => router.push("/questions/1")}
-                    className="cursor-pointer"
-                > 
-                    <TableCell>Theorem</TableCell>
-                    <TableCell>Mathematics</TableCell>
-                    <TableCell>
-                        {getStatusBadge('active')}
-                    </TableCell>
-                    <TableCell className="flex justify-end items-end">
-                        <Button className="cursor-pointer">Edit</Button>
-                    </TableCell>
-                </TableRow>
+                {data?.map(question => (
+                    <TableRow
+                        onClick={() => router.push(`/questions/${question.id}`)}
+                        className="cursor-pointer"
+                    > 
+                        <TableCell>{question.questionType}</TableCell>
+                        <TableCell>{question.subject.name}</TableCell>
+                        <TableCell>
+                            {getStatusBadge('active')}
+                        </TableCell>
+                        <TableCell className="flex justify-end items-end">
+                            <Button className="cursor-pointer"
+                                onClick={() => router.push(`/questions/${question.id}`)}
+                            >Edit</Button>
+                        </TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
     )

@@ -186,3 +186,8 @@ export const DurationData = [
         label: "75 Minutes",
     }
 ];
+
+export const newsletterUserType = [
+    { label: "Users", key: 'users' },
+    { label: 'Admins', key: "admins" }
+]

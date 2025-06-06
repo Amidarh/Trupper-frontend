@@ -1,15 +1,18 @@
+import { SubjectType } from "./subject.types";
+import { ExamType } from "./exam.types";
+
 export interface Option {
   a: string;
   b: string;
   c: string;
   d: string;
-  e: string;
+  e?: string;
 }
 
 export interface QuestionType {
   question: string;
-  options: Option[];
-  subject: string; // ObjectId as string
+  options: Option;
+  subject: SubjectType; // ObjectId as string
   section: string;
   image: string;
   answer: string;
@@ -28,9 +31,11 @@ export interface QuestionType {
   status: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  exam: ExamType;
+  id: string
 }
 
 
 export interface QuestionDataType {
-    doc: QuestionDataType[]
+    doc: QuestionType[]
 }

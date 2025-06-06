@@ -8,43 +8,34 @@ const api = axios.create({
     : '',
 });
 
-// Request interceptor: Attach token, organization data, and handle form data safely
+// Request interceptor: Attach token and organization
 api.interceptors.request.use(
   async (config) => {
     if (typeof window !== 'undefined') {
       const { organization } = useAltStore.getState();
-      const key = `${(organization?.name || '').replace(/\s+/g, '_')}-accessToken`;
+      const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}-accessToken`;
       const token = document.cookie
         .split('; ')
-        .find((row) => row.startsWith(`${key}=`))
+        .find((row) => row.startsWith(`${orgKey}=`))
         ?.split('=')[1];
 
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
       }
 
-      // Handle FormData
-      if (config.data instanceof FormData) {
-        const formCopy = new FormData();
-        for (const [k, v] of config.data.entries()) {
-          formCopy.append(k, v);
+      // Inject organization info
+      if (organization?.id && config.data) {
+        if (config.data instanceof FormData) {
+          // Append to FormData safely
+          config.data.append('organization', organization.id);
+          // Let the browser set the correct Content-Type with boundary
+        } else if (typeof config.data === 'object') {
+          config.headers['Content-Type'] = 'application/json';
+          config.data = {
+            ...config.data,
+            organization: organization.id,
+          };
         }
-
-        if (organization?.id) {
-          formCopy.append('organization', organization.id);
-        }
-
-        config.data = formCopy;
-
-        // Let browser handle Content-Type with proper boundary
-        delete config.headers['Content-Type'];
-      } else if (config.data && organization?.id) {
-        // JSON payload
-        config.headers['Content-Type'] = 'application/json';
-        config.data = {
-          ...config.data,
-          organization: organization.id,
-        };
       }
     }
 
@@ -53,7 +44,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor: Token refresh logic
+// Response interceptor: Handle token refresh
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -68,11 +59,13 @@ api.interceptors.response.use(
       try {
         if (typeof window !== 'undefined') {
           const { organization } = useAltStore.getState();
-          const key = `${(organization?.name || '').replace(/\s+/g, '_')}-accessToken`;
-          const refreshKey = `${(organization?.name || '').replace(/\s+/g, '_')}-refreshToken`;
+          const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
+          const accessTokenKey = `${orgKey}-accessToken`;
+          const refreshTokenKey = `${orgKey}-refreshToken`;
+
           const refreshToken = document.cookie
             .split('; ')
-            .find((row) => row.startsWith(`${refreshKey}=`))
+            .find((row) => row.startsWith(`${refreshTokenKey}=`))
             ?.split('=')[1];
 
           const res = await axios.post(
@@ -82,11 +75,11 @@ api.interceptors.response.use(
           );
 
           const newAccessToken = res.data.doc.token;
-          document.cookie = `${key}=${newAccessToken}; path=/; secure; HttpOnly`;
+          document.cookie = `${accessTokenKey}=${newAccessToken}; path=/; secure; HttpOnly`;
 
           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
-          // Let the browser handle multipart Content-Type on retry
+          // For FormData: Do NOT override Content-Type
           if (originalRequest.data instanceof FormData) {
             delete originalRequest.headers['Content-Type'];
           } else {
@@ -96,11 +89,11 @@ api.interceptors.response.use(
           return api(originalRequest);
         }
       } catch (refreshError) {
-        console.error('Token refresh failed', refreshError);
+        console.error('Token refresh failed:', refreshError);
         if (typeof window !== 'undefined') {
           const { organization } = useAltStore.getState();
-          const key = `${(organization?.name || '').replace(/\s+/g, '_')}-accessToken`;
-          document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+          const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
+          document.cookie = `${orgKey}-accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
           window.location.href = '/login';
         }
         return Promise.reject(refreshError);

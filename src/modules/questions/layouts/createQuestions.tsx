@@ -21,10 +21,10 @@ import { ExamType } from "@/types/exam.types";
 import { SubjectType } from "@/types/subject.types";
 
 export const CreateQuestion = () => {
-  const [selectedExam, setSelectedExam] = useState<ExamType | undefined>(undefined);
-  const [selectedSubject, setSelectedSubject] = useState<SubjectType | undefined>(undefined);
-  const [selectedQuestionType, setSelectedQuestionType] = useState<{ name: string; label: string } | undefined>(undefined);
-  const [selectedAnswer, setSelectedAnswer] = useState<{ name: string; label: string } | undefined>(undefined);
+  const [selectedExam, setSelectedExam] = useState<ExamType>();
+  const [selectedSubject, setSelectedSubject] = useState<SubjectType>();
+  const [selectedQuestionType, setSelectedQuestionType] = useState<{ name: string; label: string }>();
+  const [selectedAnswer, setSelectedAnswer] = useState<{ name: string; label: string }>();
 
   const {
     form: {
@@ -37,8 +37,8 @@ export const CreateQuestion = () => {
     createQuestion,
     serverError,
   } = useQuestionService();
-  const image = watch("image");
 
+  const image = watch("image");
   const section = watch("section");
   const question = watch("question");
   const a = watch("a");
@@ -53,31 +53,37 @@ export const CreateQuestion = () => {
   const onSubmit = useCallback(
     async (data: QuestionFormData) => {
       try {
-         if (!image) {
-            toast.error("Please select an image");
-            return;
-        }
+        // if (!image || !(image instanceof File)) {
+        //   toast.error("Please upload a valid image.");
+        //   return;
+        // }
+
         const formData = new FormData();
+
         formData.append("exam", data.exam);
         formData.append("subject", data.subject);
         formData.append("questionType", data.questionType);
         formData.append("answer", data.answer);
-        formData.append("section", data.section);
-        formData.append("question", data.question);
-        formData.append("a", data.a);
-        formData.append("b", data.b);
-        formData.append("c", data.c);
-        formData.append("d", data.d);
-        formData.append("reason", data.reason);
-        formData.append("image", image);
+        formData.append("section", data.section || "");
+        formData.append("question", data.question || "");
+        formData.append("a", data.a || "");
+        formData.append("b", data.b || "");
+        formData.append("c", data.c || "");
+        formData.append("d", data.d || "");
+        formData.append("reason", data.reason || "");
+        if (image) {
+          formData.append("image", image);
+        }
+
         await createQuestion(formData);
       } catch (error: any) {
         console.error("Failed to create question:", error);
         toast.error(serverError || "Failed to create question");
       }
     },
-    [createQuestion, serverError]
+    [image, createQuestion, serverError]
   );
+
 
   return (
     <Card>

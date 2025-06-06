@@ -1,9 +1,9 @@
 "use client";
 
-import "./index.scss"
+import "./index.scss";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React from "react";
+import React, { useEffect } from "react";
 import MenuBar from "./menu-bar";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
@@ -12,12 +12,15 @@ import { cn } from "@/lib/utils";
 interface RichTextEditorProps {
   content: string;
   onChange: (content: string) => void;
-  className?: string
+  className?: string;
+  disabled?: boolean;
 }
+
 export default function RichTextEditor({
   content,
   onChange,
-  className
+  className,
+  disabled,
 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
@@ -38,22 +41,28 @@ export default function RichTextEditor({
       }),
       Highlight,
     ],
-    content: content,
+    content: content, // Initial HTML content
     editorProps: {
       attributes: {
         class: "min-h-[156px] dark:bg-transparent bg-white outline-none rounded-md py-2 px-3",
       },
     },
     onUpdate: ({ editor }) => {
-      // console.log(editor.getHTML());
-      onChange(editor.getHTML());
+      onChange(editor.getHTML()); // Output HTML on change
     },
   });
+
+  // Update editor content when the `content` prop changes
+  useEffect(() => {
+    if (editor && content !== editor.getHTML()) {
+      editor.commands.setContent(content, false); // false prevents emitting an update event
+    }
+  }, [editor, content]);
 
   return (
     <div className="border rounded-md">
       <MenuBar editor={editor} />
-      <EditorContent className={className} editor={editor} />
+      <EditorContent className={className} editor={editor} disabled={disabled} />
     </div>
   );
 }

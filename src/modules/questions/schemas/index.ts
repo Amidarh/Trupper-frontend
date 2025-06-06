@@ -17,7 +17,7 @@ export const questionSchema = z.object({
       {
         message: 'File must be a JPEG, PNG, or PDF',
       }
-    ), z.string().url()]),
+    ), z.string().url()]).optional(),
     answer: z.string().min(1, { message: "Enter Question answer" }),
     reason: z.string().min(1, { message: "Provide question answer reason" }),
     questionCategory: z.string().optional(),
