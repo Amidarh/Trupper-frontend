@@ -19,7 +19,7 @@ export const preferenceSchema = z.object({
 export type PreferenceFormData = z.infer<typeof preferenceSchema>;
 
 export const settingsSchema = z.object({
-    enableSignUp: z.boolean().optional(),
+    enableSignup: z.boolean().optional(),
     defaultCategory: z.string().optional(),
     defaultSubCategory: z.string().optional(),
     defaultPassword: z.string().optional(),

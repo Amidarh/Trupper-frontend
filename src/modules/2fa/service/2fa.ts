@@ -1,3 +1,5 @@
+"use client";
+
 import api from "@/core/services/api";
 import { useForm } from "react-hook-form";
 import { useState } from "react";

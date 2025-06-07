@@ -5,14 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAltStore } from "@/lib/zustand/userStore";
 import { useKycComplete } from "@/modules/kyc-complete/services";
 import { useEffect } from "react";
 import Image from "next/image";
 
-const KycCompletePage = () => {
+const KycCompleteContent = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { organization } = useAltStore()
@@ -131,4 +131,10 @@ const KycCompletePage = () => {
     )
 }
 
-export default KycCompletePage;
+export default function KycCompletePage () {
+    return (
+        <Suspense fallback={<div>loaading...</div>}>
+            <KycCompleteContent/>
+        </Suspense>
+    )
+};

@@ -5,10 +5,8 @@ import { useState } from "react";
 import { IOrganization } from "@/types/organization.types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { PreferenceFormData, preferenceSchema, SettingsFormData, settingsSchema } from "../schema";
-import useInitialDataFetch from "@/hooks/organization/initialOrgainzation";
 
 export const useCustomizationService = () => {
     const organization = useAltStore(state => state.organization);
@@ -28,7 +26,9 @@ export const useCustomizationService = () => {
         try{
             const res = await api.patch(`/organization/${organization?.id}`, data)
             if(res.status === 200){
-                setOrganization(res.data.doc)
+                const updatedOrganization = res.data.doc;
+                console.log({updatedOrganization})
+                setOrganization(updatedOrganization)
                 toast.success(res.data.message)
             }
         } catch(error: any){
@@ -45,6 +45,7 @@ export const useCustomizationService = () => {
     const updateSettings = async (data: SettingsFormData) => {
         setServerError("")
         try{
+            console.log({data})
              const res = await api.patch(`/organization/${organization?.id}`, data)
             if(res.status === 200){
                 setOrganization(res.data.doc)

@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger , SelectValue } from "@/components/ui/select";
 import { useCustomizationService } from "../../services";
+import { SettingsFormData } from "../../schema";
 
 export const Settings = () => {
     const organization = useAltStore(state => state.organization);
@@ -36,7 +37,6 @@ export const Settings = () => {
             reset,
             setValue,
             formState: { errors, isSubmitting },
-            watch,
             handleSubmit
         },
         updateSettings
@@ -50,7 +50,7 @@ export const Settings = () => {
     if(organization) {
       reset({
         codeSignUp: organization.codeSignUp,
-        enableSignUp: organization.enableSignup,
+        enableSignup: organization.enableSignup,
         defaultCategory: organization.defaultCategory,
         defaultSubCategory: organization.defaultSubCategory
       });
@@ -63,8 +63,9 @@ export const Settings = () => {
     }
   }, []);
 
-   const onSubmit = async (data: any) => {
+   const onSubmit = async (data: SettingsFormData) => {
       try{
+        // console.log({ data })
         await updateSettings(data)
       } catch(error: any){
         toast.error(error?.message || "Failed to update Exam");
@@ -92,11 +93,11 @@ export const Settings = () => {
                         checked={enableSignup}
                         onCheckedChange={(checked) => {
                         setEnableSignup(checked);
-                        setValue("enableSignUp", checked, { shouldValidate: true });
+                        setValue("enableSignup", checked, { shouldValidate: true });
                         }}
                         disabled={!edit}
                     />
-                    {errors.enableSignUp && <p className="text-red-500 text-sm">{errors.enableSignUp.message}</p>}
+                    {errors.enableSignup && <p className="text-red-500 text-sm">{errors.enableSignup.message}</p>}
                 </div>
             </div>
         </main>

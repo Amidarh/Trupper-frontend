@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { Suspense } from "react";
 import Image from "next/image";
 import {
   InputOTP,
@@ -15,7 +16,7 @@ import {
 import { useVerifyOtp } from "@/modules/verify-otp/services/verifyOtp";
 import { useAltStore } from "@/lib/zustand/userStore";
 
-const VerifyAccountPage = () => {
+const VerifyAccountContent = () => {
   const { organization } = useAltStore()
   const {
     form: {
@@ -125,4 +126,10 @@ const VerifyAccountPage = () => {
   );
 };
 
-export default VerifyAccountPage;
+export default function VerifyAccountPage() {
+  return (
+    <Suspense fallback={<div>Loading..</div>}>
+      <VerifyAccountContent/>
+    </Suspense>
+  )
+};

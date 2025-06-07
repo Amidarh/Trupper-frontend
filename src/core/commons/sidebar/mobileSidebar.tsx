@@ -35,10 +35,10 @@ export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
       const user = useAltStore(state => state.user);
       const organization = useAltStore(state => state.organization)
       
-      const allowedPermissions = PERMISSIONS[userRole] || [];
-      const accessibleMenuItems = MENU_ITEMS.filter(item => 
-        allowedPermissions.includes(item.permission)
-      );
+      const allowedPermissions: string[] = userRole ? Array.from(PERMISSIONS[userRole.toUpperCase() as keyof typeof PERMISSIONS] || []) : [];
+       const accessibleMenuItems = MENU_ITEMS
+    .filter(item => item.permission !== null)
+    .filter(item => allowedPermissions.includes(item.permission as string));
     
       // Group menu items
       const groupedMenuItems = accessibleMenuItems.reduce((groups, item) => {
