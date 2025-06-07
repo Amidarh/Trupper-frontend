@@ -56,8 +56,7 @@ const EditExam = () => {
     try {
       if (!id) return;
       await editExam({ id, data });
-      toast.success("Exam updated successfully");
-      console.log({data})
+      // toast.success("Exam updated successfully");
       setEdit(false);
     } catch (error: any) {
       toast.error(error?.message || "Failed to update Exam");
@@ -90,10 +89,6 @@ const EditExam = () => {
       setSelectedExamType(examTypes.find((et) => et.id === singleExam.examType.id));
     }
   }, [singleExam, examTypes, reset]);
-
-//   if (singleExamLoading) {
-//     return <div>Loading...</div>;
-//   }
 
   return (
     <DashboardLayout pageTitle="View And Edit an Exam">

@@ -26,7 +26,6 @@ export const useExamService = () => {
     const start = Date.now();
     const createExam = async (data: FormData) => {
         try {
-            console.log("exam Data", data)
             const res = await api.post("/exams", data, {
                 headers: {
                 "Content-Type": "multipart/form-data",
@@ -37,11 +36,7 @@ export const useExamService = () => {
                 router.push("/exams");
                 toast.success("Exam created successfully");
             }
-          // ... your code ...
-        console.log("Took", Date.now() - start, "ms");
-        } catch (error: any) {
-            // ... your code ...
-        console.log("Took", Date.now() - start, "ms");  
+        } catch (error: any) { 
           const errorMessage =
             error.response?.data?.message || error.message || "Could not create exam";
           setServerError(errorMessage);

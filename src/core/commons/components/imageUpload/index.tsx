@@ -50,6 +50,7 @@ export default function ImageUpload({ value, onChange, error, disabled }: ImageU
           onChange={handleFileChange}
           accept="image/jpeg,image/png"
           className="hidden"
+          disabled={disabled}
         />
         {previewUrl && (
           <div className="relative h-24 w-24 border rounded-sm">

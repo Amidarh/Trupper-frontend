@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { useForgetPassword } from "@/modules/forget-password/services/forgetPassword";
 import { useAltStore } from "@/lib/zustand/userStore";
+import Image from "next/image";
 
 const ForgottenPasswordPage = () => {
     const { organization } = useAltStore()
@@ -26,6 +27,9 @@ const ForgottenPasswordPage = () => {
         <div className="flex pt-10 sm:items-center justify-center h-screen w-full">
             <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                 <div className="flex flex-col items-center justify-center mb-4">
+                    {organization?.logo && 
+                        <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
+                    }
                     <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
                     <h2 className="text-md font-bold">Can't Login</h2>
                     <p className="text-sm">Enter the email you used to create account</p>

@@ -42,11 +42,23 @@ export interface IUser {
 }
 
 export interface IOrganization {
-  id: string;
+  id:string;
   name: string;
-  email: string;
-  codeSignUp: boolean;
-  enableSignup: boolean
+  email: string;  
+  logo?: string;
+  image?: string;
+  subscription?: 'free' | string;
+  subscriptionId?: string // references Pricing
+  status?: 'active' | 'blocked' | 'suspended';
+  enableSignup?: boolean;
+  codeSignUp?: boolean;
+  defaultCategory?: string;
+  defaultSubCategory?: string;
+  domain?: string;
+  admin?: string;
+  defaultPassword?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface AltStore {

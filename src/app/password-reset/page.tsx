@@ -10,6 +10,7 @@ import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { usePasswordReset } from "@/modules/password-reset/services/passwordReset";
 import { useAltStore } from "@/lib/zustand/userStore";
+import Image from "next/image";
 
 const PasswordResetPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +32,9 @@ const PasswordResetPage = () => {
             <div className="flex pt-10 sm:items-center justify-center pb-12 w-full">
                 <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                     <div className="flex flex-col items-center justify-center mb-4">
+                        {organization?.logo && 
+                            <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
+                        }
                         <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
                         <h2 className="text-md font-bold">Reset Your Password</h2>
                         {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}

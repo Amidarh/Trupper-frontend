@@ -86,7 +86,7 @@ export const ViewNewsletter = () => {
             if(singleNewsletter.category){
                 setSelectedCategory(categories.find((category) => category.id === singleNewsletter.category.id))
                 getSubCategoryByCategory(singleNewsletter.category.id)
-                setSelectedSubCategory(subCategory?.find((category) => category.id === singleNewsletter.category.id))
+                setSelectedSubCategory(subCategory?.find((category) => category.id === singleNewsletter.subCategory.id))
             }
             setSelectedUserType(newsletterUserType.find(userType => userType.key === singleNewsletter.userType))
         }
@@ -94,7 +94,7 @@ export const ViewNewsletter = () => {
 
     useEffect(() => {
         if(singleNewsletter?.category){
-            setSelectedSubCategory(subCategory?.find((category) => category.id === singleNewsletter?.category.id))
+            setSelectedSubCategory(subCategory?.find((category) => category.id === singleNewsletter?.subCategory.id))
         }
     }, [singleNewsletter?.category])
 

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { PERMISSIONS, MENU_ITEMS, AppSidebarProps, MenuItem } from "../../constants/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 import {
   Sidebar,
   SidebarContent,
@@ -66,7 +67,12 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
   return (
     <Sidebar className={`w-60 ${className || ''}`}>
       <SidebarHeader className="p-0 pl-5">
-        <h1 className="text-xl mt-4">{organization?.name}</h1>
+        {organization?.logo ?
+          <div className="flex flex-row items-center gap-1">
+            <Image src={organization.logo} height={40} width={40} className="rounded-lg mt-2" alt={`${organization.name} logo`}/>
+            <h1 className="text-xl mt-4">{organization?.name}</h1>
+          </div>
+        :<h1 className="text-xl mt-4">{organization?.name}</h1>}
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu className="p-3 flex flex-col gap-4">

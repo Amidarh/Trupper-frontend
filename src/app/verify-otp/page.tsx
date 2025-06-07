@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import Image from "next/image";
 import {
   InputOTP,
   InputOTPGroup,
@@ -43,6 +44,9 @@ const VerifyAccountPage = () => {
       <div className="flex pt-10 sm:items-center justify-center pb-5 min-h-[calc(100vh-80px)]">
         <Card className="max-w-[480px] w-full p-2 max-sm:bg-transparent sm:border sm:p-8">
           <div className="flex flex-col items-center justify-center mb-6">
+            {organization?.logo && 
+                <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
+            }
             <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
             <h3 className="text-md font-semibold">Account Verification</h3>
             <p className="text-sm text-center text-gray-600">

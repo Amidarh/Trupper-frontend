@@ -10,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAltStore } from "@/lib/zustand/userStore";
 import { useKycComplete } from "@/modules/kyc-complete/services";
 import { useEffect } from "react";
+import Image from "next/image";
 
 const KycCompletePage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -38,6 +39,9 @@ const KycCompletePage = () => {
             <div className="flex pt-10 sm:items-center justify-center pb-12 w-full">
                 <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                     <div className="flex flex-col items-center justify-center mb-4">
+                        {organization?.logo && 
+                            <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
+                        }
                         <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
                         <h2 className="text-md font-bold">Account Setup</h2>
                         <p className="text-center text-sm">Complete your credentials below to access Your <b>{organization?.name}</b> Account</p>
