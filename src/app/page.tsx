@@ -1,14 +1,14 @@
 "use client"
 
-import { ModeToggle } from "@/core/commons/modeToggle";
 import { useAltStore } from "@/lib/zustand/userStore";
+import Navbar from "@/modules/landing/components/navbar";
+import Hero from "@/modules/landing/components/hero";
 
-export default function Home() {
-  const { organization } = useAltStore()
+export default function HomePage() {
   return (
-    <div>
-      <h1>This is a test for {organization?.name}</h1>
-      <ModeToggle />
-    </div>
+    <main className="w-full">
+      <Navbar/>
+      <Hero/>
+    </main>
   );
 }
