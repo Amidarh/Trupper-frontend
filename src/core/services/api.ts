@@ -3,9 +3,7 @@ import { useAltStore } from '@/lib/zustand/userStore';
 
 // Create Axios instance
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'development'
-    ? process.env.NEXT_PUBLIC_BASE_API_URL2 || process.env.NEXT_PUBLIC_BASE_API_URL
-    : process.env.PRODUCTION_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_API_URL
 });
 
 // Request interceptor: Attach token and organization
