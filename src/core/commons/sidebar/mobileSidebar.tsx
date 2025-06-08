@@ -15,7 +15,7 @@ import {
     SidebarMenu, 
     SidebarMenuButton
 } from "@/components/ui/sidebar";
-import { 
+import {
     DropdownMenu, 
     DropdownMenuTrigger, 
     DropdownMenuItem, 
@@ -34,8 +34,8 @@ export function MobileSidebar({ userRole, className  }: AppSidebarProps) {
       const { setTheme } = useTheme()
       const user = useAltStore(state => state.user);
       const organization = useAltStore(state => state.organization)
-      
-      const allowedPermissions: string[] = userRole ? Array.from(PERMISSIONS[userRole.toUpperCase() as keyof typeof PERMISSIONS] || []) : [];
+      typeof userRole === 'string'
+      const allowedPermissions: string[] = userRole ? Array.from(PERMISSIONS[(userRole as string) as keyof typeof PERMISSIONS] || []) : [];
        const accessibleMenuItems = MENU_ITEMS
     .filter(item => item.permission !== null)
     .filter(item => allowedPermissions.includes(item.permission as string));

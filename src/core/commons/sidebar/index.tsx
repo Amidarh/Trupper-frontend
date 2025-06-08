@@ -22,8 +22,8 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
   const pathname = usePathname();
   const user = useAltStore(state => state.user);
   const organization = useAltStore(state => state.organization);
-  
-  const allowedPermissions: string[] = userRole ? Array.from(PERMISSIONS[userRole.toUpperCase() as keyof typeof PERMISSIONS] || []) : [];
+  typeof userRole === 'string'
+  const allowedPermissions: string[] = userRole ? Array.from(PERMISSIONS[(userRole as string) as keyof typeof PERMISSIONS] || []) : [];
   const accessibleMenuItems = MENU_ITEMS
     .filter(item => item.permission !== null)
     .filter(item => allowedPermissions.includes(item.permission as string));

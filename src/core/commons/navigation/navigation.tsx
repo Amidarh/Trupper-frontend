@@ -10,6 +10,7 @@ import { MobileSidebar } from "../sidebar/mobileSidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { useAltStore } from "@/lib/zustand/userStore";
+import { UserRole } from "@/core/constants/sidebar";
 
 export default function NavBar ({ title, subHeading }: { title: string, subHeading?: string }) {
     const { setTheme } = useTheme();
@@ -21,7 +22,7 @@ export default function NavBar ({ title, subHeading }: { title: string, subHeadi
         <nav 
             className="h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md"
         >
-            <AppSidebar userRole={(user?.role?.toUpperCase() as any) || null}/>
+            <AppSidebar userRole={(user?.role?.toUpperCase() as UserRole) || null}/>
            <main className="flex justify-between items-center w-full relative backdrop-blur-md max-lg:hidden">
                 <div className="relative -left-2">
                     <h1 className="text-xl font-bold">{title}</h1>
