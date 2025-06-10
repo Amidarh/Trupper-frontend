@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 interface ImageUploadProps {
@@ -9,9 +8,10 @@ interface ImageUploadProps {
   onChange?: (file: File | null) => void;
   error?: string | null;
   disabled?: boolean;
+  placeholder?: string
 }
 
-export default function ImageUpload({ value, onChange, error, disabled }: ImageUploadProps) {
+export default function ImageUpload({ value, onChange, error, disabled, placeholder }: ImageUploadProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,14 +36,11 @@ export default function ImageUpload({ value, onChange, error, disabled }: ImageU
   return (
     <div className="flex flex-col items-start">
       <div className="flex flex-row-reverse gap-2 items-center">
-        <Button
-          type="button"
-          disabled={disabled}
-          variant="outline"
-          onClick={() => fileInputRef.current?.click()}
-        >
-          Choose Image
-        </Button>
+        {!previewUrl && <div
+          className="relative h-24 w-24 border rounded-sm text-center flex justify-center items-center text-muted-foreground cursor-pointer p-2"
+          onClick={() => fileInputRef.current?.click()}>
+            <p>{placeholder ?? "Upload Image"}</p>
+          </div>}
         <input
           type="file"
           ref={fileInputRef}
@@ -53,7 +50,10 @@ export default function ImageUpload({ value, onChange, error, disabled }: ImageU
           disabled={disabled}
         />
         {previewUrl && (
-          <div className="relative h-24 w-24 border rounded-sm">
+          <div 
+            className="relative h-24 w-24 border rounded-sm cursor-pointer"
+            onClick={() => fileInputRef.current?.click()}
+          >
             <Image
               src={previewUrl}
               alt="Selected image preview"

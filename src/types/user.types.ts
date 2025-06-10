@@ -59,6 +59,7 @@ export interface IOrganization {
   defaultPassword?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  isOnboarded: Boolean
 }
 
 export interface AltStore {

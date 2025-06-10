@@ -16,7 +16,7 @@ export function useSignup() {
     const signup = async (data: SignupFormData) => {
         setServerError("");
         try{
-            const res = await api.post("auth/signup", data);
+            const res = await api.post("/auth/signup", data);
             if(res.status === 201){
                 router.push(`/verify-otp?token=${res.data.doc}`)
             }

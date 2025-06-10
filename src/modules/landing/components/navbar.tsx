@@ -15,9 +15,9 @@ export default function Navbar (){
                 <div className="flex flex-row items-center gap-1.5">
                     {organization?.logo && <Image
                         src={organization?.logo || "/default-logo.png"}
-                        height={40}
-                        width={40}
-                        className="size-10 rounded-lg"
+                        height={30}
+                        width={30}
+                        className="size-[30px] rounded-lg"
                         alt={`${organization?.name ?? "Organization"} logo`}
                     />}
                     <h2>{organization?.name}</h2>
