@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,7 @@ import { useAltStore } from "@/lib/zustand/userStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const LoginPage = () => {
+const LoginContent = () => {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const organization = useAltStore(state => state.organization)
@@ -122,4 +122,10 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage;
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginContent/>
+        </Suspense>
+    )
+};

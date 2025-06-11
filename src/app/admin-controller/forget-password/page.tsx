@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ import { useAltStore } from "@/lib/zustand/userStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const ForgottenPasswordPage = () => {
+const ForgottenPasswordContent = () => {
     const { organization } = useAltStore();
     const router = useRouter();
 
@@ -86,4 +86,10 @@ const ForgottenPasswordPage = () => {
     )
 }
 
-export default ForgottenPasswordPage;
+export default function ForgottenPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ForgottenPasswordContent/>
+        </Suspense>
+    )
+};
