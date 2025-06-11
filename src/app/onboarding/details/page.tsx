@@ -22,11 +22,13 @@ import {
 } from "@/components/ui/select";
 import { staffRange, usersRange } from "@/constants/onboarding"
 import { BackButton } from "@/core/commons/navigation/backButton"
+import { useRouter } from "next/navigation"
 
 export default function OnboardingPage () {
+    const router = useRouter();
     const organization = useAltStore(state => state.organization);
-    const [ selectedStaffRange, setSelectedStaffRange ] = useState<string | undefined>(undefined)
-    const [ selectedUsersRange, setSelectedUserRange ] = useState<string | undefined>(undefined)
+    const [ selectedStaffRange, setSelectedStaffRange ] = useState<string | undefined>(undefined);
+    const [ selectedUsersRange, setSelectedUserRange ] = useState<string | undefined>(undefined);
 
     const {
         organizationDetailsForm: {
@@ -38,6 +40,12 @@ export default function OnboardingPage () {
         organizationDetails,
         serverError
     } = useOnboardingService()
+
+    useEffect(() => {
+        if(organization && organization?.isOnboarded){
+            router.push("/login")
+        }
+    }, [organization])
 
 
     return (

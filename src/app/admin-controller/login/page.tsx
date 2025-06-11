@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
-import { useLogin } from "@/modules/login/services/login";
+import { useAdminAuthService } from "@/modules/admin-controller/services";
 import { useAltStore } from "@/lib/zustand/userStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -20,14 +20,14 @@ const LoginPage = () => {
     const organization = useAltStore(state => state.organization)
 
     const {
-        form: {
+        loginForm: {
           register,
           handleSubmit,
           formState: { errors, isSubmitting },
         },
         login,
         serverError,
-      } = useLogin();
+      } = useAdminAuthService();
 
       useEffect(() => {
         if(organization && !organization?.isOnboarded){
@@ -39,14 +39,12 @@ const LoginPage = () => {
         <ScrollArea className="w-full">
             <div className="flex pt-10 sm:items-center justify-center pb-5">
                <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
-                    <div className="flex flex-col items-center justify-center mb-4 cursor-pointer"
-                        onClick={() => router.push("/")}
-                    >
+                    <div className="flex flex-col items-center justify-center mb-4 cursor-pointer">
                         {organization?.logo && 
                             <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
                         }
                         <h2 className="text-2xl font-bold mb-1">{organization?.name}</h2>
-                        <h2 className="text-md font-bold">Login Your Account</h2>
+                        <h2 className="text-md font-bold">Login to manage your organization</h2>
                         {serverError && <p className="text-red-600 text-sm text-center">{serverError}</p>}
                     </div>
                     <form onSubmit={handleSubmit(login)}>
@@ -70,7 +68,7 @@ const LoginPage = () => {
                                     type={showPassword ? "text" : "password"} 
                                     id="password" 
                                     placeholder="Enter your password" 
-                                    className="h-12 pr-10" 
+                                    className="h-12 pr-10"
                                     {...register("password")}
                                 />
                                 <button
@@ -108,13 +106,9 @@ const LoginPage = () => {
                         <div
                             className="flex flex-row justify-center items-center mt-4 gap-4 relative left-4"
                         >
-                            <Link href="/forget-password" className="hover:underline mt-4">
+                            <Link href="/admin-controller/forget-password" className="hover:underline mt-4">
                                 Can't Login
                             </Link>
-                            {organization?.enableSignup && <div className="border h-5 relative top-2"/>}
-                            {organization?.enableSignup && <Link href="/sign-up" className="line mt-4">
-                                Create Account
-                            </Link>}
                         </div>
 
                         <div className="mt-5 flex flex-col justify-center gap-5 items-center">

@@ -39,7 +39,9 @@ const SignUpPage = () => {
         <ScrollArea className="w-full">
             <div className="flex pt-10 sm:items-center justify-center pb-12">
                 <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
-                    <div className="flex flex-col items-center justify-center mb-4">
+                    <div className="flex flex-col items-center justify-center mb-4 cursor-pointer"
+                            onClick={() => router.push("/")}
+                        >
                         {organization?.logo && 
                             <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
                         }

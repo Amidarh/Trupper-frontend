@@ -10,11 +10,19 @@ import { useAltStore } from "@/lib/zustand/userStore"
 import { Button } from "@/components/ui/button"
 import { EyeOff, Eye } from "lucide-react"
 import { useOnboardingService } from "@/modules/onBoarding/services"
+import { useRouter } from "next/navigation"
 
 export default function OnboardingPage () {
+    const router = useRouter();
     const organization = useAltStore(state => state.organization)
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    useEffect(() => {
+        if(organization && organization?.isOnboarded){
+            router.push("/login")
+        }
+    }, [organization])
 
     const {
         accountSetupForm: {

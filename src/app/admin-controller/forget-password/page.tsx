@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { useForgetPassword } from "@/modules/forget-password/services/forgetPassword";
+import { useAdminAuthService } from "@/modules/admin-controller/services";
 import { useAltStore } from "@/lib/zustand/userStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ const ForgottenPasswordPage = () => {
         }
     }, [organization])
     const {
-        form: {
+        forgetPasswordForm: {
             register,
             handleSubmit,
             formState: { errors, isSubmitting }
@@ -30,13 +30,13 @@ const ForgottenPasswordPage = () => {
         forgetPassword,
         serverError,
         successMessage
-    } = useForgetPassword()
+    } = useAdminAuthService()
 
     return (
         <div className="flex pt-10 sm:items-center justify-center h-screen w-full">
             <Card className="w-full max-w-120 p-2 max-sm:bg-transparent border-none sm:border sm:p-8">
                 <div className="flex flex-col items-center justify-center mb-4 cursor-pointer"
-                    onClick={() => router.push("/")}
+                    onClick={() => router.push("/admin-controller/login")}
                 >
                     {organization?.logo && 
                         <Image src={organization.logo} height={40} width={40} className="rounded-lg mb-1" alt={`${organization.name} logo`}/>
@@ -71,7 +71,7 @@ const ForgottenPasswordPage = () => {
                     <div
                         className="flex flex-row justify-center items-center mt-4 gap-4"
                     >
-                        <Link href="/login" className="hover:underline mt-4">
+                        <Link href="/admin-controller/login" className="hover:underline mt-4">
                             return to Login
                         </Link>
                     </div>

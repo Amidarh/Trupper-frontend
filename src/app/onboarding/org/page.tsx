@@ -20,8 +20,10 @@ import {
 } from "@/components/ui/tooltip";
 import { useOnboardingService } from "@/modules/onBoarding/services"
 import { OrganizationSetupFormData } from "@/modules/onBoarding/schema"
+import { useRouter } from "next/navigation"
 
 export default function OnboardingPage () {
+    const router = useRouter();
     const organization = useAltStore(state => state.organization)
 
     const {
@@ -48,6 +50,12 @@ export default function OnboardingPage () {
         })
     }
     }, []);
+
+    useEffect(() => {
+        if(organization && organization?.isOnboarded){
+            router.push("/login")
+        }
+    }, [organization])
 
     const onSubmit = useCallback(
         async (data: OrganizationSetupFormData) => {
@@ -81,7 +89,7 @@ export default function OnboardingPage () {
             <main className=" py-1 w-full flex flex-row gap-2">
                 <section className="w-full lg:max-w-xl">
                    <Progress
-                        value={90}
+                        value={66.33}
                         className="w-full my-2"
                     />
                     <BackButton title="back"/>
@@ -111,7 +119,7 @@ export default function OnboardingPage () {
                             <Input
                                 placeholder="Enter Organization name"
                                 className="mt-2"
-                                // disabled
+                                disabled
                                 { ...register("name") }
                             />
                         </div>

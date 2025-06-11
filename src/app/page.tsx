@@ -11,7 +11,7 @@ export default function HomePage() {
   const router = useRouter()
 
   useEffect(() => {
-      if(!organization?.isOnboarded){
+      if(organization && !organization?.isOnboarded){
           router.push("/onboarding/personnel")
       }
   }, [organization])
