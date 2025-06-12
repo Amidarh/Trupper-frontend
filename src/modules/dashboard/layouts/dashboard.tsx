@@ -1,14 +1,14 @@
 import { StatsCard } from "@/modules/dashboard/components/card/statsCard";
 import { UserSignupChart } from "@/modules/dashboard/components/chart/usersSignupBarChart";
 import { Users } from "lucide-react";
-import { DailyActivityBarChart } from "@/modules/dashboard/components/chart/dailyActiveStatusChart";
-import { UserCategoryChart } from "@/modules/dashboard/components/chart/userCategoryChart";
+// import { DailyActivityBarChart } from "@/modules/dashboard/components/chart/dailyActiveStatusChart";
+// import { UserCategoryChart } from "@/modules/dashboard/components/chart/userCategoryChart";
 import { ExamTable } from "@/modules/dashboard/components/table/examsTable";
 import { UserCategoryTable } from "@/modules/dashboard/components/table/userCategoryTable";
 import { useGetAnalytics } from "../services/dashboard";
 
 export const Dashboard = () => {
-    const { data, error, isLoading } = useGetAnalytics()
+    const { data } = useGetAnalytics()
     console.log({data})
     return (
         <main>
@@ -52,10 +52,10 @@ export const Dashboard = () => {
         <section className="mt-7">
             <UserSignupChart chartData={data?.monthlyUserAnalytics}/>
         </section>
-        <section className="mt-6 grid grid-cols-2 gap-4">
+        {/* <section className="mt-6 grid grid-cols-2 gap-4">
             <DailyActivityBarChart/>
             <UserCategoryChart/>
-        </section>
+        </section> */}
 
         <section className="mt-7 grid grid-cols-2 gap-4">
             <ExamTable/>

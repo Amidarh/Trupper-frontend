@@ -19,8 +19,7 @@ const CreateCategoryPage = () => {
       formState: { errors, isSubmitting },
       setValue,
     },
-    createCategory,
-    serverError,
+    createCategory
   } = useCategoryService();
 
   const [isActive, setIsActive] = useState(false);
@@ -40,7 +39,7 @@ const CreateCategoryPage = () => {
             }
           </div>
           <div>
-            <div className="h-25 w-25 border rounded-sm"></div>
+            {/* <div className="h-25 w-25 border rounded-sm"></div> */}
           </div>
 
           <Separator className="my-5" />

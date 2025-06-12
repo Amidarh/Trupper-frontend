@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 // import { PhoneInput } from "@/core/commons/components/input/phone"
-import { ChevronLeft } from "lucide-react"
+// import { ChevronLeft } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { Progress } from "@/components/ui/progress"
 import ImageUpload from "@/core/commons/components/imageUpload"
@@ -63,7 +63,7 @@ export default function OnboardingPage () {
                     />
                     <BackButton title="back"/>
                     <div className="mt-4 flex flex-col gap-3">
-                        <h1 className="text-3xl font-semibold ">Let's Know your Organization</h1>
+                        <h1 className="text-3xl font-semibold ">Let&apos;s Know your Organization</h1>
                         {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
                         <p>Let’s get to know your organization! A few quick questions now means a smoother, smarter experience for you and your users later.</p>
                     </div> 

@@ -25,7 +25,6 @@ const CreateSubCategoryPage = () => {
             setValue
         },
         createSubCategory,
-        serverError
     } = useSubCategoryService();
     const [isActive, setIsActive] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<CategoryTypes | undefined>(undefined); // Track selected category
@@ -55,7 +54,7 @@ const CreateSubCategoryPage = () => {
                             </Button>
                         </div>
                         <div>
-                            <div className="h-25 w-25 border rounded-sm"></div>
+                            {/* <div className="h-25 w-25 border rounded-sm"></div> */}
                         </div>
 
                         <Separator className="my-5"/>

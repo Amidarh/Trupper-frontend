@@ -114,7 +114,7 @@ const ViewCategoryPage = () => {
         </div>
         <form id="categoryForm" onSubmit={handleSubmit(onSubmit)}>
 
-          <div className="h-25 w-25 border rounded-sm"></div>
+          {/* <div className="h-25 w-25 border rounded-sm"></div> */}
 
           <Separator className="my-5" />
 

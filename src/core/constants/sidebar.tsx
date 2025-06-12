@@ -14,8 +14,6 @@ import {
   BringToFront,
   Sparkles,
   PenSquare,
-  BookAudio,
-  Clock11,
   ChartLine,
   LibrarySquare
 } from "lucide-react";
@@ -25,7 +23,7 @@ export type UserRole = 'SUPER_ADMIN' | 'ADMIN' | 'SUB_ADMIN' | 'USER' | 'user' |
 export interface MenuItem {
   href: string;
   label: string;
-  icon: any;
+  icon: React.ElementType;
   permission: string | null ;
   group: string;
 }

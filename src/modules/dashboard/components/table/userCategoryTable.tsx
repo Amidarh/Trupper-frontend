@@ -7,14 +7,15 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Card, CardHeader } from "@/components/ui/card";
-import { UserCategoryData } from "@/constants/data";
 import { SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
+import { useCategoryService } from "@/modules/categories/services/categoryServices";
 
 export function UserCategoryTable() {
     const router = useRouter()
+    const { data } = useCategoryService()
 
     return (
         <Card className="w-full">
@@ -34,14 +35,14 @@ export function UserCategoryTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {UserCategoryData.map((category) => (
+                    {data?.map((category) => (
                         <TableRow key={category.id}>
                             <TableCell className="font-medium">{category.name}</TableCell>
-                            <TableCell>{category.noUsers}</TableCell>
-                            <TableCell>{getStatusBadge(category.status)}</TableCell>
+                            <TableCell>100</TableCell>
+                            <TableCell>{getStatusBadge(category.status ? "active" : "inactive")}</TableCell>
                             <TableCell>
                                 <button className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                                    onClick={() => router.push("/categories/1")}
+                                    onClick={() => router.push(`/categories/${category.id}`)}
                                 >
                                     view
                                 </button>

@@ -3,6 +3,7 @@ import autoTable from 'jspdf-autotable';
 import Papa from 'papaparse';
 import { toast } from 'sonner';
 import { codeType } from '@/modules/codes/types';
+import { IOrganization } from '@/types/user.types';
 
 // interface Category {
 //     _id: string;
@@ -23,20 +24,20 @@ import { codeType } from '@/modules/codes/types';
 //     createdAt: string | Date;
 // }
 
-interface TableColumn {
-    header: string;
-    dataKey: keyof codeType | string;
-    width?: number;
-}
+// interface TableColumn {
+//     header: string;
+//     dataKey: keyof codeType | string;
+//     width?: number;
+// }
 
-const columns: TableColumn[] = [
-    { header: 'Code', dataKey: 'code' },
-    { header: 'Expires In', dataKey: 'expiresIn' },
-    { header: 'Category', dataKey: 'category.name' },
-    { header: 'SubCategory', dataKey: 'subCategory.name' },
-    { header: 'Status', dataKey: 'status' },
-    // { header: 'Created At', dataKey: 'createdAt' }
-];
+// const columns: TableColumn[] = [
+//     { header: 'Code', dataKey: 'code' },
+//     { header: 'Expires In', dataKey: 'expiresIn' },
+//     { header: 'Category', dataKey: 'category.name' },
+//     { header: 'SubCategory', dataKey: 'subCategory.name' },
+//     { header: 'Status', dataKey: 'status' },
+//     // { header: 'Created At', dataKey: 'createdAt' }
+// ];
 
 const columnMappings: Record<string, string> = {
     code: 'Code',
@@ -60,8 +61,10 @@ const formatDate = (date: string | Date): string => {
 const getValue = (item: codeType, key: string): string => {
     if (key.includes('.')) {
         const [obj, prop] = key.split('.');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (item as any)[obj][prop];
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value = (item as any)[key];
     if (key.toLowerCase().includes('date') || key === 'expiresIn') {
         return formatDate(value);
@@ -69,12 +72,12 @@ const getValue = (item: codeType, key: string): string => {
     return value;
 };
 
-export const handleExport = (format: 'csv' | 'pdf', data: codeType[]): void => {
+export const handleExport = (format: 'csv' | 'pdf', data: codeType[], organization: IOrganization ): void => {
     try {
         if (format === 'csv') {
             exportToCSV(data);
         } else {
-            exportToPDF(data);
+            exportToPDF(data, organization);
         }
         toast.success(`Data exported successfully as ${format.toUpperCase()}`);
     } catch (error) {
@@ -93,7 +96,7 @@ const exportToCSV = (data: codeType[]): void => {
     URL.revokeObjectURL(url);
 };
 
-const exportToPDF = (data: codeType[]): void => {
+const exportToPDF = (data: codeType[], organization: IOrganization): void => {
     const doc = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -102,9 +105,9 @@ const exportToPDF = (data: codeType[]): void => {
     console.log("Export Data",data)
     try {
         // Add logo or text fallback
-        const logoUrl = '/assets/images/logo.png';
-        const logoWidth = 60;
-        const logoHeight = 15;
+        const logoUrl = organization.logo ?? "";
+        const logoWidth = 30;
+        const logoHeight = 30;
         
         const img = new Image();
         img.src = logoUrl;
@@ -113,7 +116,7 @@ const exportToPDF = (data: codeType[]): void => {
             // If image fails to load, use text instead
             doc.setFontSize(20);
             doc.setTextColor(3, 175, 105); // Use brand color
-            doc.text('eglobalsphere', 14, 20);
+            doc.text(organization.name, 14, 20);
             continueWithPDFGeneration();
         };
         
@@ -128,7 +131,7 @@ const exportToPDF = (data: codeType[]): void => {
             // Document title
             doc.setFontSize(16);
             doc.setTextColor(0); // Reset to black
-            doc.text('Codes Export', 14, 40);
+            doc.text(`${organization.name} Authentication Codes`, 14, 40);
 
             // Generate table
             autoTable(doc, {
@@ -163,6 +166,7 @@ const exportToPDF = (data: codeType[]): void => {
             });
 
             // Add footer with page numbers
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const pageCount = (doc as any).internal.getNumberOfPages();
             for (let i = 1; i <= pageCount; i++) {
                 doc.setPage(i);
@@ -175,15 +179,16 @@ const exportToPDF = (data: codeType[]): void => {
             }
 
             // Save the PDF
-            const fileName = `codes_export_${new Date().toISOString().split('T')[0]}.pdf`;
+            const fileName = `${organization.name}_code_export.pdf`;
             doc.save(fileName);
         };
 
     } catch (error) {
+        toast.error((error as Error).message)
         // Fallback if any error occurs during image handling
-        doc.setFontSize(20);
-        doc.setTextColor(3, 175, 105);
-        doc.text('eglobalsphere', 14, 20);
+        // doc.setFontSize(20);
+        // doc.setTextColor(3, 175, 105);
+        // doc.text('eglobalsphere', 14, 20);
         // continueWithPDFGeneration();
     }
 };

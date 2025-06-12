@@ -6,13 +6,15 @@ import { CodeTable } from "../components/tables/codeTable";
 import { GenerateCodeModal } from "../components/modals/generateCode";
 import { useCodeService } from "../services";
 import { handleExport } from "@/utils/exports/codes";
+import { useAltStore } from "@/lib/zustand/userStore";
 
 
 export const Codes = () => {
     const { data } = useCodeService()
+    const organization = useAltStore(state => state.organization)
     const handleExportCodes = async () => {
-        if (data) {
-            await handleExport('pdf', data);
+        if (data && organization) {
+            await handleExport('pdf', data, organization);
         }
     };
     return (

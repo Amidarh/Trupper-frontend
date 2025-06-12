@@ -35,7 +35,6 @@ const ViewSubject = () => {
             handleSubmit,
             formState: { errors, isSubmitting },
             setValue,
-            watch,
             reset
             },
         editSubject,
@@ -47,7 +46,6 @@ const ViewSubject = () => {
     const [ isActive, setIsActive ] = useState(false);
     const [ selectedExam, setSelectedExam ] = useState<ExamType | undefined>(undefined);
     const { id } = useParams<{id:string}>();
-       const status = watch("status");
     
     useEffect(() => {
         if(id){
@@ -68,17 +66,6 @@ const ViewSubject = () => {
         );
         }
     }, [singleSubject, reset])
-
-    const handleEditState = () => {
-        if (edit && singleSubject) {
-          reset({
-            name: singleSubject.name,
-            status: singleSubject.status,
-            exam: singleSubject.exam.id
-          });
-        }
-        setEdit(!edit);
-      };
 
 
     const onSubmit = async (data: SubjectFormData) => {
@@ -106,12 +93,12 @@ const ViewSubject = () => {
                     <div className="flex flex-row gap-2 items-center">
                         {!edit && (
                             <Button type="button" onClick={() => setEdit(true)}>
-                                Edit Subcategory
+                                Edit Subject
                             </Button>
                             )}
                             {edit && (
                             <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting ? "Updating..." : "Update Subcategory"}
+                                {isSubmitting ? "Updating..." : "Update Subject"}
                             </Button>
                             )}
                             {edit ? <Button

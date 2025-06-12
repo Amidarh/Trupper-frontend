@@ -7,13 +7,16 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { Card, CardHeader } from "@/components/ui/card"
-import { ExamData } from "@/constants/data"
 import Link from "next/link"
 import { SquareArrowOutUpRight } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useExamService } from "@/modules/exam/services"
+import { Button } from "@/components/ui/button"
+import { getStatusBadge } from "@/core/commons/components/badge/badge"
 
   export function ExamTable() {
     const router = useRouter()
+    const { data } = useExamService()
     return (
         <Card className="w-full">
             <CardHeader
@@ -25,25 +28,23 @@ import { useRouter } from "next/navigation"
                 </Link>
             </CardHeader>
             <Table>
-                {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>
                 <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead>Full Name</TableHead>
                     <TableHead>Exam Type</TableHead>
                     <TableHead align="right">Actions</TableHead>
-                    {/* <TableHead className="text-right">Amount</TableHead> */}
                 </TableRow>
                 </TableHeader>
                 <TableBody>
-                {ExamData.map((invoice) => (
-                    <TableRow key={invoice.id}>
-                    <TableCell className="font-medium">{invoice.name}</TableCell>
-                    <TableCell>{invoice.fullName}</TableCell>
-                    <TableCell>{invoice.examType}</TableCell>
+                {data?.map((exam) => (
+                    <TableRow key={exam.id}>
+                    <TableCell className="font-medium">{exam.acronym}</TableCell>
+                    <TableCell>{exam.name}</TableCell>
+                    <TableCell>{getStatusBadge(exam.status ? "active" : 'inactive')}</TableCell>
                     <TableCell>
                         <button className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                            onClick={() => router.push('/exams/1')}
+                            onClick={() => router.push(`/exams/${exam.id}`)}
                         >
                             view
                         </button>
@@ -51,8 +52,14 @@ import { useRouter } from "next/navigation"
                     {/* <TableCell className="text-right">{invoice.totalAmount}</TableCell> */}
                     </TableRow>
                 ))}
-                </TableBody>
+                </TableBody> 
             </Table>
+            {data && data?.length <= 0 && <div className="flex items-center justify-center w-full flex-col">
+                    <p>You don&apos;t have any exam</p>
+                    <Button className="mt-10"
+                        onClick={() => router.push('/exams/create')}
+                    >Create an Exam</Button>
+                </div>}
         </Card>
     )
   }

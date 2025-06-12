@@ -12,7 +12,6 @@ import { Trash2 } from "lucide-react";
 import { useCategoryService } from "@/modules/categories/services/categoryServices";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CategoryFormData } from "@/modules/categories/schema/categoriesSchema";
 import { useSubCategoryService } from "@/modules/categories/services/subCategoryServices";
 import {
   Select,
@@ -33,7 +32,6 @@ const ViewSubCategoryPage = () => {
       handleSubmit,
       formState: { errors, isSubmitting },
       setValue,
-      watch,
       reset,
     },
     getSingleSubCategory,
@@ -45,7 +43,6 @@ const ViewSubCategoryPage = () => {
 
   const { id } = useParams<{ id: string }>();
   const [edit, setEdit] = useState(false);
-  const status = watch("status");
   const { data: categories } = useCategoryService();
   const [isActive, setIsActive] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryTypes | undefined>(undefined);
@@ -77,8 +74,8 @@ const ViewSubCategoryPage = () => {
       await editSubCategory({ id, data }); // Use `id` from useParams
       setEdit(false); // Exit edit mode after successful submission
       toast.success("Subcategory updated successfully");
-    } catch (error: any) {
-      toast.error("Failed to update subcategory", error);
+    } catch (error) {
+      toast.error("Failed to update subcategory: " + ((error as Error)?.message || ""));
     }
   };
 
@@ -86,8 +83,8 @@ const ViewSubCategoryPage = () => {
     if (id && confirm("Are you sure you want to delete this subcategory?")) {
       try {
         await deleteSubCategory(id);
-      } catch (error: any) {
-        toast.error("Failed to update subcategory", error);
+      } catch (error) {
+        toast.error("Failed to update subcategory: " + ((error as Error)?.message || ""));
       }
     }
   };

@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserRole } from "../core/constants/sidebar";
+import { CategoryTypes } from "./categories.types";
+import { SubCategoryTypes } from "./categories.types";
+
 export interface IUser {
   id: string;
   firstName?: string;
@@ -21,9 +25,8 @@ export interface IUser {
   massLogin?: boolean;
   noOfLoggedInDevices?: number;
   isVerified?: boolean;
-  settings?: Object;
-  category?: string;
-  subCategory?: string;
+  category?: CategoryTypes;
+  subCategory?: SubCategoryTypes;
   verificationCode?: number;
   lastLogin?: Date;
   photo?: string;
@@ -59,7 +62,7 @@ export interface IOrganization {
   defaultPassword?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  isOnboarded: Boolean
+  isOnboarded: boolean
 }
 
 export interface AltStore {

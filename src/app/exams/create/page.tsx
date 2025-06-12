@@ -23,6 +23,7 @@ import { ExamFormData } from "@/modules/exam/schema";
 import { useExamTypeService } from "@/modules/examTypes/services";
 import { ExamTypes } from "@/types/examTypes.types";
 import ImageUpload from "@/core/commons/components/imageUpload";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const CreateExam = () => {
@@ -43,6 +44,7 @@ const {
   const [selectedExamType, setSelectedExamType] = useState<ExamTypes | undefined>(undefined);
   const [selectedDuration, setSelectedDuration] = useState<string>("0");
   const [isActive, setIsActive] = useState(false);
+  const router = useRouter()
 
   const onSubmit = useCallback(
     async (data: ExamFormData) => {
@@ -66,7 +68,7 @@ const {
         formData.append("image", image);
 
         await createExam(formData);
-      } catch (error: any) {
+      } catch (error) {
         console.error("Failed to create exam:", error);
         toast.error(serverError || "Failed to create exam");
       }
@@ -132,7 +134,7 @@ const {
                   setValue("examType", value, { shouldValidate: true });
                 }}
                 value={selectedExamType?.id || ""}
-                disabled={examTypeLoading || !examTypes?.length}
+                // disabled={examTypeLoading || !examTypes?.length}
               >
                 <SelectTrigger className="w-full h-12">
                   <SelectValue placeholder={examTypeLoading ? "Loading..." : "Select Exam Type"} />
@@ -145,6 +147,13 @@ const {
                       </SelectItem>
                     ))}
                   </SelectGroup>
+                  {examTypes && examTypes.length <= 0 && (
+                    <div className="flex flex-row items-center justify-center py-4">
+                      <Button className="text-xs px-2 py-3 rounded-full h-5"
+                        onClick={() => router.push('/exam-types/create')}
+                      >Create ExamType</Button>
+                    </div>
+                  )}
                 </SelectContent>
               </Select>
               {errors.examType && <p className="text-red-500 text-sm mt-1">{errors.examType.message}</p>}

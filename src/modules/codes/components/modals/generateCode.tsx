@@ -30,7 +30,7 @@ import { useCategoryService } from "@/modules/categories/services/categoryServic
 import { CategoryTypes, SubCategoryTypes } from "@/types/categories.types"
 import { CodeFormData } from "../../schemas";
 import { toast } from "sonner";
-import { handleExport } from "@/utils/exports/codes";
+// import { handleExport } from "@/utils/exports/codes";
 
 export function GenerateCodeModal() {
   const {
@@ -53,13 +53,23 @@ export function GenerateCodeModal() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryTypes | undefined>(undefined)
   const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategoryTypes | undefined>(undefined)
 
+  // const onSubmit = useCallback(
+  //   async (data: CodeFormData, exportCodes: boolean) => {
+  //     try {
+  //       await generateCode(data)
+  //       if(exportCodes && bulkCode.length > 0){
+  //         handleExport("pdf", bulkCode)
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to generate codes:", error)
+  //     }
+  //   },
+  //   [generateCode, bulkCode]
+  // );
   const onSubmit = useCallback(
-    async (data: CodeFormData, exportCodes: boolean) => {
+    async (data: CodeFormData) => {
       try {
         await generateCode(data)
-        if(exportCodes && bulkCode.length > 0){
-          handleExport("pdf", bulkCode)
-        }
       } catch (error) {
         console.error("Failed to generate codes:", error)
       }
@@ -213,13 +223,13 @@ export function GenerateCodeModal() {
           </AlertDialogHeader>
           <div className="mt-5 flex flex-row justify-between">
             <AlertDialogAction
-              onClick={handleSubmit((data) => onSubmit(data, false))}
+              onClick={handleSubmit((data) => onSubmit(data))}
               disabled={isSubmitting || subCategoryLoading || categoriesLoading}
             >
               Generate Code(s)
             </AlertDialogAction>
             <AlertDialogAction
-              onClick={handleSubmit((data) => onSubmit(data, true))}
+              onClick={handleSubmit((data) => onSubmit(data))}
               disabled={isSubmitting || subCategoryLoading || categoriesLoading}
               className="bg-green-800 text-white hover:bg-green-900"
             >

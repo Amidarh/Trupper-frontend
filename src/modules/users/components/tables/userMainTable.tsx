@@ -2,7 +2,10 @@
 
 import * as React from "react"
 
-import { Plus, EllipsisVertical } from "lucide-react";
+import { 
+    // Plus, 
+    EllipsisVertical
+} from "lucide-react";
 import { getStatusBadge } from "@/core/commons/components/badge/badge";
 import { useUserService } from "../../services/user";
 import moment from 'moment'
@@ -18,12 +21,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { useRouter } from "next/navigation";
+import { handleExport } from "@/utils/exports/users";
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
+    // DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
+    // DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
   import {
@@ -31,13 +35,22 @@ import {
     SelectContent,
     SelectItem,
     SelectTrigger,
-    SelectValue,
+    // SelectValue,
   } from "@/components/ui/select"
+import { useAltStore } from "@/lib/zustand/userStore";
 
 
 export const UserTable = () => {
     const router = useRouter();
     const { data } = useUserService()
+    const organization = useAltStore(state => state.organization);
+
+    const handleExportCodes = async () => {
+        if (data && organization) {
+            await handleExport('pdf', data, organization);
+        }
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -54,11 +67,13 @@ export const UserTable = () => {
                     </Select>
 
                     <div className="flex flex-row gap-2 items-center">
-                        <Button variant="outline" className="cursor-pointer h-10">Export Data</Button>
-                        <Button className="cursor-pointer">
+                        <Button variant="outline" className="cursor-pointer h-10"
+                            onClick={handleExportCodes}
+                        >Export Data</Button>
+                        {/* <Button className="cursor-pointer">
                             <Plus className="h-4 w-4" />
                             <p>Add New User</p>
-                        </Button>
+                        </Button> */}
                     </div>
 
                 </div>
@@ -84,7 +99,7 @@ export const UserTable = () => {
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{getStatusBadge(user.isVerified ? "verified" : "not verified")}</TableCell>
                             {/* <TableCell>{user.status}</TableCell> */}
-                            <TableCell>HLC</TableCell>
+                            <TableCell>{user.category?.name}</TableCell>
                             <TableCell>{moment(user.createdAt).format("MMMM D, YYYY")}</TableCell>
                             <TableCell>{moment(user.lastLogin).format('MMMM D, YYYY, h:mm A')}</TableCell>
                             <TableCell>{getStatusBadge(user.isBlocked ? "blocked" : "active")}</TableCell>
