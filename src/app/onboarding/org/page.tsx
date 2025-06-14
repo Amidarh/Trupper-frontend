@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useCallback, useEffect } from "react"
@@ -8,16 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { useAltStore } from "@/lib/zustand/userStore"
 import { Button } from "@/components/ui/button"
-import { CirclePlus } from "lucide-react";
-import { themeColors } from "@/constants/theme";
 import { BackButton } from "@/core/commons/navigation/backButton"
 import { toast } from "sonner"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-    TooltipProvider
-} from "@/components/ui/tooltip";
 import { useOnboardingService } from "@/modules/onBoarding/services"
 import { OrganizationSetupFormData } from "@/modules/onBoarding/schema"
 import { useRouter } from "next/navigation"
@@ -94,7 +87,7 @@ export default function OnboardingPage () {
                     />
                     <BackButton title="back"/>
                     <div className="mt-4 flex flex-col gap-3">
-                        <h1 className="text-3xl font-semibold ">Let's setup your Organization</h1>
+                        <h1 className="text-3xl font-semibold ">Let&apos;s setup your Organization</h1>
                         {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
                         <p>We’ll start by setting up your organization with just the essentials — no long forms, just the key info we need to tailor your experience.</p>
                     </div> 
@@ -123,37 +116,6 @@ export default function OnboardingPage () {
                                 { ...register("name") }
                             />
                         </div>
-
-                        <main className="mt-5">
-                            <div className="mb-4">
-                                <Label htmlFor="email" className="mb-2">
-                                Theme
-                                </Label>
-                                <div className="flex flex-row flex-wrap gap-1.5 mt-2">
-                                {themeColors.map((color, index) => (
-                                    <TooltipProvider>
-                                        <Tooltip>
-                                            <TooltipTrigger>
-                                                <div
-                                                key={index}
-                                                className={`size-8 rounded-sm cursor-pointer ${color.primary}`}
-                                                ></div>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                            <p>{color.name}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
-                                ))}
-                                </div>
-                                <div className="mt-3">
-                                <Button>
-                                    <CirclePlus />
-                                    <p className="ml-2">Add Custom Color</p>
-                                </Button>
-                                </div>
-                            </div>
-                        </main>
 
                         <Button className="mt-5" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading" : "Next"}</Button>
                     </form>
