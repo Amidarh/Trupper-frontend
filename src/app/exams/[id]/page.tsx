@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import DashboardLayout from "@/core/commons/layout/dashboardLayout";
@@ -26,6 +27,8 @@ import { ExamTypes } from "@/types/examTypes.types";
 import ImageUpload from "@/core/commons/components/imageUpload";
 import Image from "next/image";
 import DeleteExamButton from "@/modules/exam/components/modal/delete";
+import { CreateExamCategoryModal } from "@/modules/exam/components/modal/createExamCategory";
+import { ViewExamCategoryModal } from "@/modules/exam/components/modal/viewExamCategory";
 
 const EditExam = () => {
   const {
@@ -39,14 +42,14 @@ const EditExam = () => {
     },
     editExam,
     getSingleExam,
-    singleExamLoading,
     singleExam,
+    getExamCategories,
+    examCategoryList,
   } = useExamService();
 
   const image = watch("image");
   const { id } = useParams<{ id: string }>();
   const [edit, setEdit] = useState(false);
-  const status = watch("status");
   const [isActive, setIsActive] = useState(false);
   const [selectedDuration, setSelectedDuration] = useState<string>("0");
   const [selectedExamType, setSelectedExamType] = useState<ExamTypes | undefined>(undefined);
@@ -66,8 +69,11 @@ const EditExam = () => {
   useEffect(() => {
     if (id) {
       getSingleExam(id);
+      getExamCategories(id)
     }
   }, [id]);
+
+  
 
   useEffect(() => {
     if (singleExam && examTypes) {
@@ -355,6 +361,14 @@ const EditExam = () => {
             {errors.status && <p className="text-red-500 text-sm">{errors.status.message}</p>}
           </div>
         </form>
+        <Separator className="my-5" />
+        <div>
+          <h1 className="text-xl">Exam Categories</h1>
+          <div className="flex flex-row gap-2 items-center py-2">
+              {examCategoryList && examCategoryList.map(category => <ViewExamCategoryModal key={category.id} category={category}/>)}
+              <CreateExamCategoryModal/>
+          </div>
+        </div>
       </Card>
     </DashboardLayout>
   );

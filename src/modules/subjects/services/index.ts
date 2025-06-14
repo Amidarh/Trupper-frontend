@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from "@/core/services/api";
 import { useState } from "react";
 import { subjectSchema, SubjectFormData } from "../schemas";

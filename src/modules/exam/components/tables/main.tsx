@@ -32,6 +32,7 @@ export const ExamsTable = ({ data }: { data: ExamType[] | undefined }) => {
                     <TableRow
                         onClick={() => router.push(`/exams/${exam.id}`)}
                         className="cursor-pointer"
+                        key={exam.id}
                     > 
                         <TableCell>{exam.acronym}</TableCell>
                         <TableCell>{exam.name}</TableCell>
