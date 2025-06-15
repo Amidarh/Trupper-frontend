@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useCallback } from 'react';
@@ -41,7 +42,6 @@ export const CreateQuestion = () => {
 
   const {
     form: {
-      register,
       handleSubmit,
       formState: { errors, isSubmitting },
       setValue,

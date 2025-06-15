@@ -13,6 +13,7 @@ import { useCategoryService } from '@/modules/categories/services/categoryServic
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSubCategoryService } from '@/modules/categories/services/subCategoryServices';
+import { CreateExamModeModal } from '@/modules/categories/components/modal/createExamMode';
 import {
   Select,
   SelectContent,
@@ -24,6 +25,7 @@ import {
 import { CategoryTypes } from '@/types/categories.types';
 import { SubCategoryFormData } from '@/modules/categories/schema/categoriesSchema';
 import { toast } from 'sonner';
+import { ExamModeTable } from '@/modules/categories/components/tables/examMode';
 
 const ViewSubCategoryPage = () => {
   const {
@@ -143,7 +145,7 @@ const ViewSubCategoryPage = () => {
               </div>
             </div>
             <div>
-              <div className='h-24 w-24 border rounded-sm'></div>{' '}
+              {/* <div className='h-24 w-24 border rounded-sm'></div>{' '} */}
               {/* Fixed Tailwind classes */}
             </div>
 
@@ -220,6 +222,16 @@ const ViewSubCategoryPage = () => {
             </div>
             <Separator className='my-5' />
           </form>
+
+          <main className='mt-10'>
+            <div className='flex flex-row justify-between'>
+              <h1 className='text-xl'>Exam Mode</h1>
+              <CreateExamModeModal/>
+            </div>
+            <div className='mt-5'>
+              <ExamModeTable/>
+            </div>
+          </main>
         </CardContent>
       </Card>
     </DashboardLayout>

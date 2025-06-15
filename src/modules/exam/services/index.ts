@@ -159,8 +159,8 @@ export const useExamService = () => {
   };
 
   const getExamCategories = async (id: string | undefined) => {
+    setExamCategoryLoading(true);
     try {
-      setExamCategoryLoading(true);
       const res = await api(`/exam-category/exam/${id}`);
       if (res.status === 200) {
         toast.success(res.data.message);
@@ -179,8 +179,8 @@ export const useExamService = () => {
   };
 
   const getAnExamCategory = async (id: string) => {
+    setExamCategoryLoading(true);
     try {
-      setExamCategoryLoading(true);
       const res = await api(`/exam-category/${id}`);
       if (res.status === 200) {
         // toast.success(res.data.message)
@@ -202,8 +202,8 @@ export const useExamService = () => {
     id: string,
     data: EditExamCategoryFormData
   ) => {
+    setExamCategoryLoading(true);
     try {
-      setExamCategoryLoading(true);
       const res = await api.patch(`/exam-category/${id}`, data);
       if (res.status === 200) {
         toast.success(res.data.message);
@@ -222,8 +222,8 @@ export const useExamService = () => {
   };
 
   const removeExamCategory = async (id: string) => {
+    setExamCategoryLoading(true);
     try {
-      setExamCategoryLoading(true);
       const res = await api.post(`/exam-category/remove/${id}`, data);
       if (res.status === 200) {
         toast.success(res.data.message);

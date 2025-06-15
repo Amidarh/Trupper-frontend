@@ -15,3 +15,11 @@ export const subCategorySchema = z.object({
 });
 
 export type SubCategoryFormData = z.infer<typeof subCategorySchema>;
+
+export const examModeSchema = z.object({
+  name: z.string().min(1, { message: "Enter exam mode name" }),
+  exam: z.string().min(1, { message: "Select an exam" }),
+  subCategory: z.string().optional(),
+});
+
+export type ExamModeFormData = z.infer<typeof examModeSchema>;

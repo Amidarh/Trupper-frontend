@@ -44,7 +44,7 @@ export const ExamsTable = ({ data }: { data: ExamType[] | undefined }) => {
             <TableCell>{exam.acronym}</TableCell>
             <TableCell>{exam.name}</TableCell>
             <TableCell>{exam.duration} Minutes</TableCell>
-            <TableCell>O'Level</TableCell>
+            <TableCell>{exam.examType.name}</TableCell>
             <TableCell>{exam.noOfQuestions} Question</TableCell>
             <TableCell>
               {getStatusBadge(exam.status ? 'active' : 'inactive')}

@@ -45,6 +45,7 @@ const EditExam = () => {
     singleExam,
     getExamCategories,
     examCategoryList,
+    examCategoryLoading
   } = useExamService();
 
   const image = watch('image');
@@ -410,10 +411,10 @@ const EditExam = () => {
         <div>
           <h1 className='text-xl'>Exam Categories</h1>
           <div className='flex flex-row gap-2 items-center py-2'>
-            {examCategoryList &&
+            {!examCategoryLoading ? examCategoryList &&
               examCategoryList.map((category) => (
                 <ViewExamCategoryModal key={category.id} category={category} />
-              ))}
+              )) : <p>loading...</p>}
             <CreateExamCategoryModal />
           </div>
         </div>
