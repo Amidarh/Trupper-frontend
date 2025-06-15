@@ -1,25 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import ImageUpload from "@/core/commons/components/imageUpload";
-import { useAltStore } from "@/lib/zustand/userStore";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import ImageUpload from '@/core/commons/components/imageUpload';
+import { useAltStore } from '@/lib/zustand/userStore';
+import { toast } from 'sonner';
 // import { CirclePlus } from "lucide-react";
 // import { themeColors } from "@/constants/theme";
-// import { 
+// import {
 //     Tooltip,
 //     TooltipContent,
 //     TooltipTrigger,
 //     TooltipProvider
 // } from "@/components/ui/tooltip";
-import { useEffect, useState } from "react";
-import { useCustomizationService } from "../../services";
-import { PreferenceFormData } from "../../schema";
+import { useEffect, useState } from 'react';
+import { useCustomizationService } from '../../services';
+import { PreferenceFormData } from '../../schema';
 
 export const Preference = () => {
-  const organization = useAltStore(state => state.organization);
-  const [ edit, setEdit ] = useState(false);
+  const organization = useAltStore((state) => state.organization);
+  const [edit, setEdit] = useState(false);
 
   const {
     preferenceForm: {
@@ -28,76 +28,86 @@ export const Preference = () => {
       formState: { errors, isSubmitting },
       setValue,
       watch,
-      reset
+      reset,
     },
-    updatePreference
+    updatePreference,
   } = useCustomizationService();
 
-  const image = watch("image");
+  const image = watch('image');
 
-  const handleEditState = ()  => {
-    setEdit(!edit)
-  }
+  const handleEditState = () => {
+    setEdit(!edit);
+  };
 
   useEffect(() => {
-    if(organization) {
+    if (organization) {
       reset({
         name: organization.name,
-        image: organization.logo ?? "",
-      })
+        image: organization.logo ?? '',
+      });
     }
   }, []);
 
   const onSubmit = async (data: PreferenceFormData) => {
-    try{
+    try {
       const formData = new FormData();
-       formData.append("name", data.name);
-       formData.append("image", image ?? "");
-      await updatePreference(formData)
-    } catch(error: any){
-      toast.error(error?.message || "Failed to update Exam");
+      formData.append('name', data.name);
+      formData.append('image', image ?? '');
+      await updatePreference(formData);
+    } catch (error: any) {
+      toast.error(error?.message || 'Failed to update Exam');
     }
-  }
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-row items-center justify-between">
-        <h1>Customize</h1>
-        {edit ? (
-          <div className="flex flex-row gap-1.5">
-            <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save"}</Button>
-            <Button variant="destructive" onClick={handleEditState} disabled={isSubmitting}>Cancel</Button>
-          </div>
-        ) : <Button onClick={handleEditState}>Edit</Button>}
-      </div>
-        <Separator  className="mt-4"/>
-        <div className="mt-5">
+        <div className='flex flex-row items-center justify-between'>
+          <h1>Customize</h1>
+          {edit ? (
+            <div className='flex flex-row gap-1.5'>
+              <Button type='submit' disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : 'Save'}
+              </Button>
+              <Button
+                variant='destructive'
+                onClick={handleEditState}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            <Button onClick={handleEditState}>Edit</Button>
+          )}
+        </div>
+        <Separator className='mt-4' />
+        <div className='mt-5'>
           <ImageUpload
             value={image}
             onChange={(file) => {
               if (file) {
-                console.log(file)
-                setValue("image", file, { shouldValidate: true });
+                console.log(file);
+                setValue('image', file, { shouldValidate: true });
               }
             }}
             disabled={!edit}
             error={errors.image?.message as string}
           />
         </div>
-        <Separator className="my-5" />
-        <main className="grid sm:grid-cols-2 grid-cols-1 gap-5">
-          <div className="mb-4">
-            <Label className="mb-2">
-              Organization Name
-            </Label>
+        <Separator className='my-5' />
+        <main className='grid sm:grid-cols-2 grid-cols-1 gap-5'>
+          <div className='mb-4'>
+            <Label className='mb-2'>Organization Name</Label>
             <Input
-              placeholder="Enter Organization Name"
-              className="h-12"
+              placeholder='Enter Organization Name'
+              className='h-12'
               disabled={!edit || isSubmitting}
-              { ...register("name") }
+              {...register('name')}
             />
-             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+            {errors.name && (
+              <p className='text-red-500 text-sm mt-1'>{errors.name.message}</p>
+            )}
           </div>
         </main>
         {/* <main className="grid grid-cols-2 gap-5 mt-3">

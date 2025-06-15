@@ -1,5 +1,5 @@
-import { SubjectType } from "./subject.types";
-import { ExamType } from "./exam.types";
+import { SubjectType } from './subject.types';
+import { ExamType } from './exam.types';
 
 export interface Option {
   a: string;
@@ -32,10 +32,9 @@ export interface QuestionType {
   createdAt?: Date;
   updatedAt?: Date;
   exam: ExamType;
-  id: string
+  id: string;
 }
 
-
 export interface QuestionDataType {
-    doc: QuestionType[]
+  doc: QuestionType[];
 }

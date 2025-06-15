@@ -1,5 +1,5 @@
 export interface loginTypes {
-    email: string;
-    password: string;
-    acceptTerms?: boolean;
+  email: string;
+  password: string;
+  acceptTerms?: boolean;
 }

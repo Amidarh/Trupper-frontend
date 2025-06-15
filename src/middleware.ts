@@ -8,10 +8,55 @@ const VALID_ROLES = {
 } as const;
 
 const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
-  USER: ['my-dashboard', 'my-exams', 'mock-exams', 'ai-examiner', 'my-performance', 'my-notifications', 'my-profile', 'result'],
-  ADMIN: ['dashboard', 'users', 'categories', 'sub-admins', 'exam-type', 'exams', 'subjects', 'questions', 'notifications', 'newsletters', 'codes', 'customization', 'subscription'],
-  SUB_ADMIN: ['dashboard', 'users', 'categories', 'exam-type', 'exams', 'subjects', 'questions'],
-  SUPER_ADMIN: ['dashboard', 'users', 'categories', 'sub-admins', 'exam-type', 'exams', 'subjects', 'questions', 'notifications', 'newsletters', 'codes', 'customization', 'subscription'],
+  USER: [
+    'my-dashboard',
+    'my-exams',
+    'mock-exams',
+    'ai-examiner',
+    'my-performance',
+    'my-notifications',
+    'my-profile',
+    'result',
+  ],
+  ADMIN: [
+    'dashboard',
+    'users',
+    'categories',
+    'sub-admins',
+    'exam-type',
+    'exams',
+    'subjects',
+    'questions',
+    'notifications',
+    'newsletters',
+    'codes',
+    'customization',
+    'subscription',
+  ],
+  SUB_ADMIN: [
+    'dashboard',
+    'users',
+    'categories',
+    'exam-type',
+    'exams',
+    'subjects',
+    'questions',
+  ],
+  SUPER_ADMIN: [
+    'dashboard',
+    'users',
+    'categories',
+    'sub-admins',
+    'exam-type',
+    'exams',
+    'subjects',
+    'questions',
+    'notifications',
+    'newsletters',
+    'codes',
+    'customization',
+    'subscription',
+  ],
 };
 
 const ROUTE_PERMISSIONS: Record<string, string> = {
@@ -39,16 +84,27 @@ const ROUTE_PERMISSIONS: Record<string, string> = {
 };
 
 const AUTH_ROUTES = [
-  '/login', '/register', '/sign-up', '/2fa', '/forget-password',
-  '/password-reset', '/verify-otp', '/password', '/',
+  '/login',
+  '/register',
+  '/sign-up',
+  '/2fa',
+  '/forget-password',
+  '/password-reset',
+  '/verify-otp',
+  '/password',
+  '/',
 ];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const userRole = request.cookies.get('role')?.value as keyof typeof VALID_ROLES | undefined;
+  const userRole = request.cookies.get('role')?.value as
+    | keyof typeof VALID_ROLES
+    | undefined;
 
   // Redirect unauthenticated users on protected routes
-  const isProtected = Object.keys(ROUTE_PERMISSIONS).some(route => pathname.startsWith(route));
+  const isProtected = Object.keys(ROUTE_PERMISSIONS).some((route) =>
+    pathname.startsWith(route)
+  );
   if (!userRole || !VALID_ROLES[userRole]) {
     console.log(userRole);
     if (isProtected) {
@@ -67,7 +123,9 @@ export function middleware(request: NextRequest) {
   }
 
   // Authorization check
-  const permissionKey = Object.keys(ROUTE_PERMISSIONS).find(route => pathname.startsWith(route));
+  const permissionKey = Object.keys(ROUTE_PERMISSIONS).find((route) =>
+    pathname.startsWith(route)
+  );
   if (permissionKey) {
     const requiredPermission = ROUTE_PERMISSIONS[permissionKey];
     const allowedPermissions = PERMISSIONS[userRole] || [];

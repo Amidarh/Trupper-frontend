@@ -8,8 +8,8 @@ import moment from 'moment';
 
 // Define column mappings for both CSV and PDF exports
 const columns: Record<string, string> = {
-  'firstName': 'First Name',
-  'lastName': 'Last Name',
+  firstName: 'First Name',
+  lastName: 'Last Name',
   'category.name': 'Category',
   'subCategory.name': 'Sub Category',
   createdAt: 'Joined Date',
@@ -56,15 +56,17 @@ export const handleExport = (
     }
   } catch (error) {
     console.error('Export error:', error);
-    toast.error(error instanceof Error ? error.message : 'Error exporting data');
+    toast.error(
+      error instanceof Error ? error.message : 'Error exporting data'
+    );
   }
 };
 
 const exportToCSV = (data: IUser[]): void => {
   // Map data to include user-friendly headers and formatted values
-  const csvData = data.map(item => {
+  const csvData = data.map((item) => {
     const result: Record<string, string> = {};
-    Object.keys(columns).forEach(key => {
+    Object.keys(columns).forEach((key) => {
       result[columns[key]] = getValue(item, key);
     });
     return result;
@@ -108,7 +110,9 @@ const exportToPDF = (data: IUser[], organization: IOrganization): void => {
       // Generate table
       autoTable(doc, {
         head: [Object.values(columns)],
-        body: data.map(item => Object.keys(columns).map(key => getValue(item, key))),
+        body: data.map((item) =>
+          Object.keys(columns).map((key) => getValue(item, key))
+        ),
         startY: 50,
         theme: 'grid',
         styles: {
@@ -140,7 +144,11 @@ const exportToPDF = (data: IUser[], organization: IOrganization): void => {
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
         doc.setFontSize(8);
-        doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 20, doc.internal.pageSize.height - 10);
+        doc.text(
+          `Page ${i} of ${pageCount}`,
+          doc.internal.pageSize.width - 20,
+          doc.internal.pageSize.height - 10
+        );
       }
 
       const fileName = `${organization.name}_users.pdf`;
@@ -148,7 +156,9 @@ const exportToPDF = (data: IUser[], organization: IOrganization): void => {
       toast.success('Data exported successfully as PDF');
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error(error instanceof Error ? error.message : 'Error generating PDF');
+      toast.error(
+        error instanceof Error ? error.message : 'Error generating PDF'
+      );
     }
   };
 

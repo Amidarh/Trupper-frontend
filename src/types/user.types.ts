@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserRole } from "../core/constants/sidebar";
-import { CategoryTypes } from "./categories.types";
-import { SubCategoryTypes } from "./categories.types";
+import { UserRole } from '../core/constants/sidebar';
+import { CategoryTypes } from './categories.types';
+import { SubCategoryTypes } from './categories.types';
 
 export interface IUser {
   id: string;
@@ -18,7 +18,7 @@ export interface IUser {
   mobile?: string;
   school?: string;
   isBlocked?: boolean;
-  role: 'user' | 'admin' | 'sub-admin' | UserRole | null |  undefined;
+  role: 'user' | 'admin' | 'sub-admin' | UserRole | null | undefined;
   twoFactor?: boolean;
   twoFactorVerificationCode?: number;
   queryId?: string;
@@ -37,7 +37,7 @@ export interface IUser {
   theme?: 'light' | 'dark' | 'system';
   signUpMode?: 'normal' | 'google';
   loginTokens?: string[];
-  loginDetails?: any[]; 
+  loginDetails?: any[];
   cbt?: string;
   status: 'active' | 'inactive';
   createdAt?: Date;
@@ -45,13 +45,13 @@ export interface IUser {
 }
 
 export interface IOrganization {
-  id:string;
+  id: string;
   name: string;
-  email: string;  
+  email: string;
   logo?: string;
   image?: string;
   subscription?: 'free' | string;
-  subscriptionId?: string // references Pricing
+  subscriptionId?: string; // references Pricing
   status?: 'active' | 'blocked' | 'suspended';
   enableSignup?: boolean;
   codeSignUp?: boolean;
@@ -62,7 +62,7 @@ export interface IOrganization {
   defaultPassword?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  isOnboarded: boolean
+  isOnboarded: boolean;
 }
 
 export interface AltStore {
@@ -73,7 +73,7 @@ export interface AltStore {
   clearUser: () => void;
   setOrganization: (organization: IOrganization) => void;
   setOrganizationId: (id: string) => void;
-  isAuthenticated: boolean,
+  isAuthenticated: boolean;
   logout: () => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
 }

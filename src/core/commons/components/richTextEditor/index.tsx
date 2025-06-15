@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import "./index.scss";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import React, { useEffect } from "react";
-import MenuBar from "./menu-bar";
-import TextAlign from "@tiptap/extension-text-align";
-import Highlight from "@tiptap/extension-highlight";
-import { cn } from "@/lib/utils";
+import './index.scss';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import React, { useEffect } from 'react';
+import MenuBar from './menu-bar';
+import TextAlign from '@tiptap/extension-text-align';
+import Highlight from '@tiptap/extension-highlight';
+import { cn } from '@/lib/utils';
 
 interface RichTextEditorProps {
   content: string;
@@ -27,24 +27,25 @@ export default function RichTextEditor({
       StarterKit.configure({
         bulletList: {
           HTMLAttributes: {
-            class: "list-disc ml-3",
+            class: 'list-disc ml-3',
           },
         },
         orderedList: {
           HTMLAttributes: {
-            class: "list-decimal ml-3",
+            class: 'list-decimal ml-3',
           },
         },
       }),
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ['heading', 'paragraph'],
       }),
       Highlight,
     ],
     content: content, // Initial HTML content
     editorProps: {
       attributes: {
-        class: "min-h-[156px] dark:bg-transparent bg-white outline-none rounded-md py-2 px-3",
+        class:
+          'min-h-[156px] dark:bg-transparent bg-white outline-none rounded-md py-2 px-3',
       },
     },
     onUpdate: ({ editor }) => {
@@ -60,9 +61,13 @@ export default function RichTextEditor({
   }, [editor, content]);
 
   return (
-    <div className="border rounded-md">
+    <div className='border rounded-md'>
       <MenuBar editor={editor} />
-      <EditorContent className={className} editor={editor} disabled={disabled} />
+      <EditorContent
+        className={className}
+        editor={editor}
+        disabled={disabled}
+      />
     </div>
   );
 }

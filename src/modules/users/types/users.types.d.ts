@@ -1,5 +1,5 @@
-import { IUser } from "@/types/user.types";
+import { IUser } from '@/types/user.types';
 
 export interface usersData {
-    doc: IUser[]
+  doc: IUser[];
 }

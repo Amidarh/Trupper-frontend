@@ -1,14 +1,14 @@
-import api from "@/core/services/api";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { loginSchema, LoginFormData } from "../schema/loginSchema";
-import { useAltStore } from "@/lib/zustand/userStore";
+import api from '@/core/services/api';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { loginSchema, LoginFormData } from '../schema/loginSchema';
+import { useAltStore } from '@/lib/zustand/userStore';
 
 export function useLogin() {
   const router = useRouter();
-  const [serverError, setServerError] = useState("");
+  const [serverError, setServerError] = useState('');
   const setUser = useAltStore((state) => state.setUser);
 
   const form = useForm<LoginFormData>({
@@ -16,10 +16,10 @@ export function useLogin() {
   });
 
   const login = async (data: LoginFormData) => {
-    setServerError("");
+    setServerError('');
 
     try {
-      const res = await api.post("/auth/login", data);
+      const res = await api.post('/auth/login', data);
 
       if (res.status === 203) {
         router.push(`/2fa?token=${res.data.doc.token}`);
@@ -27,26 +27,33 @@ export function useLogin() {
       }
 
       const { user, token, refreshToken } = res.data.doc;
-      const isProduction = process.env.NODE_ENV === "production";
-      const secureFlag = isProduction ? "; secure" : "";
-      const orgName = (user.organization?.name || "default").replace(/\s+/g, "_");
+      const isProduction = process.env.NODE_ENV === 'production';
+      const secureFlag = isProduction ? '; secure' : '';
+      const orgName = (user.organization?.name || 'default').replace(
+        /\s+/g,
+        '_'
+      );
 
       // Set cookies client-side
       document.cookie = `${orgName}-accessToken=${token}; path=/${secureFlag}; SameSite=Strict`;
       document.cookie = `${orgName}-refreshToken=${refreshToken}; path=/${secureFlag}; SameSite=Strict`;
       document.cookie = `role=${user.role.toUpperCase()}; path=/${secureFlag}; SameSite=Strict`;
-      document.cookie = `organizationId=${user.organization?.id || "default"}; path=/${secureFlag}; SameSite=Strict`;
+      document.cookie = `organizationId=${user.organization?.id || 'default'}; path=/${secureFlag}; SameSite=Strict`;
 
       // Debug cookies
-      console.log("Cookies after setting:", document.cookie);
+      console.log('Cookies after setting:', document.cookie);
 
       // Update Zustand store
       setUser(user);
 
-      if (user.role === "USER" || user.role === "user") {
-        router.push("/my-dashboard");
-      } else if (user.role === "ADMIN" || user.role === "SUB_ADMIN" || user.role === "admin") {
-        router.push("/dashboard");
+      if (user.role === 'USER' || user.role === 'user') {
+        router.push('/my-dashboard');
+      } else if (
+        user.role === 'ADMIN' ||
+        user.role === 'SUB_ADMIN' ||
+        user.role === 'admin'
+      ) {
+        router.push('/dashboard');
       }
     } catch (err: any) {
       console.error(err);
@@ -54,7 +61,7 @@ export function useLogin() {
         router.push(`/verify-otp?token=${err.response.data.doc.token}`);
       } else {
         const errorMessage =
-          err.response?.data?.message || err.message || "Login failed";
+          err.response?.data?.message || err.message || 'Login failed';
         setServerError(errorMessage);
       }
     }

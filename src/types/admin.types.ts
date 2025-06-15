@@ -1,5 +1,5 @@
-import { UserRole } from "../core/constants/sidebar";
-import { IUser } from "./user.types";
+import { UserRole } from '../core/constants/sidebar';
+import { IUser } from './user.types';
 
 export interface IAdmin {
   id: string;
@@ -33,8 +33,8 @@ export interface IAdmin {
   passwordResetToken?: string;
   verificationToken?: string;
   createdAt: Date;
-};
+}
 
 export interface AdminData {
-  doc: IAdmin[]
+  doc: IAdmin[];
 }

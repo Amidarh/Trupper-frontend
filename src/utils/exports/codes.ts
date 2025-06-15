@@ -40,155 +40,162 @@ import { IOrganization } from '@/types/user.types';
 // ];
 
 const columnMappings: Record<string, string> = {
-    code: 'Code',
-    expiresIn: 'Expires In',
-    'category.name': 'Category',
-    'subCategory.name': 'SubCategory',
-    status: 'Status',
-    // createdAt: 'Created At',
+  code: 'Code',
+  expiresIn: 'Expires In',
+  'category.name': 'Category',
+  'subCategory.name': 'SubCategory',
+  status: 'Status',
+  // createdAt: 'Created At',
 };
 
 const formatDate = (date: string | Date): string => {
-    return new Date(date).toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
+  return new Date(date).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 };
 
 const getValue = (item: codeType, key: string): string => {
-    if (key.includes('.')) {
-        const [obj, prop] = key.split('.');
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (item as any)[obj][prop];
-    }
+  if (key.includes('.')) {
+    const [obj, prop] = key.split('.');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const value = (item as any)[key];
-    if (key.toLowerCase().includes('date') || key === 'expiresIn') {
-        return formatDate(value);
-    }
-    return value;
+    return (item as any)[obj][prop];
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const value = (item as any)[key];
+  if (key.toLowerCase().includes('date') || key === 'expiresIn') {
+    return formatDate(value);
+  }
+  return value;
 };
 
-export const handleExport = (format: 'csv' | 'pdf', data: codeType[], organization: IOrganization ): void => {
-    try {
-        if (format === 'csv') {
-            exportToCSV(data);
-        } else {
-            exportToPDF(data, organization);
-        }
-        toast.success(`Data exported successfully as ${format.toUpperCase()}`);
-    } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'Error exporting data');
+export const handleExport = (
+  format: 'csv' | 'pdf',
+  data: codeType[],
+  organization: IOrganization
+): void => {
+  try {
+    if (format === 'csv') {
+      exportToCSV(data);
+    } else {
+      exportToPDF(data, organization);
     }
+    toast.success(`Data exported successfully as ${format.toUpperCase()}`);
+  } catch (error) {
+    toast.error(
+      error instanceof Error ? error.message : 'Error exporting data'
+    );
+  }
 };
 
 const exportToCSV = (data: codeType[]): void => {
-    const csvData = Papa.unparse(data);
-    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `codes_export_${new Date().toISOString().split('T')[0]}.csv`);
-    link.click();
-    URL.revokeObjectURL(url);
+  const csvData = Papa.unparse(data);
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute(
+    'download',
+    `codes_export_${new Date().toISOString().split('T')[0]}.csv`
+  );
+  link.click();
+  URL.revokeObjectURL(url);
 };
 
 const exportToPDF = (data: codeType[], organization: IOrganization): void => {
-    const doc = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-    });
-    console.log("Export Data",data)
-    try {
-        // Add logo or text fallback
-        const logoUrl = organization.logo ?? "";
-        const logoWidth = 30;
-        const logoHeight = 30;
-        
-        const img = new Image();
-        img.src = logoUrl;
-        
-        img.onerror = () => {
-            // If image fails to load, use text instead
-            doc.setFontSize(20);
-            doc.setTextColor(3, 175, 105); // Use brand color
-            doc.text(organization.name, 14, 20);
-            continueWithPDFGeneration();
-        };
-        
-        img.onload = () => {
-            // If image loads successfully, add it
-            doc.addImage(logoUrl, 'PNG', 10, 10, logoWidth, logoHeight);
-            continueWithPDFGeneration();
-        };
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4',
+  });
+  console.log('Export Data', data);
+  try {
+    // Add logo or text fallback
+    const logoUrl = organization.logo ?? '';
+    const logoWidth = 30;
+    const logoHeight = 30;
 
-        // Separate function to continue PDF generation
-        const continueWithPDFGeneration = () => {
-            // Document title
-            doc.setFontSize(16);
-            doc.setTextColor(0); // Reset to black
-            doc.text(`${organization.name} Authentication Codes`, 14, 40);
+    const img = new Image();
+    img.src = logoUrl;
 
-            // Generate table
-            autoTable(doc, {
-                head: [Object.values(columnMappings)],
-                body: data.map(item => 
-                    Object.keys(columnMappings).map(key => getValue(item, key))
-                ),
-                startY: 50,
-                theme: 'grid',
-                styles: {
-                    fontSize: 8,
-                    cellPadding: 2,
-                    overflow: 'linebreak',
-                    minCellHeight: 10
-                },
-                columnStyles: {
-                    0: { cellWidth: 30 }, // ID
-                    1: { cellWidth: 40 }, // Code
-                    2: { cellWidth: 40 }, // Type
-                    3: { cellWidth: 40 }, // Expires In
-                    4: { cellWidth: 40 }, // Category
+    img.onerror = () => {
+      // If image fails to load, use text instead
+      doc.setFontSize(20);
+      doc.setTextColor(3, 175, 105); // Use brand color
+      doc.text(organization.name, 14, 20);
+      continueWithPDFGeneration();
+    };
 
-                },
-                headStyles: {
-                    fillColor: [3, 175, 105],
-                    textColor: 255,
-                    fontStyle: 'bold'
-                },
-                alternateRowStyles: {
-                    fillColor: [245, 245, 245]
-                }
-            });
+    img.onload = () => {
+      // If image loads successfully, add it
+      doc.addImage(logoUrl, 'PNG', 10, 10, logoWidth, logoHeight);
+      continueWithPDFGeneration();
+    };
 
-            // Add footer with page numbers
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const pageCount = (doc as any).internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.text(
-                    `Page ${i} of ${pageCount}`,
-                    doc.internal.pageSize.width - 20,
-                    doc.internal.pageSize.height - 10
-                );
-            }
+    // Separate function to continue PDF generation
+    const continueWithPDFGeneration = () => {
+      // Document title
+      doc.setFontSize(16);
+      doc.setTextColor(0); // Reset to black
+      doc.text(`${organization.name} Authentication Codes`, 14, 40);
 
-            // Save the PDF
-            const fileName = `${organization.name}_code_export.pdf`;
-            doc.save(fileName);
-        };
+      // Generate table
+      autoTable(doc, {
+        head: [Object.values(columnMappings)],
+        body: data.map((item) =>
+          Object.keys(columnMappings).map((key) => getValue(item, key))
+        ),
+        startY: 50,
+        theme: 'grid',
+        styles: {
+          fontSize: 8,
+          cellPadding: 2,
+          overflow: 'linebreak',
+          minCellHeight: 10,
+        },
+        columnStyles: {
+          0: { cellWidth: 30 }, // ID
+          1: { cellWidth: 40 }, // Code
+          2: { cellWidth: 40 }, // Type
+          3: { cellWidth: 40 }, // Expires In
+          4: { cellWidth: 40 }, // Category
+        },
+        headStyles: {
+          fillColor: [3, 175, 105],
+          textColor: 255,
+          fontStyle: 'bold',
+        },
+        alternateRowStyles: {
+          fillColor: [245, 245, 245],
+        },
+      });
 
-    } catch (error) {
-        toast.error((error as Error).message)
-        // Fallback if any error occurs during image handling
-        // doc.setFontSize(20);
-        // doc.setTextColor(3, 175, 105);
-        // doc.text('eglobalsphere', 14, 20);
-        // continueWithPDFGeneration();
-    }
+      // Add footer with page numbers
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const pageCount = (doc as any).internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.text(
+          `Page ${i} of ${pageCount}`,
+          doc.internal.pageSize.width - 20,
+          doc.internal.pageSize.height - 10
+        );
+      }
+
+      // Save the PDF
+      const fileName = `${organization.name}_code_export.pdf`;
+      doc.save(fileName);
+    };
+  } catch (error) {
+    toast.error((error as Error).message);
+    // Fallback if any error occurs during image handling
+    // doc.setFontSize(20);
+    // doc.setTextColor(3, 175, 105);
+    // doc.text('eglobalsphere', 14, 20);
+    // continueWithPDFGeneration();
+  }
 };

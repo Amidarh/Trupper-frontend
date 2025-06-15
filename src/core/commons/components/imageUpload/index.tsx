@@ -8,10 +8,16 @@ interface ImageUploadProps {
   onChange?: (file: File | null) => void;
   error?: string | null;
   disabled?: boolean;
-  placeholder?: string
+  placeholder?: string;
 }
 
-export default function ImageUpload({ value, onChange, error, disabled, placeholder }: ImageUploadProps) {
+export default function ImageUpload({
+  value,
+  onChange,
+  error,
+  disabled,
+  placeholder,
+}: ImageUploadProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -34,38 +40,41 @@ export default function ImageUpload({ value, onChange, error, disabled, placehol
   };
 
   return (
-    <div className="flex flex-col items-start">
-      <div className="flex flex-row-reverse gap-2 items-center">
-        {!previewUrl && <div
-          className="relative h-24 w-24 border rounded-sm text-center flex justify-center items-center text-muted-foreground cursor-pointer p-2"
-          onClick={() => fileInputRef.current?.click()}>
-            <p>{placeholder ?? "Upload Image"}</p>
-          </div>}
+    <div className='flex flex-col items-start'>
+      <div className='flex flex-row-reverse gap-2 items-center'>
+        {!previewUrl && (
+          <div
+            className='relative h-24 w-24 border rounded-sm text-center flex justify-center items-center text-muted-foreground cursor-pointer p-2'
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <p>{placeholder ?? 'Upload Image'}</p>
+          </div>
+        )}
         <input
-          type="file"
+          type='file'
           ref={fileInputRef}
           onChange={handleFileChange}
-          accept="image/jpeg,image/png"
-          className="hidden"
+          accept='image/jpeg,image/png'
+          className='hidden'
           disabled={disabled}
         />
         {previewUrl && (
-          <div 
-            className="relative h-24 w-24 border rounded-sm cursor-pointer"
+          <div
+            className='relative h-24 w-24 border rounded-sm cursor-pointer'
             onClick={() => fileInputRef.current?.click()}
           >
             <Image
               src={previewUrl}
-              alt="Selected image preview"
+              alt='Selected image preview'
               width={96}
               height={96}
-              className="object-contain rounded-md h-24 w-24"
+              className='object-contain rounded-md h-24 w-24'
               priority
             />
           </div>
         )}
       </div>
-      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      {error && <p className='text-red-500 text-sm text-center'>{error}</p>}
     </div>
   );
 }

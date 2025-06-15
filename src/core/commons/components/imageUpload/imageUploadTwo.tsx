@@ -12,7 +12,12 @@ interface ImageUploadProps {
   disabled?: boolean;
 }
 
-export default function ImageUploadTwo({ value, onChange, error, disabled }: ImageUploadProps) {
+export default function ImageUploadTwo({
+  value,
+  onChange,
+  error,
+  disabled,
+}: ImageUploadProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,40 +40,40 @@ export default function ImageUploadTwo({ value, onChange, error, disabled }: Ima
   };
 
   return (
-    <div className="flex flex-col items-start w-full">
-        <div className='flex flex-row items-center gap-2 mb-2'>
-            <Label className="mb-2">Image</Label>
-            <Button
-                type="button"
-                disabled={disabled}
-                variant="outline"
-                onClick={() => fileInputRef.current?.click()}
-                >
-                Choose Image
-                </Button>
-        </div>
+    <div className='flex flex-col items-start w-full'>
+      <div className='flex flex-row items-center gap-2 mb-2'>
+        <Label className='mb-2'>Image</Label>
+        <Button
+          type='button'
+          disabled={disabled}
+          variant='outline'
+          onClick={() => fileInputRef.current?.click()}
+        >
+          Choose Image
+        </Button>
+      </div>
 
-      <div className="flex flex-row-reverse gap-2 items-center w-full">
+      <div className='flex flex-row-reverse gap-2 items-center w-full'>
         <input
-          type="file"
+          type='file'
           ref={fileInputRef}
           onChange={handleFileChange}
-          accept="image/jpeg,image/png"
-          className="hidden"
+          accept='image/jpeg,image/png'
+          className='hidden'
         />
         {previewUrl && (
-          <div className="relative h-[185px] w-full border rounded-sm overflow-hidden">
+          <div className='relative h-[185px] w-full border rounded-sm overflow-hidden'>
             <Image
               src={previewUrl}
-              alt="Selected image preview"
-              className="object-contain rounded-md"
+              alt='Selected image preview'
+              className='object-contain rounded-md'
               fill
               priority
             />
           </div>
         )}
       </div>
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      {error && <p className='text-red-500 text-sm mt-2'>{error}</p>}
     </div>
   );
 }
