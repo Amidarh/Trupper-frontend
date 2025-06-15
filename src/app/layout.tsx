@@ -13,8 +13,8 @@ import ClientWrapper from "@/core/commons/layout/clientLayout";
 // })
 
 export const metadata: Metadata = {
-  title: "Trupper: The smart Examiner management system",
-  description: "Trupper: The smart Examiner management system",
+  title: "Trupper: The smart Exam management system",
+  description: "Trupper: The smart Exam management system",
 };
 
 export default function RootLayout({
