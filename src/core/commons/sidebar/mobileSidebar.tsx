@@ -5,7 +5,7 @@ import { Menu, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   SidebarMenuItem,
   SidebarMenu,
@@ -138,7 +138,11 @@ export function MobileSidebar({ userRole, className }: AppSidebarProps) {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar className='cursor-pointer'>
-                    <AvatarFallback>SA</AvatarFallback>
+                    {user?.photo ? <AvatarImage src={user?.photo} alt='User' /> :
+                    <AvatarFallback> 
+                      {user?.firstName?.slice(0, 1)}
+                      {user?.lastName?.slice(0, 1)}
+                    </AvatarFallback>}
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>

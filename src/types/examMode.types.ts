@@ -12,7 +12,9 @@ export interface examModeType{
     category: CategoryTypes,
     updatedAt: Date,
     status: boolean,
-    id:string
+    id:string,
+    validFrom: Date,
+    validTill: Date
 };
 
 export interface examModeDataType {

@@ -23,3 +23,11 @@ export const examModeSchema = z.object({
 });
 
 export type ExamModeFormData = z.infer<typeof examModeSchema>;
+
+export const updateExamModeSchema = z.object({
+  status: z.boolean(),
+  validFrom: z.date({ required_error: "Select the start time and date" }),
+  validTill: z.date({ required_error: "Select the end time and date" })
+});
+
+export type UpdateExamModeFormData = z.infer<typeof updateExamModeSchema>;

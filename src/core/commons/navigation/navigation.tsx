@@ -16,10 +16,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useTheme } from 'next-themes';
 import { MobileSidebar } from '../sidebar/mobileSidebar';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAltStore } from '@/lib/zustand/userStore';
 import { UserRole } from '@/core/constants/sidebar';
+import { useRouter } from 'next/navigation';
 
 export default function NavBar({
   title,
@@ -31,7 +31,8 @@ export default function NavBar({
   const { setTheme } = useTheme();
   const user = useAltStore((state) => state.user);
   const organization = useAltStore((state) => state.organization);
-  const { isLoading, logout, serverError } = useLogout();
+  const { isLoading, logout } = useLogout();
+  const router = useRouter()
 
   return (
     <nav className='h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md'>
@@ -48,10 +49,12 @@ export default function NavBar({
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar className='cursor-pointer'>
-                <AvatarFallback>
+                {user?.photo ? 
+                  <AvatarImage src={user.photo}/>
+                  : <AvatarFallback>
                   {user?.firstName?.slice(0, 1)}
                   {user?.lastName?.slice(0, 1)}
-                </AvatarFallback>
+                </AvatarFallback>}
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -63,8 +66,11 @@ export default function NavBar({
                   </span>
                 </div>
               </div>
-              <DropdownMenuItem>
-                <Link href='/dashboard/settings'>Setting</Link>
+              <DropdownMenuItem
+                onClick={() => router.push('/dashboard/settings')}
+                className='cursor-pointer'
+              >
+                Setting
               </DropdownMenuItem>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
@@ -101,7 +107,7 @@ export default function NavBar({
 
       {/* Mobile Navigation */}
       <main className='w-full justify-between items-center flex flex-row lg:hidden'>
-        <MobileSidebar userRole={(user?.role?.toUpperCase as any) || null} />
+        <MobileSidebar userRole={(user?.role) || null} />
         <h1 className='text-xl'>{organization?.name}</h1>
         <Bell className='cursor-pointer' />
       </main>

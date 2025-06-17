@@ -6,8 +6,8 @@ import { SecuritySettings } from '../components/tabs/security';
 export const Settings = () => {
   return (
     <Card className='px-4'>
-      <Tabs>
-        <TabsList>
+      <Tabs defaultValue='security'>
+        <TabsList defaultValue="preference">
           <TabsTrigger value='preference'>Preference</TabsTrigger>
           <TabsTrigger value='security'>Security</TabsTrigger>
         </TabsList>

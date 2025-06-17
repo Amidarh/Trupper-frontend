@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
 import { useState } from 'react';
 import { examModeType, examModeDataType } from '@/types/examMode.types';
-import { ExamModeFormData, examModeSchema } from '../schema/categoriesSchema';
+import { ExamModeFormData, examModeSchema, UpdateExamModeFormData, updateExamModeSchema } from '../schema/categoriesSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -24,6 +24,10 @@ export const useExamModeService = () => {
     const form = useForm<ExamModeFormData>({
         resolver: zodResolver(examModeSchema),
     });
+
+    const updateForm = useForm<UpdateExamModeFormData>({
+        resolver: zodResolver(updateExamModeSchema),
+    })
 
     const createExamMode = async (data: ExamModeFormData) => {
         try{
@@ -83,11 +87,34 @@ export const useExamModeService = () => {
         }
     }
 
-    const deleteSingleExamMode = async (id: string) => {
+    const enableExamMode = async (id: string, data: UpdateExamModeFormData) => {
+        setSingleExamModeLoading(true)
+        try{
+        const res = await api.patch(`/exam-mode/${id}`, data);
+            if (res.status === 201) {
+                mutate()
+                setSingleExamMode(res.data.doc);
+                toast.success(res.data.message)
+            };
+            mutate()
+            setSingleExamModeLoading(false)
+        } catch(error: any){
+            setSingleExamModeLoading(false)
+            const errorMessage =
+                error.response?.data?.message ||
+                error.message ||
+                'Could not create exam mode';
+            setServerError(errorMessage);
+            toast.error(errorMessage);
+        }
+    }
+
+    const deleteSingleExamMode = async (id: string | undefined) => {
         setSingleExamModeLoading(true)
         try{
             const res = await api.delete(`/exam-mode/${id}`);
             if (res.status === 200) {
+                mutate()
                 toast.success(res.data.message)
             }
             setSingleExamModeLoading(false)
@@ -114,6 +141,8 @@ export const useExamModeService = () => {
         singleExamModeLoading,
         getSingleExamMode,
         deleteSingleExamMode,
-        updateSingleExamMode
+        updateSingleExamMode,
+        updateForm,
+        enableExamMode
     }
 }
