@@ -72,7 +72,7 @@ export const CategoryOneTable = ({
         </TableHeader>
         <TableBody>
           {categories?.map((category) => (
-            <TableRow className='cursor-pointer'>
+            <TableRow className='cursor-pointer' key={category.id}>
               <TableCell
                 onClick={() => router.push(`/categories/${category.id}`)}
               >
@@ -110,7 +110,7 @@ export const CategoryOneTable = ({
                       <p>Open</p>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      className='cursor-pointer bg-red-800'
+                      className='bg-destructive cursor-pointer hover:bg-destructive/90'
                       onClick={() => deleteCategory(category.id)}
                     >
                       <Trash2 />

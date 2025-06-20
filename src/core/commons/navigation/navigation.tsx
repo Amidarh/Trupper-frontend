@@ -32,7 +32,7 @@ export default function NavBar({
   const user = useAltStore((state) => state.user);
   const organization = useAltStore((state) => state.organization);
   const { isLoading, logout } = useLogout();
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <nav className='h-14 border-b flex justify-between items-center w-full px-4 fixed z-1 backdrop-blur-md'>
@@ -49,12 +49,14 @@ export default function NavBar({
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar className='cursor-pointer'>
-                {user?.photo ? 
-                  <AvatarImage src={user.photo}/>
-                  : <AvatarFallback>
-                  {user?.firstName?.slice(0, 1)}
-                  {user?.lastName?.slice(0, 1)}
-                </AvatarFallback>}
+                {user?.photo ? (
+                  <AvatarImage src={user.photo} />
+                ) : (
+                  <AvatarFallback>
+                    {user?.firstName?.slice(0, 1)}
+                    {user?.lastName?.slice(0, 1)}
+                  </AvatarFallback>
+                )}
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
@@ -107,7 +109,7 @@ export default function NavBar({
 
       {/* Mobile Navigation */}
       <main className='w-full justify-between items-center flex flex-row lg:hidden'>
-        <MobileSidebar userRole={(user?.role) || null} />
+        <MobileSidebar userRole={user?.role || null} />
         <h1 className='text-xl'>{organization?.name}</h1>
         <Bell className='cursor-pointer' />
       </main>

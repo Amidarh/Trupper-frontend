@@ -53,7 +53,7 @@ export default function DeleteExamButton({ id }: { id: string | undefined }) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className='bg-red-800 hover:bg-red-700'
+              className='bg-destructive hover:bg-destructive/90'
               onClick={handleDelete}
             >
               Delete

@@ -128,11 +128,14 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
       <SidebarFooter className='border-t p-4'>
         <div className='flex items-center gap-2'>
           <Avatar className='h-8 w-8'>
-            {user?.photo ? <AvatarImage src={user?.photo} alt='User' /> :
-            <AvatarFallback> 
-              {user?.firstName?.slice(0, 1)}
-              {user?.lastName?.slice(0, 1)}
-            </AvatarFallback>}
+            {user?.photo ? (
+              <AvatarImage src={user?.photo} alt='User' />
+            ) : (
+              <AvatarFallback>
+                {user?.firstName?.slice(0, 1)}
+                {user?.lastName?.slice(0, 1)}
+              </AvatarFallback>
+            )}
           </Avatar>
           <div className='flex flex-col text-sm'>
             <span className='font-medium'>{user?.firstName}</span>

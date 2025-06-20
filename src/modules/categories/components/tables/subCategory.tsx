@@ -111,7 +111,7 @@ export const SubCategoryTable = ({
                       <p>Open</p>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      className='cursor-pointer bg-red-800'
+                      className='cursor-pointer bg-destructive hover:bg-destructive/90'
                       onClick={() => deleteSubCategory(subCategory.id)}
                     >
                       <Trash2 />

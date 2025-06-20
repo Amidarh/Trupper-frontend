@@ -138,11 +138,14 @@ export function MobileSidebar({ userRole, className }: AppSidebarProps) {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Avatar className='cursor-pointer'>
-                    {user?.photo ? <AvatarImage src={user?.photo} alt='User' /> :
-                    <AvatarFallback> 
-                      {user?.firstName?.slice(0, 1)}
-                      {user?.lastName?.slice(0, 1)}
-                    </AvatarFallback>}
+                    {user?.photo ? (
+                      <AvatarImage src={user?.photo} alt='User' />
+                    ) : (
+                      <AvatarFallback>
+                        {user?.firstName?.slice(0, 1)}
+                        {user?.lastName?.slice(0, 1)}
+                      </AvatarFallback>
+                    )}
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>

@@ -21,7 +21,12 @@ interface CustomModalProps {
   validTill: Date | null | undefined; // Allow null/undefined
 }
 
-export function EnableExamModeModal({ id, validFrom, validTill, status }: CustomModalProps) {
+export function EnableExamModeModal({
+  id,
+  validFrom,
+  validTill,
+  status,
+}: CustomModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -38,8 +43,14 @@ export function EnableExamModeModal({ id, validFrom, validTill, status }: Custom
     if (id) {
       reset({
         status,
-        validFrom: validFrom instanceof Date && !isNaN(validFrom.getTime()) ? validFrom : undefined,
-        validTill: validTill instanceof Date && !isNaN(validTill.getTime()) ? validTill : undefined,
+        validFrom:
+          validFrom instanceof Date && !isNaN(validFrom.getTime())
+            ? validFrom
+            : undefined,
+        validTill:
+          validTill instanceof Date && !isNaN(validTill.getTime())
+            ? validTill
+            : undefined,
       });
     }
   }, [id, status, validFrom, validTill, reset]);
@@ -60,62 +71,90 @@ export function EnableExamModeModal({ id, validFrom, validTill, status }: Custom
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className='flex items-center space-x-2'>
       <Switch
-        id="modal-toggle"
+        id='modal-toggle'
         checked={status}
         onCheckedChange={() => setIsOpen(true)}
       />
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader className="flex justify-center items-center text-center">
-            <DialogTitle className="flex justify-center items-center text-center flex-col gap-3">
+        <DialogContent className='sm:max-w-[425px]'>
+          <DialogHeader className='flex justify-center items-center text-center'>
+            <DialogTitle className='flex justify-center items-center text-center flex-col gap-3'>
               <Info size={50} />
-              <h2 className="text-center">Info</h2>
+              <h2 className='text-center'>Info</h2>
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription className="text-center">
-            Note: by setting this exam mode active all users under this sub category will be mandated to take part in this exam and therefore will lose access to their dashboard until they partake in this exam or the validity of this exam elapses.
+          <DialogDescription className='text-center'>
+            Note: by setting this exam mode active all users under this sub
+            category will be mandated to take part in this exam and therefore
+            will lose access to their dashboard until they partake in this exam
+            or the validity of this exam elapses.
           </DialogDescription>
-          <form className="flex flex-col gap-5" onSubmit={handleSubmit(handleEnableExamMode)}>
+          <form
+            className='flex flex-col gap-5'
+            onSubmit={handleSubmit(handleEnableExamMode)}
+          >
             <div>
               <Calendar24
-                label="Valid From"
-                value={isValidDate(validFrom) ? validFrom.toISOString() : undefined}
+                label='Valid From'
+                value={
+                  isValidDate(validFrom) ? validFrom.toISOString() : undefined
+                }
                 onchange={(isoString?: string) => {
                   if (isoString) {
-                    setValue('validFrom', new Date(isoString), { shouldValidate: true });
+                    setValue('validFrom', new Date(isoString), {
+                      shouldValidate: true,
+                    });
                   }
                 }}
               />
               {errors.validFrom && (
-                <p className="text-red-500 text-sm">{errors.validFrom.message}</p>
+                <p className='text-red-500 text-sm'>
+                  {errors.validFrom.message}
+                </p>
               )}
             </div>
             <div>
               <Calendar24
-                label="Valid Till"
-                value={isValidDate(validTill) ? validTill.toISOString() : undefined}
+                label='Valid Till'
+                value={
+                  isValidDate(validTill) ? validTill.toISOString() : undefined
+                }
                 onchange={(isoString?: string) => {
                   if (isoString) {
-                    setValue('validTill', new Date(isoString), { shouldValidate: true });
+                    setValue('validTill', new Date(isoString), {
+                      shouldValidate: true,
+                    });
                   }
                 }}
               />
               {errors.validTill && (
-                <p className="text-red-500 text-sm">{errors.validTill.message}</p>
+                <p className='text-red-500 text-sm'>
+                  {errors.validTill.message}
+                </p>
               )}
             </div>
-            <div className="flex flex-row justify-between items-center">
-              <Button variant="destructive" type="button" onClick={() => setIsOpen(false)}>
+            <div className='flex flex-row justify-between items-center'>
+              <Button
+                variant='destructive'
+                type='button'
+                onClick={() => setIsOpen(false)}
+              >
                 Cancel
               </Button>
               <Button
                 disabled={isSubmitting}
-                type="submit"
-                onClick={() => setValue('status', !status, { shouldValidate: true })}
+                type='submit'
+                onClick={() =>
+                  setValue('status', !status, { shouldValidate: true })
+                }
               >
-                {isSubmitting ? 'Loading...' : status ? 'Set inactive' : 'Set active'}
+                {isSubmitting
+                  ? 'Loading...'
+                  : status
+                    ? 'Set inactive'
+                    : 'Set active'}
               </Button>
             </div>
           </form>

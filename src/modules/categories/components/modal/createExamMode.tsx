@@ -29,36 +29,36 @@ import { useParams } from 'next/navigation';
 export function CreateExamModeModal() {
   const [selectedExam, setSelectedExam] = useState<ExamType>();
   const { data: exams, isLoading: examLoading } = useExamService();
-  const { id } = useParams<{ id: string }>()
+  const { id } = useParams<{ id: string }>();
 
   const {
-    form: { 
+    form: {
       register,
       formState: { isSubmitting, errors },
       handleSubmit,
-      setValue
-     },
-     createExamMode
-  } = useExamModeService()
+      setValue,
+    },
+    createExamMode,
+  } = useExamModeService();
 
   const onSubmit = async (data: ExamModeFormData) => {
-    try{
+    try {
       createExamMode({
         name: data.name,
         exam: data.exam,
-        subCategory: id
-      })
-    }catch (error) {
+        subCategory: id,
+      });
+    } catch (error) {
       toast.error((error as Error).message || 'Failed to update Exam');
     }
-  }
+  };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button>
-            <Plus/>
-            <p>Create Exam Mode</p>
+          <Plus />
+          <p>Create Exam Mode</p>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -77,7 +77,7 @@ export function CreateExamModeModal() {
               id='categoryName'
               placeholder='Enter Category Name'
               className='h-12'
-              { ...register('name') }
+              {...register('name')}
             />
             {errors.name && (
               <p className='text-red-500 text-sm'>{errors.name.message}</p>
@@ -115,7 +115,7 @@ export function CreateExamModeModal() {
           </div>
           <div className='flex items-end justify-end'>
             <Button type='submit' disabled={isSubmitting}>
-              { isSubmitting ? "Saving..." : "Save"}
+              {isSubmitting ? 'Saving...' : 'Save'}
             </Button>
           </div>
         </form>

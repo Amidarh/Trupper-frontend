@@ -16,6 +16,7 @@ import {
   PenSquare,
   ChartLine,
   LibrarySquare,
+  GalleryVerticalEnd
 } from 'lucide-react';
 
 export type UserRole =
@@ -52,6 +53,7 @@ export const PERMISSIONS = {
     'exam',
     'categories',
     'codes',
+    'results'
   ],
   ADMIN: [
     'dashboard',
@@ -69,8 +71,12 @@ export const PERMISSIONS = {
     'exam',
     'categories',
     'codes',
+    'results'
   ],
-  SUB_ADMIN: ['dashboard', 'schools'],
+  SUB_ADMIN: [
+    'dashboard',
+    'schools'
+  ],
   USER: [
     'my-dashboard',
     'ai-examiner',
@@ -148,6 +154,13 @@ export const MENU_ITEMS: MenuItem[] = [
     label: 'Questions',
     icon: FileText,
     permission: 'questions',
+    group: 'exams',
+  },
+  {
+    href: '/user-results',
+    label: 'Results',
+    icon: GalleryVerticalEnd,
+    permission: 'results',
     group: 'exams',
   },
   // Communication Group

@@ -57,7 +57,7 @@ export default function DeleteSubjectButton({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className='bg-red-800 hover:bg-red-700'
+              className='bg-destructive hover:bg-destructive/90'
               onClick={handleDelete}
             >
               Delete

@@ -226,10 +226,10 @@ const ViewSubCategoryPage = () => {
           <main className='mt-10'>
             <div className='flex flex-row justify-between'>
               <h1 className='text-xl'>Exam Mode</h1>
-              <CreateExamModeModal/>
+              <CreateExamModeModal />
             </div>
             <div className='mt-5'>
-              <ExamModeTable/>
+              <ExamModeTable />
             </div>
           </main>
         </CardContent>

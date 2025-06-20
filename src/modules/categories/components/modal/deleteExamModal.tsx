@@ -15,7 +15,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { useExamModeService } from '../../services/examModeService';
 
-export default function DeleteExamModeModeButton({ id }: { id: string | undefined }) {
+export default function DeleteExamModeModeButton({
+  id,
+}: {
+  id: string | undefined;
+}) {
   const { deleteSingleExamMode, singleExamMode } = useExamModeService();
 
   const handleDelete = useCallback(async () => {
@@ -24,7 +28,7 @@ export default function DeleteExamModeModeButton({ id }: { id: string | undefine
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive' className='cursor-pointer h-7 text-xs' >
+        <Button variant='destructive' className='cursor-pointer h-7 text-xs'>
           Delete
         </Button>
       </AlertDialogTrigger>

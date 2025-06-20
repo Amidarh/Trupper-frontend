@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BackButton } from '@/core/commons/navigation/backButton';
@@ -24,7 +25,7 @@ import { useQuestionService } from '../services';
 
 import { toast } from 'sonner';
 import { questionTypeData, questionObject } from '@/constants/question';
-import { QuestionFormData } from '../schemas';
+// import { QuestionFormData } from '../schemas';
 import { ExamType } from '@/types/exam.types';
 import { SubjectType } from '@/types/subject.types';
 import { useParams } from 'next/navigation';
@@ -53,8 +54,8 @@ export const ViewQuestion = () => {
     },
     editQuestion,
     singleQuestion,
-    singleQuestionLoading,
-    deleteQuestion,
+    // singleQuestionLoading,
+    // deleteQuestion,
     getQuestion,
   } = useQuestionService();
 

@@ -58,7 +58,7 @@ export default function DeleteCodeModal({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className='bg-red-600 hover:bg-red-700'
+              className='bg-destructive hover:bg-destructive/90'
               onClick={handleDelete}
             >
               Delete

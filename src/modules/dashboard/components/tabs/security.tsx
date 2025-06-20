@@ -14,7 +14,7 @@ export const SecuritySettings = () => {
       formState: { errors, isSubmitting },
       handleSubmit,
       register,
-    }
+    },
   } = useSettingService();
 
   // const handleUpdateSecurity = useCallback(async(data: UserSecurityFormData) => {
@@ -30,7 +30,9 @@ export const SecuritySettings = () => {
       <form onSubmit={handleSubmit(updateSecurity)}>
         <div className='flex flex-row items-center justify-between'>
           <h1 className='font-bold'>Update Your password</h1>
-          <Button disabled={isSubmitting} type='submit'>{isSubmitting ? "updating..." : "Update"}</Button>
+          <Button disabled={isSubmitting} type='submit'>
+            {isSubmitting ? 'updating...' : 'Update'}
+          </Button>
         </div>
         <Separator className='my-5' />
         <main className='grid sm:grid-cols-2 grid-cols-1 gap-5'>
@@ -43,7 +45,7 @@ export const SecuritySettings = () => {
               id='email'
               placeholder='Enter Old Password'
               className='h-12'
-              {...register("currentPassword")}
+              {...register('currentPassword')}
             />
             {errors.currentPassword && (
               <p className='text-red-500 text-sm mt-1'>
@@ -62,7 +64,7 @@ export const SecuritySettings = () => {
               id='fullName'
               placeholder='Enter new Password'
               className='h-12'
-              {...register("newPassword")}
+              {...register('newPassword')}
             />
             {errors.newPassword && (
               <p className='text-red-500 text-sm mt-1'>
@@ -79,7 +81,7 @@ export const SecuritySettings = () => {
               id='email'
               placeholder='Confirm New Password'
               className='h-12'
-              {...register("confirmPassword")}
+              {...register('confirmPassword')}
             />
             {errors.currentPassword && (
               <p className='text-red-500 text-sm mt-1'>

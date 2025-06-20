@@ -21,11 +21,9 @@ export const examSchema = z.object({
   maxNoOfSubjects: z
     .number()
     .min(1, { message: 'set the number of subject to be select at once' }),
-  minNoOfSubjects: z
-    .number()
-    .min(1, {
-      message: 'set the minimum number of subject to be select at once',
-    }),
+  minNoOfSubjects: z.number().min(1, {
+    message: 'set the minimum number of subject to be select at once',
+  }),
   subjectToBeWritten: z
     .number()
     .min(1, { message: 'set the number of subjects to be written at once' }),
@@ -33,12 +31,10 @@ export const examSchema = z.object({
     .number()
     .min(1, { message: 'set the number of questions to be written at one' }),
   status: z.boolean().optional(),
-  scoreMultiplier: z
-    .number()
-    .min(1, {
-      message:
-        'Enter the number that will multiply the numnber of questions to get user score ',
-    }),
+  scoreMultiplier: z.number().min(1, {
+    message:
+      'Enter the number that will multiply the numnber of questions to get user score ',
+  }),
 });
 
 export type ExamFormData = z.infer<typeof examSchema>;

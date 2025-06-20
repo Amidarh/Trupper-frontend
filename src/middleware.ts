@@ -32,6 +32,8 @@ const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
     'codes',
     'customization',
     'subscription',
+    "roles",
+    "results"
   ],
   SUB_ADMIN: [
     'dashboard',
@@ -80,7 +82,7 @@ const ROUTE_PERMISSIONS: Record<string, string> = {
   '/my-performance': 'my-performance',
   '/my-notifications': 'my-notifications',
   '/my-profile': 'my-profile',
-  '/result': 'result',
+  '/user-result': 'results',
 };
 
 const AUTH_ROUTES = [

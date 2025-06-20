@@ -120,7 +120,7 @@ export function CreateExamCategoryModal() {
           </div>
           <div className='flex items-end justify-end'>
             <Button type='submit' disabled={isSubmitting}>
-              {isSubmitting ? "Creating..." : "Create Category"}
+              {isSubmitting ? 'Creating...' : 'Create Category'}
             </Button>
           </div>
         </form>

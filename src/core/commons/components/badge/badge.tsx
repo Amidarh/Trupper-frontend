@@ -40,7 +40,13 @@ export const getStatusBadge = (status: string) => {
     case 'used':
       return (
         <span className={`${baseClass} bg-yellow-200 text-yellow-800`}>
-          used
+          Used
+        </span>
+      );
+    case 'running':
+      return (
+        <span className={`${baseClass} bg-yellow-200 text-yellow-800`}>
+          Running
         </span>
       );
     case 'sent':
@@ -51,6 +57,12 @@ export const getStatusBadge = (status: string) => {
       return (
         <span className={`${baseClass} bg-green-200 text-green-800`}>
           Approved
+        </span>
+      );
+    case 'completed':
+      return (
+        <span className={`${baseClass} bg-green-200 text-green-800`}>
+          Completed
         </span>
       );
     case 'blocked':

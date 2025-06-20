@@ -11,54 +11,56 @@ import { toast } from 'sonner';
 import { useAltStore } from '@/lib/zustand/userStore';
 
 export const PreferenceSettings = () => {
-  const user = useAltStore(state => state.user)
+  const user = useAltStore((state) => state.user);
   const {
-    updateForm:{
+    updateForm: {
       formState: { isSubmitting, errors },
       setValue,
       register,
       handleSubmit,
       watch,
-      reset
+      reset,
     },
     serverError,
-    updatePreference
+    updatePreference,
   } = useSettingService();
   const image = watch('image');
 
   const handleUpdate = useCallback(
-    async(data: UserPreferenceFormData) => {
-      try{
+    async (data: UserPreferenceFormData) => {
+      try {
         const formData = new FormData();
         if (data?.image) {
-          formData.append("image", data.image);
+          formData.append('image', data.image);
         }
-        formData.append("firstName", data.firstName);
-        formData.append("lastName", data.lastName);
+        formData.append('firstName', data.firstName);
+        formData.append('lastName', data.lastName);
 
-        await updatePreference(formData)
-      } catch(error: any){
+        await updatePreference(formData);
+      } catch (error: any) {
         console.error('Failed to create exam:', error);
         toast.error(serverError || 'Failed to create exam');
       }
     },
-    [ serverError ]
+    [serverError]
   );
 
   useEffect(() => {
-    console.log(user?.photo)
+    console.log(user?.photo);
     reset({
       firstName: user?.firstName,
       lastName: user?.lastName,
-      image: user?.photo ?? ''
-    })
-  }, [user, useAltStore])
+      image: user?.photo ?? '',
+    });
+  }, [user, useAltStore]);
 
   return (
     <form onSubmit={handleSubmit(handleUpdate)}>
       <div className='flex flex-row items-center justify-between'>
         <h1 className='font-bold'>Preference Settings</h1>
-        <Button type='submit' disabled={isSubmitting}>{isSubmitting ? "updating..." : "Edit"}</Button>
+        <Button type='submit' disabled={isSubmitting}>
+          {isSubmitting ? 'updating...' : 'Edit'}
+        </Button>
       </div>
       <Separator className='my-4' />
       <main>
@@ -82,7 +84,7 @@ export const PreferenceSettings = () => {
             id='email'
             placeholder='Enter First Name'
             className='h-12'
-            { ...register("firstName") }
+            {...register('firstName')}
           />
           {errors.firstName && (
             <p className='text-red-500 text-sm mt-1'>
@@ -99,7 +101,7 @@ export const PreferenceSettings = () => {
             id='email'
             placeholder='Enter Last Name'
             className='h-12'
-            { ...register("lastName") }
+            {...register('lastName')}
           />
           {errors.lastName && (
             <p className='text-red-500 text-sm mt-1'>
