@@ -78,7 +78,7 @@ export const PERMISSIONS = {
     'schools'
   ],
   USER: [
-    'my-dashboard',
+    'dashboard',
     'ai-examiner',
     'my-profile',
     'my-exams',

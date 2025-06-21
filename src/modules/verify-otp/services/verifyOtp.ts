@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/core/services/api';
 import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -41,7 +42,7 @@ export function useVerifyOtp() {
 
         // Update Zustand store
         setUser(user);
-        router.push('/my-dashboard');
+        router.push('/dashboard');
       }
     } catch (err: any) {
       const errorMessage =

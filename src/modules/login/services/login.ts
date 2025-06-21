@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/core/services/api';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -46,15 +47,15 @@ export function useLogin() {
       // Update Zustand store
       setUser(user);
 
-      if (user.role === 'USER' || user.role === 'user') {
-        router.push('/my-dashboard');
-      } else if (
-        user.role === 'ADMIN' ||
-        user.role === 'SUB_ADMIN' ||
-        user.role === 'admin'
-      ) {
-        router.push('/dashboard');
-      }
+      // if (user.role === 'USER' || user.role === 'user') {
+      //   router.push('/my-dashboard');
+      // } else if (
+      //   user.role === 'ADMIN' ||
+      //   user.role === 'SUB_ADMIN' ||
+      //   user.role === 'admin'
+      // ) {
+        // }
+      router.push('/dashboard');
     } catch (err: any) {
       console.error(err);
       if (err.response?.status === 406) {

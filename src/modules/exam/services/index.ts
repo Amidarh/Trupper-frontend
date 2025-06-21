@@ -21,6 +21,8 @@ import { useParams } from 'next/navigation';
 
 export const useExamService = () => {
   const organization = useAltStore((state) => state.organization);
+  const [ examList, setExamList ] = useState<ExamType[] | null>(null);
+  const [ examListLoading, setExamListLoading ] = useState<boolean>(false);
   const [singleExam, setSingleExam] = useState<ExamType | null>(null);
   const [singleExamLoading, setSingleExamLoading] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -139,6 +141,26 @@ export const useExamService = () => {
       toast.error(errorMessage);
     }
   };
+
+    const getExamByExamTypes = async (id: string | undefined) => {
+      setExamListLoading(true);
+      try {
+        const res = await api(`/exams/exam-type/${id}`);
+        if (res.status === 200) {
+          toast.success(res.data.message);
+          setExamList(res.data.doc);
+          setExamListLoading(false);
+        }
+      } catch (error: any) {
+        setExamListLoading(false);
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          'Could not get this exam categories';
+        setServerError(errorMessage);
+        toast.error(errorMessage);
+      }
+    };
 
   const createExamCategory = async (data: ExamCategoryFormData) => {
     try {
@@ -264,5 +286,8 @@ export const useExamService = () => {
     editExamCategoryForm,
     editExamCategory,
     removeExamCategory,
+    examList,
+    getExamByExamTypes,
+    examListLoading
   };
 };

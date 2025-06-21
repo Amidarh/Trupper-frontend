@@ -9,7 +9,7 @@ const VALID_ROLES = {
 
 const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
   USER: [
-    'my-dashboard',
+    'dashboard',
     'my-exams',
     'mock-exams',
     'ai-examiner',
@@ -63,7 +63,7 @@ const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
 
 const ROUTE_PERMISSIONS: Record<string, string> = {
   '/dashboard': 'dashboard',
-  '/my-dashboard': 'my-dashboard',
+  // '/my-dashboard': 'my-dashboard',
   '/users': 'users',
   '/categories': 'categories',
   '/sub-admins': 'sub-admins',

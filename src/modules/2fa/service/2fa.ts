@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import api from '@/core/services/api';
@@ -44,7 +45,7 @@ export function useTwoFactor() {
 
         // Update Zustand store
         setUser(user);
-        router.push('/my-dashboard');
+        router.push('/dashboard');
       }
     } catch (err: any) {
       const errorMessage =
