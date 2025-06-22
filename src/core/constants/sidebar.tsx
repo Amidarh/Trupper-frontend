@@ -16,7 +16,7 @@ import {
   PenSquare,
   ChartLine,
   LibrarySquare,
-  GalleryVerticalEnd
+  GalleryVerticalEnd,
 } from 'lucide-react';
 
 export type UserRole =
@@ -53,7 +53,7 @@ export const PERMISSIONS = {
     'exam',
     'categories',
     'codes',
-    'results'
+    'results',
   ],
   ADMIN: [
     'dashboard',
@@ -71,12 +71,9 @@ export const PERMISSIONS = {
     'exam',
     'categories',
     'codes',
-    'results'
+    'results',
   ],
-  SUB_ADMIN: [
-    'dashboard',
-    'schools'
-  ],
+  SUB_ADMIN: ['dashboard', 'schools'],
   USER: [
     'dashboard',
     'ai-examiner',

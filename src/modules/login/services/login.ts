@@ -54,7 +54,7 @@ export function useLogin() {
       //   user.role === 'SUB_ADMIN' ||
       //   user.role === 'admin'
       // ) {
-        // }
+      // }
       router.push('/dashboard');
     } catch (err: any) {
       console.error(err);

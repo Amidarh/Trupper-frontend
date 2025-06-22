@@ -32,8 +32,8 @@ const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
     'codes',
     'customization',
     'subscription',
-    "roles",
-    "results"
+    'roles',
+    'results',
   ],
   SUB_ADMIN: [
     'dashboard',
