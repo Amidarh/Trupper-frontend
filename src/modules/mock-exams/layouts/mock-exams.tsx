@@ -15,6 +15,7 @@ import { ExamType } from '@/types/exam.types';
 import { SubjectType } from '@/types/subject.types';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useMockExamsService } from '../services';
 
 export const MockExams = () => {
   const { data, isLoading } = useExamTypeService();
@@ -34,6 +35,12 @@ export const MockExams = () => {
     examCategoryLoading,
     examCategoryList,
   } = useExamService();
+  const {
+    form: {
+      formState: { isSubmitting },
+    },
+    createExamCard,
+  } = useMockExamsService();
 
   const handleExamCategorySelection = (data: ExamCategoryType) => {
     setSelectedExamCategory(data);
@@ -53,6 +60,19 @@ export const MockExams = () => {
       selectedExam.minNoOfSubjects > selectedSubjects.length
     ) {
       setSubjectError('Select More Subjects ');
+    } else {
+      console.log('Selected Exam:', {
+        selectedExam,
+        selectedExamCategory,
+        selectedSubjects,
+      });
+      createExamCard({
+        exam: selectedExam?.id || '',
+        category: selectedExamCategory?.id || '',
+        subjects: selectedSubjects.map((subject) => ({
+          id: subject.id,
+        })),
+      });
     }
   };
 
@@ -231,10 +251,11 @@ export const MockExams = () => {
                   disabled={
                     !selectedExamCategory ||
                     selectedSubjects.length <
-                      (selectedExam?.minNoOfSubjects ?? 0)
+                      (selectedExam?.minNoOfSubjects ?? 0) ||
+                    isSubmitting
                   }
                 >
-                  Save Exam
+                  {isSubmitting ? 'Creating card...' : 'Save Exam'}
                 </Button>
               </div>
             )}

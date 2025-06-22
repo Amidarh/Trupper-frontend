@@ -1,42 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/core/services/api';
-import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { ExamDataType } from '@/types/exam.types';
-import { useAltStore } from '@/lib/zustand/userStore';
-import { fetcher } from '@/lib/fetcher';
-import useSWR from 'swr';
+import { ExamCardFormData, examCardSchema } from '../schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export function useMockExamsService() {
-  const organization = useAltStore((state) => state.organization);
   const [serverError, setServerError] = useState('');
-  const [resendLoading, setResendLoading] = useState<boolean>(false);
 
-  const { data, error, isLoading } = useSWR<ExamDataType | undefined>(
-    `/examTypes/organization-user/${organization?.id}`,
-    fetcher
-  );
+  const form = useForm<ExamCardFormData>({
+    resolver: zodResolver(examCardSchema),
+  });
 
-  const getMockExams = async (id: string) => {
+  const createExamCard = async (data: ExamCardFormData) => {
     try {
-      const res = await api.get(`/exams/organization-user/${id}`);
-      if (res.status === 200) {
-        return res.data.doc;
+      setServerError('');
+      const response = await api.post('/exam-card', data);
+      if (response.status !== 201) {
+        throw new Error('Failed to create exam card');
       }
-    } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.message ||
-        err.message ||
-        'Could not get Mock Exams';
-      setServerError(errorMessage);
-      toast.error(errorMessage);
+      examCardSchema.parse(data);
+      console.log('Exam card created successfully:', response.data);
+      toast.success(response.data.message || 'Exam card created successfully');
+      form.reset();
+      return response.data;
+    } catch (error: any) {
+      setServerError(
+        error?.message || 'An error occurred while creating the exam card'
+      );
+      toast.error(
+        error?.message || 'An error occurred while creating the exam card'
+      );
     }
   };
 
   return {
-    data,
-    error,
-    isLoading,
+    createExamCard,
+    serverError,
+    setServerError,
+    form,
   };
 }
