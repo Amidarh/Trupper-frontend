@@ -12,34 +12,36 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { useQuestionService } from '../../services';
 import { Trash2 } from 'lucide-react';
+import { useMockExamsService } from '@/modules/mock-exams/services';
 
-export default function DeleteQuestionButton({
+export default function DeleteExamCardButton({
   id,
 }: {
   id: string | undefined;
 }) {
-  const { deleteQuestion, singleQuestionLoading } = useQuestionService();
+  const { deleteExamCard, loading } = useMockExamsService();
 
   const handleDelete = useCallback(async () => {
-    await deleteQuestion(id);
-  }, [deleteQuestion, id]);
+    await deleteExamCard(id);
+  }, [deleteExamCard, id]);
+
+  console.log(id);
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive' className='cursor-pointer'>
-          <Trash2 />
-          <p>Delete Question</p>
-        </Button>
+        <div className='text-left text-sm flex flex-row items-center cursor-pointer hover:bg-destructive/90 bg-destructive/90 p-1 rounded-md'>
+          <Trash2 className='mr-2' size={17} />
+          <p className='text-sm'>Delete AR</p>
+        </div>
       </AlertDialogTrigger>
-      {singleQuestionLoading ? (
+      {loading ? (
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Deleting...</AlertDialogTitle>
             <AlertDialogDescription>
-              Please wait while we delete this question.
+              Please wait while we delete this exam card.
             </AlertDialogDescription>
           </AlertDialogHeader>
         </AlertDialogContent>
@@ -47,7 +49,7 @@ export default function DeleteQuestionButton({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this Question?
+              Are you sure you want to delete this exam card?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this

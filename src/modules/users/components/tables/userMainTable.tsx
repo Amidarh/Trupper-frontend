@@ -72,9 +72,9 @@ export const UserTable = () => {
               Export Data
             </Button>
             {/* <Button className="cursor-pointer">
-                            <Plus className="h-4 w-4" />
-                            <p>Add New User</p>
-                        </Button> */}
+                <Plus className="h-4 w-4" />
+                <p>Add New User</p>
+            </Button> */}
           </div>
         </div>
       </CardHeader>

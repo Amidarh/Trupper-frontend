@@ -1,14 +1,16 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { ExamCardType } from '@/types/examCards.types';
+import moment from 'moment';
+import { ExamCardOptionsButton } from '../buttons/options';
 
-export const ExamCard = () => {
+export const ExamCard = ({ data }: { data: ExamCardType }) => {
   return (
     <Card className='p-3 gap-0 w-full max-w-[290px] min-h-[220px]'>
       <CardHeader className='flex flex-row justify-between items-center w-full px-0'>
-        <h1 className='text-[14px]'>LLC</h1>
-        <EllipsisVertical scale={10} />
+        <h1 className='text-[14px]'>{data.exam.acronym} Exam</h1>
+        <ExamCardOptionsButton id={data.id} />
       </CardHeader>
       <CardContent className='p-0 mt-2 flex justify-between flex-col h-full'>
         {/* <div> */}
@@ -16,22 +18,22 @@ export const ExamCard = () => {
           <Separator />
           <div className='mt-3  flex justify-between flex-row'>
             <p className='font-bold text-sm'>Category</p>
-            <p className='text-sm text-gray-500'>Science</p>
+            <p className='text-sm text-gray-500'>{data.category.name}</p>
           </div>
           <div className='flex justify-between flex-row'>
             <p className='font-bold text-sm'>Creation Date</p>
             <p className='text-sm text-right text-gray-500'>
-              Thursday Apr 24 2025
+              {moment(data.createdAt).format('MMMM D, YYYY')}
             </p>
           </div>
           <div className='flex justify-between flex-row gap-2'>
             <p className='font-bold text-sm'>Subjects</p>
             <div className='flex gap-1 flex-wrap justify-end items-end text-gray-500'>
-              <p className='text-sm'>English,</p>
-              <p className='text-sm'>English,</p>
-              <p className='text-sm'>English,</p>
-              <p className='text-sm'>English,</p>
-              <p className='text-sm'>Mathematics,</p>
+              {data.subjects.map((subject) => (
+                <p key={subject.id} className='text-sm'>
+                  {subject.name},
+                </p>
+              ))}
             </div>
           </div>
         </div>
