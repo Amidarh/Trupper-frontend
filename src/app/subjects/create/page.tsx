@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useSubjectService } from '@/modules/subjects/services';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import { useState } from 'react';
 import { ExamType } from '@/types/exam.types';
 

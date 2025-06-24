@@ -1,7 +1,7 @@
 'use client';
 
 import DashboardLayout from '@/core/commons/layout/dashboardLayout';
-import { Exams } from '@/modules/exam/layouts/exam';
+import { Exams } from '@/modules/exams/layouts/exam';
 
 const ExamPage = () => {
   return (

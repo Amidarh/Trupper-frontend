@@ -33,7 +33,7 @@ export default function DeleteExamCardButton({
       <AlertDialogTrigger asChild>
         <div className='text-left text-sm flex flex-row items-center cursor-pointer hover:bg-destructive/90 bg-destructive/90 p-1 rounded-md'>
           <Trash2 className='mr-2' size={17} />
-          <p className='text-sm'>Delete AR</p>
+          <p className='text-sm'>Delete</p>
         </div>
       </AlertDialogTrigger>
       {loading ? (

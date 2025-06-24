@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { SubjectCard } from '../components/card/subjectCard';
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 
 export const Subject = () => {
   const router = useRouter();

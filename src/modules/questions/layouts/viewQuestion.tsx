@@ -19,7 +19,7 @@ import RichTextEditor from '@/core/commons/components/richTextEditor';
 import ImageUploadTwo from '@/core/commons/components/imageUpload/imageUploadTwo';
 import DeleteQuestionButton from '../components/modal/delete';
 
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import { useSubjectService } from '@/modules/subjects/services';
 import { useQuestionService } from '../services';
 

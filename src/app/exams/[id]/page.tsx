@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { DurationData } from '@/constants/data';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
@@ -26,9 +26,9 @@ import { useExamTypeService } from '@/modules/examTypes/services';
 import { ExamTypes } from '@/types/examTypes.types';
 import ImageUpload from '@/core/commons/components/imageUpload';
 import Image from 'next/image';
-import DeleteExamButton from '@/modules/exam/components/modal/delete';
-import { CreateExamCategoryModal } from '@/modules/exam/components/modal/createExamCategory';
-import { ViewExamCategoryModal } from '@/modules/exam/components/modal/viewExamCategory';
+import DeleteExamButton from '@/modules/exams/components/modal/delete';
+import { CreateExamCategoryModal } from '@/modules/exams/components/modal/createExamCategory';
+import { ViewExamCategoryModal } from '@/modules/exams/components/modal/viewExamCategory';
 
 const EditExam = () => {
   const {

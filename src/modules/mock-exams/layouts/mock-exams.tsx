@@ -7,7 +7,7 @@ import { SubjectCard } from '../components/cards/subjectCards';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useExamTypeService } from '@/modules/examTypes/services';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { ExamCategoryType } from '@/types/examCategory.types';

@@ -1,7 +1,7 @@
 import { StatsCard } from '@/modules/my-dashboard/components/cards/statsCard';
 import { ChartSpline } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { ExamsTable } from '@/modules/exam/components/tables/main';
+import { ExamsTable } from '@/modules/exams/components/tables/main';
 import { PerformanceTable } from '../components/tables/performanceTable';
 
 export const MyPerformance = () => {

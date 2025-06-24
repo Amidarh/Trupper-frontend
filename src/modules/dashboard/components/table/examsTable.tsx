@@ -10,7 +10,7 @@ import { Card, CardHeader } from '@/components/ui/card';
 import Link from 'next/link';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import { Button } from '@/components/ui/button';
 import { getStatusBadge } from '@/core/commons/components/badge/badge';
 

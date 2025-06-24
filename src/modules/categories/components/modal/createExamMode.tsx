@@ -18,7 +18,7 @@ import { Plus, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import { ExamType } from '@/types/exam.types';
 import { useState } from 'react';
 import { useExamModeService } from '../../services/examModeService';

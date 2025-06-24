@@ -17,9 +17,9 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { DurationData } from '@/constants/data';
-import { useExamService } from '@/modules/exam/services';
+import { useExamService } from '@/modules/exams/services';
 import { useState, useCallback } from 'react';
-import { ExamFormData } from '@/modules/exam/schema';
+import { ExamFormData } from '@/modules/exams/schema';
 import { useExamTypeService } from '@/modules/examTypes/services';
 import { ExamTypes } from '@/types/examTypes.types';
 import ImageUpload from '@/core/commons/components/imageUpload';
