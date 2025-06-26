@@ -6,15 +6,29 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, PanelLeft, Calculator } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
-export const QuestionBodyContent = () => {
+export const QuestionBodyContent = ({ onToggleSidebar, onToggleCalculator }: { onToggleSidebar: () => void, onToggleCalculator: () => void }) => {
   return (
-    <Card className='w-full max-w-2xl p-4 shadow-md'>
+    <Card className='w-full bg-card max-w-2xl p-4 shadow-md'>
       <CardHeader className='px-0 flex flex-col items-start justify-start'>
-        <p>Physics</p>
+        <div className='flex items-center justify-between w-full mb-1'>
+          <p>Physics</p>
+          <div className='flex flex-row gap-2 items-center'>
+            <Calculator
+              className='cursor-pointer'
+              size={20}
+              onClick={onToggleCalculator}
+            />
+            <PanelLeft
+              onClick={onToggleSidebar}
+              size={20}
+              className='cursor-pointer'
+            />
+          </div>
+        </div>
         <h1 className='font-bold'>Question 1</h1>
         <p className='text-sm text-gray-900 dark:text-gray-300'>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
