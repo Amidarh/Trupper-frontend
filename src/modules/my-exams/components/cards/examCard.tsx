@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ExamCardType } from '@/types/examCards.types';
 import moment from 'moment';
 import { ExamCardOptionsButton } from '../buttons/options';
+import ExamDetailsButton from '../modal/examInfo';
 
 export const ExamCard = ({ data }: { data: ExamCardType }) => {
   return (
@@ -39,7 +39,7 @@ export const ExamCard = ({ data }: { data: ExamCardType }) => {
         </div>
         {/* </div> */}
         <div className='mt-3'>
-          <Button className='w-full h-10'>Start</Button>
+          <ExamDetailsButton title='Start Exam' id={data.id} data={data}  />
         </div>
       </CardContent>
     </Card>
