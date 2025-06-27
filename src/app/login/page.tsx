@@ -118,7 +118,7 @@ const LoginPage = () => {
 
             <div className='flex flex-row justify-center items-center mt-4 gap-4 relative left-4'>
               <Link href='/forget-password' className='hover:underline mt-4'>
-                Can't Login
+                Can&apos;t Login
               </Link>
               {organization?.enableSignup && (
                 <div className='border h-5 relative top-2' />

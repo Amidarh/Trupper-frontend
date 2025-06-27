@@ -49,7 +49,7 @@ const ForgottenPasswordContent = () => {
             />
           )}
           <h2 className='text-2xl font-bold mb-1'>{organization?.name}</h2>
-          <h2 className='text-md font-bold'>Can't Login</h2>
+          <h2 className='text-md font-bold'>Can&apos;t Login</h2>
           <p className='text-sm'>Enter the email you used to create account</p>
           {serverError && (
             <p className='text-red-600 text-sm text-center'>{serverError}</p>

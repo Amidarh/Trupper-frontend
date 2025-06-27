@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@radix-ui/react-separator';
 import { SubjectCard } from '../components/cards/subjectCards';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { useExamTypeService } from '@/modules/examTypes/services';
 import { useExamService } from '@/modules/exams/services';
 import Image from 'next/image';
@@ -16,6 +16,8 @@ import { SubjectType } from '@/types/subject.types';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useMockExamsService } from '../services';
+import { ExamTypes } from '@/types/examTypes.types';
+import ExamDetailsButton from '../components/modals/details';
 
 export const MockExams = () => {
   const { data, isLoading } = useExamTypeService();
@@ -25,6 +27,7 @@ export const MockExams = () => {
   const [defaultTab, setDefaultTab] = useState<string>(data?.[0]?.name || '');
   const [selectedSubjects, setSelectedSubjects] = useState<SubjectType[]>([]);
   const [subjectError, setSubjectError] = useState('');
+  const [ selectedExamType, setSelectedExamType ] = useState<ExamTypes | undefined>(undefined)
   const [selectedExamCategory, setSelectedExamCategory] =
     useState<ExamCategoryType | null>(null);
   const {
@@ -117,6 +120,7 @@ export const MockExams = () => {
           {data?.map((examType) => (
             <TabsTrigger
               onClick={() => {
+                setSelectedExamType(examType)
                 getExamByExamTypes(examType.id);
                 setSelectedExam(undefined);
                 setSelectedExamCategory(null);
@@ -246,7 +250,7 @@ export const MockExams = () => {
               )}
             {(examCategoryList ?? []).length > 0 && selectedExamCategory && (
               <div className='flex justify-end mt-5'>
-                <Button
+                {/* <Button
                   onClick={handelShowExam}
                   disabled={
                     !selectedExamCategory ||
@@ -256,7 +260,21 @@ export const MockExams = () => {
                   }
                 >
                   {isSubmitting ? 'Creating card...' : 'Save Exam'}
-                </Button>
+                </Button> */}
+                <ExamDetailsButton
+                  action={handelShowExam}
+                  title={isSubmitting ? 'Creating card...' : 'Save Exam'}
+                  category={selectedExamCategory}
+                  disabled={
+                    !selectedExamCategory ||
+                    selectedSubjects.length <
+                      (selectedExam?.minNoOfSubjects ?? 0) ||
+                    isSubmitting
+                  }
+                  exam={selectedExam}
+                  examType={selectedExamType}
+                  subjects={selectedSubjects}
+                />
               </div>
             )}
           </TabsContent>

@@ -120,7 +120,7 @@ const LoginContent = () => {
                 href='/admin-controller/forget-password'
                 className='hover:underline mt-4'
               >
-                Can't Login
+                Can&apos;t Login
               </Link>
             </div>
 
