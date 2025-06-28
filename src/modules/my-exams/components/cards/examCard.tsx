@@ -39,7 +39,7 @@ export const ExamCard = ({ data }: { data: ExamCardType }) => {
         </div>
         {/* </div> */}
         <div className='mt-3'>
-          <ExamDetailsButton title='Start Exam' id={data.id} data={data}  />
+          <ExamDetailsButton title='Start Exam' data={data} />
         </div>
       </CardContent>
     </Card>

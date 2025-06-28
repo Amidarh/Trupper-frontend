@@ -14,7 +14,7 @@ export const Dashboard = () => {
     <main>
       <p>Overview of entire school management platform</p>
 
-      <section className='mt-4 grid grid-cols-3 gap-4 '>
+      <section className='mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 '>
         <StatsCard Icon={Users} title='Total Users' stat={data?.userCount} />
         <StatsCard Icon={Users} title='Total Admins' stat={data?.AdminCount} />
         <StatsCard
@@ -49,7 +49,7 @@ export const Dashboard = () => {
             <UserCategoryChart/>
         </section> */}
 
-      <section className='mt-7 grid grid-cols-2 gap-4'>
+      <section className='mt-7 grid grid-col-1 md:grid-cols-2 gap-4'>
         <ExamTable />
         <UserCategoryTable />
       </section>

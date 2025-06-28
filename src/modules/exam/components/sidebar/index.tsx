@@ -1,14 +1,28 @@
 'use client';
 
-import { sampleQuestions } from '@/constants/question';
 import { bgBlur, cn } from '@/lib/utils';
 import { CheckCircle2, X, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useAltStore } from '@/lib/zustand/userStore';
 
-export const ExamSidebar = ({ onToggle, isOpen }: { onToggle: () => void, isOpen: boolean }) => {
+export const ExamSidebar = ({
+  onToggle,
+  isOpen,
+}: {
+  onToggle: () => void;
+  isOpen: boolean;
+}) => {
+  const examState = useAltStore((state) => state.examState);
   return (
-    <div className={cn( isOpen ? 'fixed inset-y-0 left-0 top-22 z-10 w-80 border-r transform h-[90vh] transition-transform duration-300 ease-in-out md:translate-x-0 ' : 'hidden', bgBlur)}>
+    <div
+      className={cn(
+        isOpen
+          ? 'fixed inset-y-0 left-0 top-22 z-10 w-80 border-r transform h-[90vh] transition-transform duration-300 ease-in-out md:translate-x-0 '
+          : 'hidden',
+        bgBlur
+      )}
+    >
       {/* Overlay for mobile */}
       <div className='p-4 border-b'>
         <div className='flex items-center justify-between'>
@@ -27,17 +41,30 @@ export const ExamSidebar = ({ onToggle, isOpen }: { onToggle: () => void, isOpen
         <div className='mt-2 flex gap-4 text-sm'>
           <div className='flex items-center gap-1'>
             <CheckCircle2 className='h-4 w-4 text-green-500' />
-            <span>10 Answered</span>
+            <span>
+              {
+                examState?.questions.filter(
+                  (question) => question.userAnswer !== ''
+                ).length
+              }{' '}
+              Answered
+            </span>
           </div>
           <div className='flex items-center gap-1'>
             <Circle className='h-4 w-4 text-slate-400' />
-            <span>{sampleQuestions.length - 10} Remaining</span>
+            <span>
+              {(examState?.questions?.length ?? 0) -
+                (examState?.questions.filter(
+                  (question) => question.userAnswer !== ''
+                ).length ?? 0)}{' '}
+              Remaining
+            </span>
           </div>
         </div>
       </div>
 
       <div className='p-4 space-y-2 max-h-[calc(100vh-200px)] overflow-y-auto'>
-        {sampleQuestions.map((question, index) => (
+        {examState?.questions.map((question, index) => (
           <button
             key={question.id}
             className={cn(
@@ -58,7 +85,7 @@ export const ExamSidebar = ({ onToggle, isOpen }: { onToggle: () => void, isOpen
             </div>
             <div className='mt-1'>
               <Badge variant='secondary' className='text-xs'>
-                Mathematics
+                {question.subject.name}
               </Badge>
             </div>
           </button>

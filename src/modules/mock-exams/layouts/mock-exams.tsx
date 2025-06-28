@@ -27,7 +27,9 @@ export const MockExams = () => {
   const [defaultTab, setDefaultTab] = useState<string>(data?.[0]?.name || '');
   const [selectedSubjects, setSelectedSubjects] = useState<SubjectType[]>([]);
   const [subjectError, setSubjectError] = useState('');
-  const [ selectedExamType, setSelectedExamType ] = useState<ExamTypes | undefined>(undefined)
+  const [selectedExamType, setSelectedExamType] = useState<
+    ExamTypes | undefined
+  >(undefined);
   const [selectedExamCategory, setSelectedExamCategory] =
     useState<ExamCategoryType | null>(null);
   const {
@@ -120,7 +122,7 @@ export const MockExams = () => {
           {data?.map((examType) => (
             <TabsTrigger
               onClick={() => {
-                setSelectedExamType(examType)
+                setSelectedExamType(examType);
                 getExamByExamTypes(examType.id);
                 setSelectedExam(undefined);
                 setSelectedExamCategory(null);
@@ -250,17 +252,6 @@ export const MockExams = () => {
               )}
             {(examCategoryList ?? []).length > 0 && selectedExamCategory && (
               <div className='flex justify-end mt-5'>
-                {/* <Button
-                  onClick={handelShowExam}
-                  disabled={
-                    !selectedExamCategory ||
-                    selectedSubjects.length <
-                      (selectedExam?.minNoOfSubjects ?? 0) ||
-                    isSubmitting
-                  }
-                >
-                  {isSubmitting ? 'Creating card...' : 'Save Exam'}
-                </Button> */}
                 <ExamDetailsButton
                   action={handelShowExam}
                   title={isSubmitting ? 'Creating card...' : 'Save Exam'}

@@ -19,7 +19,7 @@ export function ExamTable() {
   const { data } = useExamService();
   return (
     <Card className='w-full'>
-      <CardHeader className='flex flex-row items-center justify-between space-y-0 pl-2 py-0'>
+      <CardHeader className='fl ex flex-row items-center justify-between space-y-0 pl-2 py-0'>
         <h1 className='text-2xl'>Exams</h1>
         <Link href={'/exams'}>
           <SquareArrowOutUpRight size={18} className='cursor-pointer' />
@@ -29,7 +29,7 @@ export function ExamTable() {
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
-            <TableHead>Full Name</TableHead>
+            <TableHead className='md:block hidden'>Full Name</TableHead>
             <TableHead>Exam Type</TableHead>
             <TableHead align='right'>Actions</TableHead>
           </TableRow>
@@ -38,7 +38,9 @@ export function ExamTable() {
           {data?.map((exam) => (
             <TableRow key={exam.id}>
               <TableCell className='font-medium'>{exam.acronym}</TableCell>
-              <TableCell>{exam.name}</TableCell>
+              <TableCell className='text-ellipsis truncate md:block hidden'>
+                {exam.name}
+              </TableCell>
               <TableCell>
                 {getStatusBadge(exam.status ? 'active' : 'inactive')}
               </TableCell>

@@ -12,7 +12,7 @@ const DashboardPage = () => {
   if (user?.role === 'user' || user?.role === 'USER') {
     return (
       <DashboardLayout
-        pageTitle='Hello Wisdom'
+        pageTitle={`Hello ${user.firstName}`}
         subHeading={`Welcome to your ${organization?.name} dashboard`}
       >
         <MyDashboard />

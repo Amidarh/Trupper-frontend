@@ -2,17 +2,21 @@
 import api from '@/core/services/api';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { ExamCardFormData, examCardSchema } from '../schema';
+import { ExamCardFormData, examCardSchema, StartExamFormData } from '../schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ExamCardDataType } from '@/types/examCards.types';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
 import { useRouter } from 'next/navigation';
+import { useAltStore } from '@/lib/zustand/userStore';
 
 export function useMockExamsService() {
   const [serverError, setServerError] = useState('');
   const [loading, setLoading] = useState(false);
+  const setExamState = useAltStore((state) => state.setExamState);
+  const setUser = useAltStore((state) => state.setUser);
+  const setCurrentQuestion = useAltStore((state) => state.setCurrentQuestion);
   const router = useRouter();
 
   const { data, error, isLoading, mutate } = useSWR<ExamCardDataType>(
@@ -69,6 +73,34 @@ export function useMockExamsService() {
     }
   };
 
+  const startExam = async (id: string | undefined, data: StartExamFormData) => {
+    try {
+      setLoading(true);
+      setServerError('');
+      const response = await api.post(`/exams/start-exam/${id}`, data);
+      if (response.status === 201) {
+        router.push('/exam');
+        toast.success(response.data.message);
+        const { questions, duration, subject, resultId, user } =
+          response.data.doc;
+        const examState = { questions, duration, subject, resultId };
+        setExamState(examState);
+        setUser(user);
+        setLoading(false);
+        setCurrentQuestion(1);
+      }
+      console.log(response.data);
+    } catch (error: any) {
+      setLoading(false);
+      setServerError(
+        error?.message || 'An error occurred while deleting the exam card'
+      );
+      toast.error(
+        error?.message || 'An error occurred while deleting the exam card'
+      );
+    }
+  };
+
   return {
     createExamCard,
     serverError,
@@ -80,5 +112,6 @@ export function useMockExamsService() {
     mutate,
     deleteExamCard,
     loading,
+    startExam,
   };
 }

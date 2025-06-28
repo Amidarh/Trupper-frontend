@@ -17,6 +17,7 @@ const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
     'my-notifications',
     'my-profile',
     'result',
+    'exam',
   ],
   ADMIN: [
     'dashboard',
@@ -83,6 +84,7 @@ const ROUTE_PERMISSIONS: Record<string, string> = {
   '/my-notifications': 'my-notifications',
   '/my-profile': 'my-profile',
   '/user-result': 'results',
+  '/exam': 'exam',
 };
 
 const AUTH_ROUTES = [
@@ -132,7 +134,7 @@ export function middleware(request: NextRequest) {
     const requiredPermission = ROUTE_PERMISSIONS[permissionKey];
     const allowedPermissions = PERMISSIONS[userRole] || [];
     if (!allowedPermissions.includes(requiredPermission)) {
-      const forbiddenUrl = new URL('/403', request.url);
+      const forbiddenUrl = new URL('/dashboard', request.url);
       return NextResponse.rewrite(forbiddenUrl); // FIXED: Use rewrite for 403, not redirect
     }
   }

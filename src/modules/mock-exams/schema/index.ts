@@ -12,3 +12,17 @@ export const examCardSchema = z.object({
   category: z.string().min(1, 'Exam Category is required'),
 });
 export type ExamCardFormData = z.infer<typeof examCardSchema>;
+
+export const startExamSchema = z.object({
+  examCardID: z.string({ message: 'select and exam' }).optional(),
+  examCardIdTwo: z.string({ message: 'select and exam' }).optional(),
+  duration: z.string().optional(),
+  examMode: z.string().optional(),
+});
+
+export type StartExamFormData = z.infer<typeof startExamSchema>;
+
+// examCardID,
+//       examCardIdTwo,
+//       duration: reqDuration,
+//       examMode,

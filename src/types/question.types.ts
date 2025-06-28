@@ -25,7 +25,7 @@ export interface QuestionType {
   category: string;
   organization: string; // ObjectId as string
   reason: string;
-  questionCategory: 'free' | 'paid';
+  questionCategory: 'main' | 'public';
   questionType: 'Objective' | 'Theory' | 'Sub-objective';
   queryId: string;
   status: boolean;

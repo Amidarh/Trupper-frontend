@@ -2,6 +2,7 @@
 import { UserRole } from '../core/constants/sidebar';
 import { CategoryTypes } from './categories.types';
 import { SubCategoryTypes } from './categories.types';
+import { QuestionType } from './question.types';
 
 export interface IUser {
   id: string;
@@ -44,6 +45,13 @@ export interface IUser {
   updatedAt?: Date;
 }
 
+export interface examStateType {
+  duration: number;
+  questions: QuestionType[];
+  subject: string;
+  resultId: string;
+}
+
 export interface IOrganization {
   id: string;
   name: string;
@@ -75,5 +83,13 @@ export interface AltStore {
   setOrganizationId: (id: string) => void;
   isAuthenticated: boolean;
   logout: () => void;
+  examDuration: number;
+  setExamDuration: (examDuration: number) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
+  examState: examStateType | null;
+  setExamState: (data: examStateType) => void;
+  currentQuestion: number | null;
+  setCurrentQuestion: (currentQuestion: number) => void;
+  nextQuestion: () => void;
+  previousQuestion: () => void;
 }

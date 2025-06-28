@@ -9,8 +9,25 @@ import { Separator } from '@/components/ui/separator';
 import { ChevronRight, ChevronLeft, PanelLeft, Calculator } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useAltStore } from '@/lib/zustand/userStore';
+import DOMPurify from 'dompurify';
 
-export const QuestionBodyContent = ({ onToggleSidebar, onToggleCalculator }: { onToggleSidebar: () => void, onToggleCalculator: () => void }) => {
+export const QuestionBodyContent = ({
+  onToggleSidebar,
+  onToggleCalculator,
+}: {
+  onToggleSidebar: () => void;
+  onToggleCalculator: () => void;
+}) => {
+  const nextQuestion = useAltStore((state) => state.nextQuestion);
+  const previousQuestion = useAltStore((state) => state.previousQuestion);
+  const currentQuestion = useAltStore((state) => state.currentQuestion);
+  const examState = useAltStore((state) => state.examState);
+
+  const questionIndex = (currentQuestion ?? 1) - 1;
+  const sanitizedHtml = DOMPurify.sanitize(
+    examState?.questions?.[questionIndex]?.question ?? ''
+  );
   return (
     <Card className='w-full bg-card max-w-2xl p-4 shadow-md'>
       <CardHeader className='px-0 flex flex-col items-start justify-start'>
@@ -30,12 +47,16 @@ export const QuestionBodyContent = ({ onToggleSidebar, onToggleCalculator }: { o
           </div>
         </div>
         <h1 className='font-bold'>Question 1</h1>
-        <p className='text-sm text-gray-900 dark:text-gray-300'>
+        {/* <p className='text-sm text-gray-900 dark:text-gray-300'>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
           provident ut earum nesciunt beatae suscipit ad dolore voluptatem nihil
           quisquam, maxime corporis assumenda. Omnis modi porro autem sequi?
           Sint, ipsa.
-        </p>
+        </p> */}
+        <div
+          className='text-sm text-gray-900 dark:text-gray-300'
+          dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+        />
       </CardHeader>
 
       <CardContent className='px-0'>
@@ -72,11 +93,19 @@ export const QuestionBodyContent = ({ onToggleSidebar, onToggleCalculator }: { o
       </CardContent>
       <Separator />
       <CardFooter className='flex flex-row items-center px-0 pt-0 justify-between'>
-        <Button>
+        <Button
+          onClick={previousQuestion}
+          disabled={currentQuestion === 1 ? true : false}
+        >
           <ChevronLeft />
           <p className='text-xs'>Previous</p>
         </Button>
-        <Button>
+        <Button
+          onClick={nextQuestion}
+          disabled={
+            examState?.questions.length === currentQuestion ? true : false
+          }
+        >
           <p className='text-xs'>Next</p>
           <ChevronRight />
         </Button>

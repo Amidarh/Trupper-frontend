@@ -1,10 +1,10 @@
-import { Card, CardHeader } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { PerformanceBarChart } from '../components/charts/performanceBarChart';
 import { StatsCard } from '../components/cards/statsCard';
 import { Sparkles, User2, SquareLibrary, PenBox } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NotificationsTable } from '../components/tables/notifications';
-import { TopPerformersTable } from '../components/tables/topPerformers';
+// import { TopPerformersTable } from '../components/tables/topPerformers';
 
 export const MyDashboard = () => {
   return (

@@ -2,8 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { X } from 'lucide-react';
 import { ModeToggle } from '@/core/commons/modeToggle';
+import { useAltStore } from '@/lib/zustand/userStore';
+import { Countdown } from '../countdown';
 
 export const ExamHeader = () => {
+  const currentQuestion = useAltStore((state) => state.currentQuestion);
+  const examState = useAltStore((state) => state.examState);
   return (
     <nav className='flex flex-col gap-2 items-center justify-between px-4 py-2 shadow-sm w-screen border-b'>
       <main className='w-full flex flex-row items-center justify-between'>
@@ -18,9 +22,16 @@ export const ExamHeader = () => {
         <div className='flex-col items-center justify-center hidden sm:flex'>
           <h1 className='text-lg'>JAMB Exam</h1>
           <div className='flex flex-row items-center justify-center text-sm gap-2'>
-            <p>Question 1 of 50</p>
+            <p>
+              Question {currentQuestion} of {examState?.questions?.length ?? 0}
+            </p>
             <span className='text-gray-500'>|</span>
-            <p>5 answered</p>
+            <p>
+              {examState?.questions.filter(
+                (question) => question.userAnswer !== ''
+              ).length ?? 0}{' '}
+              answered
+            </p>
           </div>
         </div>
 
@@ -29,7 +40,8 @@ export const ExamHeader = () => {
         </div>
 
         <div className='flex flex-row items-center gap-2'>
-          <p className='hidden sm:flex text-green-600'>10:20</p>
+          <Countdown />
+          {/* <p className='hidden sm:flex text-green-600'>10:20</p> */}
           <div className='hidden sm:flex'>
             <ModeToggle />
           </div>
@@ -38,7 +50,16 @@ export const ExamHeader = () => {
           </Button>
         </div>
       </main>
-      <Progress value={50} className='w-full mt-2' />
+      <Progress
+        value={
+          ((examState?.questions.filter(
+            (question) => question.userAnswer !== ''
+          ).length ?? 0) /
+            (examState?.questions?.length ?? 0)) *
+          100
+        }
+        className='w-full mt-2'
+      />
     </nav>
   );
 };
