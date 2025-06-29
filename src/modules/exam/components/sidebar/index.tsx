@@ -14,6 +14,9 @@ export const ExamSidebar = ({
   isOpen: boolean;
 }) => {
   const examState = useAltStore((state) => state.examState);
+  const setCurrentQuestion = useAltStore((state) => state.setCurrentQuestion);
+  const currentQuestion = useAltStore((state) => state.currentQuestion);
+
   return (
     <div
       className={cn(
@@ -68,8 +71,10 @@ export const ExamSidebar = ({
           <button
             key={question.id}
             className={cn(
-              'w-full p-3 rounded-lg border text-left transition-all duration-200 hover:shadow-md hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer'
+              'w-full p-3 rounded-lg border text-left transition-all duration-200 hover:shadow-md hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer',
+              currentQuestion === index + 1 && 'bg-slate-100 dark:bg-slate-800'
             )}
+            onClick={() => setCurrentQuestion(index + 1)}
           >
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>

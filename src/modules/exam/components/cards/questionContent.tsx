@@ -8,16 +8,11 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import {
-  ChevronRight,
-  ChevronLeft,
-  PanelLeft,
-  Calculator,
-} from 'lucide-react';
+import { ChevronRight, ChevronLeft, PanelLeft, Calculator } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useAltStore } from '@/lib/zustand/userStore';
-// import DOMPurify from 'dompurify';
+import xss from 'xss';
 
 export const QuestionBodyContent = ({
   onToggleSidebar,
@@ -33,15 +28,15 @@ export const QuestionBodyContent = ({
 
   const questionIndex = (currentQuestion ?? 1) - 1;
 
-  // const sanitizedHtml = DOMPurify.sanitize(
-  //   examState?.questions?.[questionIndex]?.question ?? ''
-  // );
+  const sanitizedHtml = xss(
+    examState?.questions?.[questionIndex]?.question ?? ''
+  );
 
   return (
     <Card className='w-full bg-card max-w-2xl p-4 shadow-md'>
       <CardHeader className='px-0 flex flex-col items-start justify-start'>
         <div className='flex items-center justify-between w-full mb-1'>
-          <p>Physics</p>
+          <p>{examState?.questions?.[questionIndex]?.subject.name}</p>
           <div className='flex flex-row gap-2 items-center'>
             <Calculator
               className='cursor-pointer'
@@ -56,13 +51,13 @@ export const QuestionBodyContent = ({
           </div>
         </div>
         <h1 className='font-bold'>Question 1</h1>
-        {/* <div
+        <div
           className='text-sm text-gray-900 dark:text-gray-300'
           dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-        /> */}
-        <div className='text-sm text-gray-900 dark:text-gray-300'>
+        />
+        {/* <div className='text-sm text-gray-900 dark:text-gray-300'>
           {examState?.questions?.[questionIndex]?.question}
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardContent className='px-0'>
@@ -92,18 +87,13 @@ export const QuestionBodyContent = ({
       <Separator />
 
       <CardFooter className='flex flex-row items-center px-0 pt-0 justify-between'>
-        <Button
-          onClick={previousQuestion}
-          disabled={currentQuestion === 1}
-        >
+        <Button onClick={previousQuestion} disabled={currentQuestion === 1}>
           <ChevronLeft />
           <p className='text-xs'>Previous</p>
         </Button>
         <Button
           onClick={nextQuestion}
-          disabled={
-            examState?.questions.length === currentQuestion
-          }
+          disabled={examState?.questions.length === currentQuestion}
         >
           <p className='text-xs'>Next</p>
           <ChevronRight />
