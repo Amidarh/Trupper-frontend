@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -6,11 +8,16 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { ChevronRight, ChevronLeft, PanelLeft, Calculator } from 'lucide-react';
+import {
+  ChevronRight,
+  ChevronLeft,
+  PanelLeft,
+  Calculator,
+} from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useAltStore } from '@/lib/zustand/userStore';
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
 
 export const QuestionBodyContent = ({
   onToggleSidebar,
@@ -25,9 +32,11 @@ export const QuestionBodyContent = ({
   const examState = useAltStore((state) => state.examState);
 
   const questionIndex = (currentQuestion ?? 1) - 1;
-  const sanitizedHtml = DOMPurify.sanitize(
-    examState?.questions?.[questionIndex]?.question ?? ''
-  );
+
+  // const sanitizedHtml = DOMPurify.sanitize(
+  //   examState?.questions?.[questionIndex]?.question ?? ''
+  // );
+
   return (
     <Card className='w-full bg-card max-w-2xl p-4 shadow-md'>
       <CardHeader className='px-0 flex flex-col items-start justify-start'>
@@ -47,55 +56,45 @@ export const QuestionBodyContent = ({
           </div>
         </div>
         <h1 className='font-bold'>Question 1</h1>
-        {/* <p className='text-sm text-gray-900 dark:text-gray-300'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          provident ut earum nesciunt beatae suscipit ad dolore voluptatem nihil
-          quisquam, maxime corporis assumenda. Omnis modi porro autem sequi?
-          Sint, ipsa.
-        </p> */}
-        <div
+        {/* <div
           className='text-sm text-gray-900 dark:text-gray-300'
           dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-        />
+        /> */}
+        <div className='text-sm text-gray-900 dark:text-gray-300'>
+          {examState?.questions?.[questionIndex]?.question}
+        </div>
       </CardHeader>
 
       <CardContent className='px-0'>
         <RadioGroup defaultValue='option-one'>
-          <div className='flex cursor-pointer items-center space-x-2 w-full px-2 py-3 border rounded '>
-            <RadioGroupItem value='option-one' id='option-one' />
-            <div className='flex items-center justify-center text-center text-sm rounded-full h-6 w-6 bg-gray-500'>
-              A
-            </div>
-            <Label htmlFor='option-one'>Option One</Label>
-          </div>
-          <div className='flex cursor-pointer items-center space-x-2 w-full px-2 py-3 border rounded '>
-            <RadioGroupItem value='option-two' id='option-two' />
-            <div className='flex items-center justify-center text-center text-sm rounded-full h-6 w-6 bg-gray-500'>
-              B
-            </div>
-            <Label htmlFor='option-one'>Option Two</Label>
-          </div>
-          <div className='flex cursor-pointer items-center space-x-2 w-full px-2 py-3 border rounded '>
-            <RadioGroupItem value='option-three' id='option-three' />
-            <div className='flex items-center justify-center text-center text-sm rounded-full h-6 w-6 bg-gray-500'>
-              C
-            </div>
-            <Label htmlFor='option-one'>Option Three</Label>
-          </div>
-          <div className='flex cursor-pointer items-center space-x-2 w-full px-2 py-3 border rounded '>
-            <RadioGroupItem value='option-four' id='option-four' />
-            <div className='flex items-center justify-center text-center text-sm rounded-full h-6 w-6 bg-gray-500'>
-              D
-            </div>
-            <Label htmlFor='option-one'>Option Four</Label>
-          </div>
+          {['Option One', 'Option Two', 'Option Three', 'Option Four'].map(
+            (option, i) => {
+              const value = `option-${i + 1}`;
+              const labelId = `option-${i + 1}`;
+              const optionLetter = String.fromCharCode(65 + i);
+              return (
+                <div
+                  key={value}
+                  className='flex cursor-pointer items-center space-x-2 w-full px-2 py-3 border rounded'
+                >
+                  <RadioGroupItem value={value} id={labelId} />
+                  <div className='flex items-center justify-center text-center text-sm rounded-full h-6 w-6 bg-gray-500 text-white'>
+                    {optionLetter}
+                  </div>
+                  <Label htmlFor={labelId}>{option}</Label>
+                </div>
+              );
+            }
+          )}
         </RadioGroup>
       </CardContent>
+
       <Separator />
+
       <CardFooter className='flex flex-row items-center px-0 pt-0 justify-between'>
         <Button
           onClick={previousQuestion}
-          disabled={currentQuestion === 1 ? true : false}
+          disabled={currentQuestion === 1}
         >
           <ChevronLeft />
           <p className='text-xs'>Previous</p>
@@ -103,7 +102,7 @@ export const QuestionBodyContent = ({
         <Button
           onClick={nextQuestion}
           disabled={
-            examState?.questions.length === currentQuestion ? true : false
+            examState?.questions.length === currentQuestion
           }
         >
           <p className='text-xs'>Next</p>
