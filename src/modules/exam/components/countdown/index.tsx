@@ -13,9 +13,7 @@ export const Countdown: React.FC<CountdownProps> = ({ onCountdownEnd }) => {
   const examState = useAltStore((state) => state.examState);
   const setExamDuration = useAltStore((state) => state.setExamDuration);
   // Retrieve initial time from localStorage or use duration * 60
-  const initialTime: number = examDuration
-    ? examDuration
-    : Number(examState?.duration) * 60;
+  const initialTime: number = examDuration ?? ((Number(examState?.duration) || 0) * 60);
 
   // State with explicit types
   const [timeLeft, setTimeLeft] = useState<number>(initialTime);
@@ -34,6 +32,7 @@ export const Countdown: React.FC<CountdownProps> = ({ onCountdownEnd }) => {
           return 0;
         }
         const newTimeLeft = prevTimeLeft - 1;
+        console.log({newTimeLeft})
         setExamDuration(newTimeLeft);
         return newTimeLeft;
       });

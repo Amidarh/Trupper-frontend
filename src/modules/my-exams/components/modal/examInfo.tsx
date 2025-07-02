@@ -178,7 +178,7 @@ export default function ExamDetailsButton({
             </div>
             <div
               className={cn(
-                'px-4 py-5 rounded-lg border flex flex-col items-center justify-center cursor-pointer w-full max-w-[150px] dark:text-white',
+                'px-4 py-5 rounded-lg border flex flex-col items-center justify-center cursor-pointer w-full max-w-[160px] dark:text-white',
                 selectedMode === 'real-time'
                   ? 'border-1 border-gray-900'
                   : 'border'

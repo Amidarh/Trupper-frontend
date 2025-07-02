@@ -3,16 +3,14 @@
 import { Button } from '@/components/ui/button';
 import {
   Card,
-  CardContent,
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ChevronRight, ChevronLeft, PanelLeft, Calculator } from 'lucide-react';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useAltStore } from '@/lib/zustand/userStore';
 import xss from 'xss';
+import { ObjectiveQuestions } from './options';
 
 export const QuestionBodyContent = ({
   onToggleSidebar,
@@ -25,12 +23,28 @@ export const QuestionBodyContent = ({
   const previousQuestion = useAltStore((state) => state.previousQuestion);
   const currentQuestion = useAltStore((state) => state.currentQuestion);
   const examState = useAltStore((state) => state.examState);
-
+  const setExamState = useAltStore((state) => state.setExamState);
+  const examDuration = useAltStore((state) => state.examDuration);
   const questionIndex = (currentQuestion ?? 1) - 1;
-
+  
   const sanitizedHtml = xss(
     examState?.questions?.[questionIndex]?.question ?? ''
   );
+
+    const handleOptionChange = (optionId: string) => {
+    const updatedQuestions = examState?.questions.map((question, index) =>
+      (index + 1) === currentQuestion
+        ? { ...question, userAnswer: (optionId).toLocaleLowerCase() }
+        : question
+    );
+    console.log({examDuration})
+    setExamState({
+      duration: examDuration,
+      questions: updatedQuestions ?? examState?.questions ?? [],
+      resultId: examState?.resultId ?? "",
+      subject: examState?.subject ?? ""
+    })
+  };  
 
   return (
     <Card className='w-full bg-card max-w-2xl p-4 shadow-md'>
@@ -55,34 +69,15 @@ export const QuestionBodyContent = ({
           className='text-sm text-gray-900 dark:text-gray-300'
           dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
         />
-        {/* <div className='text-sm text-gray-900 dark:text-gray-300'>
-          {examState?.questions?.[questionIndex]?.question}
-        </div> */}
       </CardHeader>
 
-      <CardContent className='px-0'>
-        <RadioGroup defaultValue='option-one'>
-          {['Option One', 'Option Two', 'Option Three', 'Option Four'].map(
-            (option, i) => {
-              const value = `option-${i + 1}`;
-              const labelId = `option-${i + 1}`;
-              const optionLetter = String.fromCharCode(65 + i);
-              return (
-                <div
-                  key={value}
-                  className='flex cursor-pointer items-center space-x-2 w-full px-2 py-3 border rounded'
-                >
-                  <RadioGroupItem value={value} id={labelId} />
-                  <div className='flex items-center justify-center text-center text-sm rounded-full h-6 w-6 bg-gray-500 text-white'>
-                    {optionLetter}
-                  </div>
-                  <Label htmlFor={labelId}>{option}</Label>
-                </div>
-              );
-            }
-          )}
-        </RadioGroup>
-      </CardContent>
+      <ObjectiveQuestions
+        action={handleOptionChange}
+        options={
+          examState?.questions?.[questionIndex]?.options ?? { a: '', b: '', c: '', d: '' }
+        }
+        selected={examState?.questions?.[questionIndex]?.userAnswer ?? ''}
+      />
 
       <Separator />
 
