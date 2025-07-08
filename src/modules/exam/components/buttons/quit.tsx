@@ -14,7 +14,7 @@ import { X, Info } from 'lucide-react';
 import { useExamService } from '../../services';
 
 export default function QuitExamButton() {
-  const { endExam, endExamLoading } = useExamService()
+  const { endExam, endExamLoading } = useExamService();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -41,10 +41,11 @@ export default function QuitExamButton() {
         </AlertDialogHeader>
         <div className='flex flex-row justify-between items-center'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button className='bg-destructive hover:bg-destructive/80'
-            onClick={() => endExam("exit")}
+          <Button
+            className='bg-destructive hover:bg-destructive/80'
+            onClick={() => endExam('exit')}
           >
-            {endExamLoading ? "Loading...." : "Quit"}
+            {endExamLoading ? 'Loading....' : 'Quit'}
           </Button>
         </div>
       </AlertDialogContent>

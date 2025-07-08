@@ -4,8 +4,15 @@ import { Button } from '@/components/ui/button';
 import { useExamService } from '@/modules/exam/services';
 
 export default function ExamResultPage() {
-
-  const { clearExamSettings ,examPercentage, attemptedQuestion, failedQuestions, passedQuestions, skippedQuestions, totalQuestions } = useExamService()
+  const {
+    clearExamSettings,
+    examPercentage,
+    attemptedQuestion,
+    failedQuestions,
+    passedQuestions,
+    skippedQuestions,
+    totalQuestions,
+  } = useExamService();
 
   return (
     <main className='w-full flex justify-center mt-20'>
@@ -26,19 +33,27 @@ export default function ExamResultPage() {
           </div>
           <div className='w-full max-w-[350px] flex flex-row justify-between items-center'>
             <p className='font-bold'>Attempted Questions</p>
-            <p className='text-gray-700 dark:text-gray-300'>{attemptedQuestion}</p>
+            <p className='text-gray-700 dark:text-gray-300'>
+              {attemptedQuestion}
+            </p>
           </div>
           <div className='w-full max-w-[350px] flex flex-row justify-between items-center'>
             <p className='font-bold'>Skipped Questions</p>
-            <p className='text-gray-700 dark:text-gray-300'>{skippedQuestions}</p>
+            <p className='text-gray-700 dark:text-gray-300'>
+              {skippedQuestions}
+            </p>
           </div>
           <div className='w-full max-w-[350px] flex flex-row justify-between items-center'>
             <p className='font-bold'>Correctly Answered Questions</p>
-            <p className='text-gray-700 dark:text-gray-300'>{passedQuestions}</p>
+            <p className='text-gray-700 dark:text-gray-300'>
+              {passedQuestions}
+            </p>
           </div>
           <div className='w-full max-w-[350px] flex flex-row justify-between items-center'>
             <p className='font-bold'>Wrong Questions</p>
-            <p className='text-gray-700 dark:text-gray-300'>{failedQuestions}</p>
+            <p className='text-gray-700 dark:text-gray-300'>
+              {failedQuestions}
+            </p>
           </div>
         </div>
         <div className='mt-10 flex justify-between'>

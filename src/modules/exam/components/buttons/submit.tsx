@@ -15,7 +15,7 @@ import { Info } from 'lucide-react';
 import { useExamService } from '../../services';
 
 export default function SubmitExamButton() {
-  const { endExam } = useExamService()
+  const { endExam } = useExamService();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -38,8 +38,9 @@ export default function SubmitExamButton() {
         </AlertDialogHeader>
         <div className='flex flex-row justify-between items-center'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='bg-green-500 hover:bg-green-600 font-bold py-2 px-4 flex flex-row items-center justify-center gap-2'
-            onClick={() => endExam("submit")}
+          <AlertDialogAction
+            className='bg-green-500 hover:bg-green-600 font-bold py-2 px-4 flex flex-row items-center justify-center gap-2'
+            onClick={() => endExam('submit')}
           >
             Submit
           </AlertDialogAction>

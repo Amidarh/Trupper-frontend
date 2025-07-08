@@ -25,7 +25,8 @@ export const useAltStore = create<AltStore>()(
         set({ isAuthenticated }),
       setExamState: (examState: examStateType) => set({ examState }),
       currentQuestion: null,
-      setCurrentQuestion: (currentQuestion: number | null) => set({ currentQuestion }),
+      setCurrentQuestion: (currentQuestion: number | null) =>
+        set({ currentQuestion }),
       nextQuestion: () =>
         set((state) => ({
           currentQuestion:

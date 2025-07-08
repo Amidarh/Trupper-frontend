@@ -1,11 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
+import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ChevronRight, ChevronLeft, PanelLeft, Calculator } from 'lucide-react';
 import { useAltStore } from '@/lib/zustand/userStore';
@@ -26,25 +22,25 @@ export const QuestionBodyContent = ({
   const setExamState = useAltStore((state) => state.setExamState);
   const examDuration = useAltStore((state) => state.examDuration);
   const questionIndex = (currentQuestion ?? 1) - 1;
-  
+
   const sanitizedHtml = xss(
     examState?.questions?.[questionIndex]?.question ?? ''
   );
 
-    const handleOptionChange = (optionId: string) => {
+  const handleOptionChange = (optionId: string) => {
     const updatedQuestions = examState?.questions.map((question, index) =>
-      (index + 1) === currentQuestion
-        ? { ...question, userAnswer: (optionId).toLocaleLowerCase() }
+      index + 1 === currentQuestion
+        ? { ...question, userAnswer: optionId.toLocaleLowerCase() }
         : question
     );
-    console.log({examDuration})
+    console.log({ examDuration });
     setExamState({
       duration: examDuration,
       questions: updatedQuestions ?? examState?.questions ?? [],
-      resultId: examState?.resultId ?? "",
-      subject: examState?.subject ?? ""
-    })
-  };  
+      resultId: examState?.resultId ?? '',
+      subject: examState?.subject ?? '',
+    });
+  };
 
   return (
     <Card className='w-full bg-card max-w-2xl p-4 shadow-md'>
@@ -74,7 +70,12 @@ export const QuestionBodyContent = ({
       <ObjectiveQuestions
         action={handleOptionChange}
         options={
-          examState?.questions?.[questionIndex]?.options ?? { a: '', b: '', c: '', d: '' }
+          examState?.questions?.[questionIndex]?.options ?? {
+            a: '',
+            b: '',
+            c: '',
+            d: '',
+          }
         }
         selected={examState?.questions?.[questionIndex]?.userAnswer ?? ''}
       />
