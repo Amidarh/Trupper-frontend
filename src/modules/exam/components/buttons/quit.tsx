@@ -3,7 +3,6 @@
 // import { useCallback } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -12,8 +11,10 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { X, Info } from 'lucide-react';
+import { useExamService } from '../../services';
 
 export default function QuitExamButton() {
+  const { endExam, endExamLoading } = useExamService()
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -40,9 +41,11 @@ export default function QuitExamButton() {
         </AlertDialogHeader>
         <div className='flex flex-row justify-between items-center'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='bg-destructive hover:bg-destructive/80'>
-            Quit
-          </AlertDialogAction>
+          <Button className='bg-destructive hover:bg-destructive/80'
+            onClick={() => endExam("exit")}
+          >
+            {endExamLoading ? "Loading...." : "Quit"}
+          </Button>
         </div>
       </AlertDialogContent>
     </AlertDialog>

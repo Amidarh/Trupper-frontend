@@ -4,8 +4,11 @@ import { ExamCardType } from '@/types/examCards.types';
 import moment from 'moment';
 import { ExamCardOptionsButton } from '../buttons/options';
 import ExamDetailsButton from '../modal/examInfo';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export const ExamCard = ({ data }: { data: ExamCardType }) => {
+  const router = useRouter()
   return (
     <Card className='p-3 gap-0 w-full max-w-[290px] min-h-[220px]'>
       <CardHeader className='flex flex-row justify-between items-center w-full px-0'>
@@ -39,7 +42,13 @@ export const ExamCard = ({ data }: { data: ExamCardType }) => {
         </div>
         {/* </div> */}
         <div className='mt-3'>
-          <ExamDetailsButton title='Start Exam' data={data} />
+          {data.exam.subjectToBeWritten > 1 ? <ExamDetailsButton title='Start Exam' data={data} /> : 
+            <Button className='text-left w-full text-sm flex flex-row items-center cursor-pointer p-1 rounded-md'
+              onClick={() => router.push(`/my-exams/${data.id}`)}
+            >
+              <p className='text-sm'>Open</p>
+            </Button>
+          }
         </div>
       </CardContent>
     </Card>

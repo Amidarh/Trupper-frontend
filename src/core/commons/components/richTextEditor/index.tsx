@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 import MenuBar from './menu-bar';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
-import { cn } from '@/lib/utils';
 
 interface RichTextEditorProps {
   content: string;

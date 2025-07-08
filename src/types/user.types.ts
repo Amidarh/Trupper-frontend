@@ -87,9 +87,9 @@ export interface AltStore {
   setExamDuration: (examDuration: number) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   examState: examStateType | null;
-  setExamState: (data: examStateType) => void;
+  setExamState: (data: examStateType | null) => void;
   currentQuestion: number | null;
-  setCurrentQuestion: (currentQuestion: number) => void;
+  setCurrentQuestion: (currentQuestion: number | null) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;
 }
