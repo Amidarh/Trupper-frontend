@@ -47,7 +47,11 @@ export const ExamCard = ({ data }: { data: ExamCardType }) => {
           ) : (
             <Button
               className='text-left w-full text-sm flex flex-row items-center cursor-pointer p-1 rounded-md'
-              onClick={() => router.push(`/my-exams/${data.id}`)}
+              onClick={() =>
+                router.push(
+                  `/my-exams/${data.id}?cat=${data.category.name}&catId=${data.category.id}`
+                )
+              }
             >
               <p className='text-sm'>Open</p>
             </Button>

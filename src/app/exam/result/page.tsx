@@ -14,7 +14,7 @@ export default function ExamResultPage() {
     skippedQuestions,
     totalQuestions,
   } = useExamService();
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <main className='w-full flex justify-center mt-20'>
@@ -62,9 +62,7 @@ export default function ExamResultPage() {
           <Button variant='outline' onClick={clearExamSettings}>
             Return Home
           </Button>
-          <Button
-            onClick={() => router.push('/exam')}
-          >See Answers</Button>
+          <Button onClick={() => router.push('/exam')}>See Answers</Button>
         </div>
       </div>
     </main>

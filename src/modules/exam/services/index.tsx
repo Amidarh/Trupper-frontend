@@ -56,12 +56,12 @@ export function useExamService() {
         toast.success(res?.data.message);
         if (type === 'submit') {
           router.push('/exam/result');
-          setIsExamOn(false)
+          setIsExamOn(false);
         } else {
           setExamDuration(0);
           setCurrentQuestion(null);
           setExamState(null);
-          setIsExamOn(false)
+          setIsExamOn(false);
           router.push('/');
         }
       }
@@ -80,7 +80,7 @@ export function useExamService() {
     setExamDuration(0);
     setCurrentQuestion(null);
     setExamState(null);
-    setIsExamOn(false)
+    setIsExamOn(false);
     router.push('/');
   };
 

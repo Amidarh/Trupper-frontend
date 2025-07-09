@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/core/services/api';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { TrendingUp } from 'lucide-react';
+// import { TrendingUp } from 'lucide-react';
 import {
   Bar,
   BarChart,
@@ -13,7 +13,7 @@ import {
 import {
   Card,
   CardContent,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -48,7 +48,7 @@ const chartConfig = {
 
 export function PerformanceBarChart() {
   return (
-    <Card className='w-[80%]'>
+    <Card className='w-[80%] max-lg:w-full'>
       <CardHeader>
         <CardTitle>Completed CBT Exams</CardTitle>
       </CardHeader>

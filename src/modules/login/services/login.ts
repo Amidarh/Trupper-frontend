@@ -11,6 +11,7 @@ export function useLogin() {
   const router = useRouter();
   const [serverError, setServerError] = useState('');
   const setUser = useAltStore((state) => state.setUser);
+  const organization = useAltStore((state) => state.organization);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -30,16 +31,13 @@ export function useLogin() {
       const { user, token, refreshToken } = res.data.doc;
       const isProduction = process.env.NODE_ENV === 'production';
       const secureFlag = isProduction ? '; secure' : '';
-      const orgName = (user.organization?.name || 'default').replace(
-        /\s+/g,
-        '_'
-      );
+      const orgName = (organization?.name || 'default').replace(/\s+/g, '_');
 
       // Set cookies client-side
       document.cookie = `${orgName}-accessToken=${token}; path=/${secureFlag}; SameSite=Strict`;
       document.cookie = `${orgName}-refreshToken=${refreshToken}; path=/${secureFlag}; SameSite=Strict`;
       document.cookie = `role=${user.role.toUpperCase()}; path=/${secureFlag}; SameSite=Strict`;
-      document.cookie = `organizationId=${user.organization?.id || 'default'}; path=/${secureFlag}; SameSite=Strict`;
+      document.cookie = `organizationId=${organization?.id || 'default'}; path=/${secureFlag}; SameSite=Strict`;
 
       // Debug cookies
       console.log('Cookies after setting:', document.cookie);

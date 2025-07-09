@@ -10,19 +10,18 @@ import { useRouter } from 'next/navigation';
 export const ExamHeader = () => {
   const currentQuestion = useAltStore((state) => state.currentQuestion);
   const examState = useAltStore((state) => state.examState);
-    const isExamOn = useAltStore((state) => state.isExamOn);
-    const router = useRouter()
+  const isExamOn = useAltStore((state) => state.isExamOn);
+  const router = useRouter();
   return (
     <nav className='flex flex-col gap-2 items-center justify-between px-4 py-2 shadow-sm w-screen border-b'>
       <main className='w-full flex flex-row items-center justify-between'>
-        {isExamOn ? <QuitExamButton /> : 
-          <Button 
-            variant="outline"
-            onClick={() => router.back()}
-          >
+        {isExamOn ? (
+          <QuitExamButton />
+        ) : (
+          <Button variant='outline' onClick={() => router.back()}>
             Back
           </Button>
-        }
+        )}
 
         <div className='flex-col items-center justify-center hidden sm:flex'>
           <h1 className='text-lg'>JAMB Exam</h1>
@@ -50,14 +49,13 @@ export const ExamHeader = () => {
           <div className='hidden sm:flex'>
             <ModeToggle />
           </div>
-          {isExamOn ? <SubmitExamButton /> : 
-            <Button 
-              variant="outline"
-              onClick={() => router.push('/dashboard')}
-            >
+          {isExamOn ? (
+            <SubmitExamButton />
+          ) : (
+            <Button variant='outline' onClick={() => router.push('/dashboard')}>
               Dashboard
             </Button>
-          }
+          )}
         </div>
       </main>
       <Progress

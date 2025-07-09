@@ -10,7 +10,8 @@ import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
 import { useRouter } from 'next/navigation';
 import { useAltStore } from '@/lib/zustand/userStore';
-import { SubjectType } from '@/types/subject.types';
+// import { SubjectType } from '@/types/subject.types';
+import { ExamCardSubjectType } from '@/types/examCards.types';
 
 export function useMockExamsService() {
   const [serverError, setServerError] = useState('');
@@ -19,7 +20,9 @@ export function useMockExamsService() {
   const setUser = useAltStore((state) => state.setUser);
   const setCurrentQuestion = useAltStore((state) => state.setCurrentQuestion);
   const setIsExamOn = useAltStore((state) => state.setIsExamOn);
-  const [ categorySubjectList, setCategorySubjectList ] = useState<SubjectType[] | null>(null)
+  const [categorySubjectList, setCategorySubjectList] = useState<
+    ExamCardSubjectType[] | null
+  >(null);
   const router = useRouter();
 
   const { data, error, isLoading, mutate } = useSWR<ExamCardDataType>(
@@ -55,7 +58,7 @@ export function useMockExamsService() {
   };
 
   const getExamCardSubject = async (id: string) => {
-    try{
+    try {
       setLoading(true);
       setServerError('');
       const res = await api.get(`/exam-card/exam/${id}`);
@@ -63,7 +66,7 @@ export function useMockExamsService() {
         setCategorySubjectList(res.data.doc);
       }
       setLoading(false);
-    } catch(error: any){
+    } catch (error: any) {
       setLoading(false);
       setServerError(
         error?.message || 'An error occurred while getting this card details'
@@ -72,7 +75,7 @@ export function useMockExamsService() {
         error?.message || 'An error occurred while getting this card details'
       );
     }
-  }
+  };
 
   const deleteExamCard = async (id: string | undefined) => {
     try {
@@ -111,7 +114,7 @@ export function useMockExamsService() {
         setUser(user);
         setLoading(false);
         setCurrentQuestion(1);
-        setIsExamOn(true)
+        setIsExamOn(true);
       }
       console.log(response.data);
     } catch (error: any) {
@@ -138,6 +141,6 @@ export function useMockExamsService() {
     loading,
     startExam,
     categorySubjectList,
-    getExamCardSubject
+    getExamCardSubject,
   };
 }

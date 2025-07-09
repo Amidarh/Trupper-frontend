@@ -10,9 +10,9 @@ export const MyDashboard = () => {
   return (
     <main>
       <h1>Quick Overview</h1>
-      <section className='mt-4 flex flex-row gap-4'>
+      <section className='mt-4 flex max-lg:flex-col flex-row gap-4 max-lg:mb-5'>
         <PerformanceBarChart />
-        <Card className='grid grid-cols-2 gap-4 w-full px-4 max-w-md'>
+        <Card className='grid grid-cols-2 gap-4 w-full px-4 max-lg:w-full lg:max-w-md'>
           <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />
           <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />
           <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />

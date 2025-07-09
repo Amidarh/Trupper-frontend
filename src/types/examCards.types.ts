@@ -14,6 +14,18 @@ export interface ExamCardType {
   status: 'active' | 'inactive';
 }
 
+export interface ExamCardSubjectType {
+  id: string;
+  name: string;
+  exam: ExamType;
+  subjects: SubjectType[];
+  category: CategoryTypes;
+  createdAt: string;
+  updatedAt: string;
+  user: IUser;
+  status: 'active' | 'inactive';
+}
+
 export interface ExamCardDataType {
   doc: ExamCardType[];
 }

@@ -18,7 +18,7 @@ export const QuestionBodyContent = ({
   const nextQuestion = useAltStore((state) => state.nextQuestion);
   const previousQuestion = useAltStore((state) => state.previousQuestion);
   const currentQuestion = useAltStore((state) => state.currentQuestion);
-  const isExamOn = useAltStore((state) => state.isExamOn)
+  const isExamOn = useAltStore((state) => state.isExamOn);
   const examState = useAltStore((state) => state.examState);
   const setExamState = useAltStore((state) => state.setExamState);
   const examDuration = useAltStore((state) => state.examDuration);
@@ -29,7 +29,7 @@ export const QuestionBodyContent = ({
   );
 
   const handleOptionChange = (optionId: string) => {
-    if(isExamOn){
+    if (isExamOn) {
       const updatedQuestions = examState?.questions.map((question, index) =>
         index + 1 === currentQuestion
           ? { ...question, userAnswer: optionId.toLocaleLowerCase() }
