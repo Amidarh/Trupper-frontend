@@ -10,6 +10,7 @@ export function useExamService() {
   const examDuration = useAltStore((state) => state.examDuration);
   const setExamDuration = useAltStore((state) => state.setExamDuration);
   const setExamState = useAltStore((state) => state.setExamState);
+  const setIsExamOn = useAltStore((state) => state.setIsExamOn);
   const setCurrentQuestion = useAltStore((state) => state.setCurrentQuestion);
   const [serverError, setServerError] = useState('');
   const [endExamLoading, setEndExamLoading] = useState(false);
@@ -55,10 +56,12 @@ export function useExamService() {
         toast.success(res?.data.message);
         if (type === 'submit') {
           router.push('/exam/result');
+          setIsExamOn(false)
         } else {
           setExamDuration(0);
           setCurrentQuestion(null);
           setExamState(null);
+          setIsExamOn(false)
           router.push('/');
         }
       }
@@ -77,6 +80,7 @@ export function useExamService() {
     setExamDuration(0);
     setCurrentQuestion(null);
     setExamState(null);
+    setIsExamOn(false)
     router.push('/');
   };
 

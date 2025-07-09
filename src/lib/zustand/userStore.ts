@@ -14,7 +14,9 @@ export const useAltStore = create<AltStore>()(
       organization: null,
       organizationId: null,
       examState: null,
+      isExamOn: false,
       examDuration: 0,
+      setIsExamOn: (isExamOn: boolean) => set({ isExamOn }),
       setUser: (user: IUser) => set({ user }),
       clearUser: () => set({ user: null }),
       setOrganization: (organization: IOrganization) => set({ organization }),
@@ -23,7 +25,7 @@ export const useAltStore = create<AltStore>()(
       isAuthenticated: false,
       setIsAuthenticated: (isAuthenticated: boolean) =>
         set({ isAuthenticated }),
-      setExamState: (examState: examStateType) => set({ examState }),
+      setExamState: (examState: examStateType | null) => set({ examState }),
       currentQuestion: null,
       setCurrentQuestion: (currentQuestion: number | null) =>
         set({ currentQuestion }),

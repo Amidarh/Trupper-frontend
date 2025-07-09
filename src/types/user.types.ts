@@ -77,6 +77,8 @@ export interface AltStore {
   user: IUser | null | undefined;
   organization: IOrganization | null;
   organizationId: string | null;
+  isExamOn: boolean;
+  setIsExamOn: (data: boolean) => void;
   setUser: (user: IUser) => void;
   clearUser: () => void;
   setOrganization: (organization: IOrganization) => void;

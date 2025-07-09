@@ -18,6 +18,7 @@ export const QuestionBodyContent = ({
   const nextQuestion = useAltStore((state) => state.nextQuestion);
   const previousQuestion = useAltStore((state) => state.previousQuestion);
   const currentQuestion = useAltStore((state) => state.currentQuestion);
+  const isExamOn = useAltStore((state) => state.isExamOn)
   const examState = useAltStore((state) => state.examState);
   const setExamState = useAltStore((state) => state.setExamState);
   const examDuration = useAltStore((state) => state.examDuration);
@@ -28,18 +29,20 @@ export const QuestionBodyContent = ({
   );
 
   const handleOptionChange = (optionId: string) => {
-    const updatedQuestions = examState?.questions.map((question, index) =>
-      index + 1 === currentQuestion
-        ? { ...question, userAnswer: optionId.toLocaleLowerCase() }
-        : question
-    );
-    console.log({ examDuration });
-    setExamState({
-      duration: examDuration,
-      questions: updatedQuestions ?? examState?.questions ?? [],
-      resultId: examState?.resultId ?? '',
-      subject: examState?.subject ?? '',
-    });
+    if(isExamOn){
+      const updatedQuestions = examState?.questions.map((question, index) =>
+        index + 1 === currentQuestion
+          ? { ...question, userAnswer: optionId.toLocaleLowerCase() }
+          : question
+      );
+      console.log({ examDuration });
+      setExamState({
+        duration: examDuration,
+        questions: updatedQuestions ?? examState?.questions ?? [],
+        resultId: examState?.resultId ?? '',
+        subject: examState?.subject ?? '',
+      });
+    }
   };
 
   return (
@@ -60,7 +63,7 @@ export const QuestionBodyContent = ({
             />
           </div>
         </div>
-        <h1 className='font-bold'>Question 1</h1>
+        <h1 className='font-bold'>Question {currentQuestion}</h1>
         <div
           className='text-sm text-gray-900 dark:text-gray-300'
           dangerouslySetInnerHTML={{ __html: sanitizedHtml }}

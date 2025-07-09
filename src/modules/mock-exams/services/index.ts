@@ -10,6 +10,7 @@ import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
 import { useRouter } from 'next/navigation';
 import { useAltStore } from '@/lib/zustand/userStore';
+import { SubjectType } from '@/types/subject.types';
 
 export function useMockExamsService() {
   const [serverError, setServerError] = useState('');
@@ -17,6 +18,8 @@ export function useMockExamsService() {
   const setExamState = useAltStore((state) => state.setExamState);
   const setUser = useAltStore((state) => state.setUser);
   const setCurrentQuestion = useAltStore((state) => state.setCurrentQuestion);
+  const setIsExamOn = useAltStore((state) => state.setIsExamOn);
+  const [ categorySubjectList, setCategorySubjectList ] = useState<SubjectType[] | null>(null)
   const router = useRouter();
 
   const { data, error, isLoading, mutate } = useSWR<ExamCardDataType>(
@@ -50,6 +53,26 @@ export function useMockExamsService() {
       );
     }
   };
+
+  const getExamCardSubject = async (id: string) => {
+    try{
+      setLoading(true);
+      setServerError('');
+      const res = await api.get(`/exam-card/exam/${id}`);
+      if (res.status === 200) {
+        setCategorySubjectList(res.data.doc);
+      }
+      setLoading(false);
+    } catch(error: any){
+      setLoading(false);
+      setServerError(
+        error?.message || 'An error occurred while getting this card details'
+      );
+      toast.error(
+        error?.message || 'An error occurred while getting this card details'
+      );
+    }
+  }
 
   const deleteExamCard = async (id: string | undefined) => {
     try {
@@ -88,6 +111,7 @@ export function useMockExamsService() {
         setUser(user);
         setLoading(false);
         setCurrentQuestion(1);
+        setIsExamOn(true)
       }
       console.log(response.data);
     } catch (error: any) {
@@ -113,5 +137,7 @@ export function useMockExamsService() {
     deleteExamCard,
     loading,
     startExam,
+    categorySubjectList,
+    getExamCardSubject
   };
 }

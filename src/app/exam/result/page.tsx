@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useExamService } from '@/modules/exam/services';
+import { useRouter } from 'next/navigation';
 
 export default function ExamResultPage() {
   const {
@@ -13,6 +14,7 @@ export default function ExamResultPage() {
     skippedQuestions,
     totalQuestions,
   } = useExamService();
+  const router = useRouter()
 
   return (
     <main className='w-full flex justify-center mt-20'>
@@ -60,7 +62,9 @@ export default function ExamResultPage() {
           <Button variant='outline' onClick={clearExamSettings}>
             Return Home
           </Button>
-          <Button>See Answers</Button>
+          <Button
+            onClick={() => router.push('/exam')}
+          >See Answers</Button>
         </div>
       </div>
     </main>

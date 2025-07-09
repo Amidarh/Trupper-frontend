@@ -4,14 +4,25 @@ import { useAltStore } from '@/lib/zustand/userStore';
 import { Countdown } from '../countdown';
 import QuitExamButton from '../buttons/quit';
 import SubmitExamButton from '../buttons/submit';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export const ExamHeader = () => {
   const currentQuestion = useAltStore((state) => state.currentQuestion);
   const examState = useAltStore((state) => state.examState);
+    const isExamOn = useAltStore((state) => state.isExamOn);
+    const router = useRouter()
   return (
     <nav className='flex flex-col gap-2 items-center justify-between px-4 py-2 shadow-sm w-screen border-b'>
       <main className='w-full flex flex-row items-center justify-between'>
-        <QuitExamButton />
+        {isExamOn ? <QuitExamButton /> : 
+          <Button 
+            variant="outline"
+            onClick={() => router.back()}
+          >
+            Back
+          </Button>
+        }
 
         <div className='flex-col items-center justify-center hidden sm:flex'>
           <h1 className='text-lg'>JAMB Exam</h1>
@@ -34,12 +45,19 @@ export const ExamHeader = () => {
         </div>
 
         <div className='flex flex-row items-center gap-2'>
-          <Countdown />
+          {isExamOn && <Countdown />}
           {/* <p className='hidden sm:flex text-green-600'>10:20</p> */}
           <div className='hidden sm:flex'>
             <ModeToggle />
           </div>
-          <SubmitExamButton />
+          {isExamOn ? <SubmitExamButton /> : 
+            <Button 
+              variant="outline"
+              onClick={() => router.push('/dashboard')}
+            >
+              Dashboard
+            </Button>
+          }
         </div>
       </main>
       <Progress
