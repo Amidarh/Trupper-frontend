@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LogOut } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   PERMISSIONS,
   MENU_ITEMS,
@@ -95,20 +96,20 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
         )}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMenu className='p-3 flex flex-col gap-4'>
+        <SidebarMenu className={cn('p-3 flex flex-col gap-4', (userRole?.toLowerCase() === "user") && "mt-5" )}>
           {Object.entries(groupedMenuItems).map(([group, items]) => (
             <div key={group} className='flex flex-col gap-1'>
-              <div className='px-2 mb-2'>
+              {(userRole?.toLowerCase() !== "user") && <div className='px-2 mb-2'>
                 <span className='text-xs font-medium text-muted-foreground'>
                   {formatGroupName(group)}
                 </span>
-              </div>
+              </div>}
               {items.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className='rounded-2xl'>
                     <Link
                       href={item.href}
-                      className={`h-[40px] flex items-center gap-2 rounded-md px-2
+                      className={`h-[40px] flex items-center gap-2 rounded-2xl px-2
                         ${
                           isActive(item.href)
                             ? 'bg-primary text-primary-foreground'

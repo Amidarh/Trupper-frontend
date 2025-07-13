@@ -3,7 +3,7 @@ import autoTable from 'jspdf-autotable';
 import Papa from 'papaparse';
 import { toast } from 'sonner';
 import { codeType } from '@/modules/codes/types';
-import { IOrganization } from '@/types/user.types';
+import { IOrganization } from '@/types';
 
 // interface Category {
 //     _id: string;

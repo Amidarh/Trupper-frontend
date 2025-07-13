@@ -3,6 +3,7 @@ export interface IOrganization {
   name: string;
   email: string;
   logo?: string;
+  image?: string;
   subscription?: 'free' | string;
   subscriptionId?: string; // references Pricing
   status?: 'active' | 'blocked' | 'suspended';
@@ -15,4 +16,5 @@ export interface IOrganization {
   defaultPassword?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  isOnboarded: boolean;
 }

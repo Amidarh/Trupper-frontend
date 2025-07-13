@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/core/services/api';
-import useSWR from 'swr';
 import { useAltStore } from '@/lib/zustand/userStore';
 import { useState } from 'react';
-import { IOrganization } from '@/types/organization.types';
+import { IOrganization } from '@/types';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -16,7 +16,7 @@ import {
 export const useCustomizationService = () => {
   const organization = useAltStore((state) => state.organization);
   const setOrganization = useAltStore((state) => state.setOrganization);
-  const [settings, setSettings] = useState<IOrganization | null>(null);
+  // const [settings, setSettings] = useState<IOrganization | null>(null);
   const [preference, setPreference] = useState<IOrganization | null>(null);
   const [preferenceLoading, setPreferenceLoading] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string | null>(null);

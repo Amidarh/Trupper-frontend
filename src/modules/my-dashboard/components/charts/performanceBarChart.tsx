@@ -23,21 +23,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-  { month: 'July', desktop: 192 },
-  { month: 'August', desktop: 256 },
-  { month: 'September', desktop: 178 },
-  { month: 'October', desktop: 310 },
-  { month: 'November', desktop: 245 },
-  { month: 'December', desktop: 289 },
-];
+import { ResultType } from '@/types';
 
 const chartConfig = {
   desktop: {
@@ -46,7 +32,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function PerformanceBarChart() {
+export function PerformanceBarChart({ data }: { data: ResultType[] | undefined }) {
   return (
     <Card className='w-[80%] max-lg:w-full'>
       <CardHeader>
@@ -55,20 +41,20 @@ export function PerformanceBarChart() {
       <CardContent className='h-[200px] p-6'>
         <ChartContainer config={chartConfig} className='h-full w-full'>
           <ResponsiveContainer width='100%' height='100%'>
-            <BarChart data={chartData} margin={{ top: 20 }}>
+            <BarChart data={data} margin={{ top: 20 }}>
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey='month'
+                dataKey='exam.acronym'
                 tickLine={false}
-                tickMargin={10}
+                tickMargin={0}
                 axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
+                tickFormatter={(value) => value.slice(0, 8)}
               />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey='desktop' fill='var(--color-desktop)' radius={8}>
+              <Bar dataKey='score' fill='var(--color-desktop)' radius={8}>
                 <LabelList
                   position='top'
                   offset={12}

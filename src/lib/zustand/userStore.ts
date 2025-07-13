@@ -5,7 +5,7 @@ import {
   AltStore,
   IOrganization,
   examStateType,
-} from '@/types/user.types';
+} from '@/types';
 
 export const useAltStore = create<AltStore>()(
   persist(

@@ -4,19 +4,25 @@ import { StatsCard } from '../components/cards/statsCard';
 import { Sparkles, User2, SquareLibrary, PenBox } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NotificationsTable } from '../components/tables/notifications';
+import { useMyDashboardService } from '../services';
+import { NewsCarousel } from '../components/carousel';
 // import { TopPerformersTable } from '../components/tables/topPerformers';
 
 export const MyDashboard = () => {
+  const { data } = useMyDashboardService()
   return (
     <main>
       <h1>Quick Overview</h1>
+      <div className='mt-3 mb-4'>
+        <NewsCarousel/>
+      </div>
       <section className='mt-4 flex max-lg:flex-col flex-row gap-4 max-lg:mb-5'>
-        <PerformanceBarChart />
+        <PerformanceBarChart data={data?.results} />
         <Card className='grid grid-cols-2 gap-4 w-full px-4 max-lg:w-full lg:max-w-md'>
-          <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />
-          <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />
-          <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />
-          <StatsCard Icon={User2} stat={10} title='Total Exam Taken' />
+          <StatsCard Icon={User2} stat={data?.stats.totalExams ?? 0} title='Total Exam Taken' />
+          <StatsCard Icon={User2} stat={`${Math.round(data?.stats.averageScore ?? 0)}%`} title='Average Score' />
+          <StatsCard Icon={User2} stat={Math.round(data?.stats.totalAttemptedQuestions ?? 0)} title='Tried Questions' />
+          <StatsCard Icon={User2} stat={data?.stats.totalPassedQuestions ?? 0} title='Correct Questions' />
         </Card>
       </section>
       <div className='flex flex-row gap-2 items-center mt-3'>

@@ -3,6 +3,7 @@ import { UserRole } from '../core/constants/sidebar';
 import { CategoryTypes } from './categories.types';
 import { SubCategoryTypes } from './categories.types';
 import { QuestionType } from './question.types';
+import { IOrganization } from './organization.types';
 
 export interface IUser {
   id: string;
@@ -50,27 +51,6 @@ export interface examStateType {
   questions: QuestionType[];
   subject: string;
   resultId: string;
-}
-
-export interface IOrganization {
-  id: string;
-  name: string;
-  email: string;
-  logo?: string;
-  image?: string;
-  subscription?: 'free' | string;
-  subscriptionId?: string; // references Pricing
-  status?: 'active' | 'blocked' | 'suspended';
-  enableSignup?: boolean;
-  codeSignUp?: boolean;
-  defaultCategory?: string;
-  defaultSubCategory?: string;
-  domain?: string;
-  admin?: string;
-  defaultPassword?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  isOnboarded: boolean;
 }
 
 export interface AltStore {

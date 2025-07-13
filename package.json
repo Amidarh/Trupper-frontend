@@ -60,6 +60,8 @@
     "date-fns": "^4.1.0",
     "dnd-kit": "^0.0.2",
     "dompurify": "^3.2.6",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "jsdom": "^26.1.0",
     "jspdf": "^3.0.1",

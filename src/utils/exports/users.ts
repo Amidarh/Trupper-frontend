@@ -3,7 +3,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import Papa from 'papaparse';
 import { toast } from 'sonner';
-import { IOrganization, IUser } from '@/types/user.types';
+import { IOrganization, IUser } from '@/types';
 import moment from 'moment';
 
 // Define column mappings for both CSV and PDF exports

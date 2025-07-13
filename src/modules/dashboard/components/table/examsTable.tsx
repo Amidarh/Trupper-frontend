@@ -19,7 +19,7 @@ export function ExamTable() {
   const { data } = useExamService();
   return (
     <Card className='w-full'>
-      <CardHeader className='fl ex flex-row items-center justify-between space-y-0 pl-2 py-0'>
+      <CardHeader className='flex flex-row items-center justify-between space-y-0 pl-2 py-0'>
         <h1 className='text-2xl'>Exams</h1>
         <Link href={'/exams'}>
           <SquareArrowOutUpRight size={18} className='cursor-pointer' />
