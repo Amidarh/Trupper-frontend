@@ -1,5 +1,5 @@
 export const getStatusBadge = (status: string) => {
-  const baseClass = 'px-2 py-1 rounded-lg px-2 text-[13px]';
+  const baseClass = 'px-2 py-1 rounded-2xl px-2 text-[13px]';
   switch (status.toLowerCase()) {
     case 'active':
       return (
