@@ -76,7 +76,7 @@ export const PERMISSIONS = {
   SUB_ADMIN: ['dashboard', 'schools'],
   USER: [
     'dashboard',
-    'ai-examiner',
+    // 'ai-examiner',
     'my-profile',
     'my-exams',
     'result',
