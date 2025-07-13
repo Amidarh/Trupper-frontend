@@ -65,6 +65,18 @@ export const getStatusBadge = (status: string) => {
           Completed
         </span>
       );
+    case 'finished':
+      return (
+        <span className={`${baseClass} bg-green-200 text-green-800`}>
+          finished
+        </span>
+      );
+    case 'writing':
+      return (
+        <span className={`${baseClass} bg-purple-200 text-purple-800`}>
+          writing
+        </span>
+      );
     case 'blocked':
       return (
         <span className={`${baseClass} bg-red-200 text-red-800`}>Blocked</span>

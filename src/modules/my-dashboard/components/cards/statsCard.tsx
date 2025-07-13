@@ -7,7 +7,7 @@ export const StatsCard = ({
   Icon,
 }: {
   title: string;
-  stat: number | string;
+  stat: number | undefined | string;
   Icon: IconType;
 }) => {
   return (
@@ -17,7 +17,7 @@ export const StatsCard = ({
         <Icon className='h-4 w-4 text-gray-500' />
       </CardHeader>
       <CardContent className='p-3'>
-        <h1 className='text-5xl'>{stat.toLocaleString()}</h1>
+        <h1 className='text-5xl'>{stat?.toLocaleString()}</h1>
       </CardContent>
     </Card>
   );

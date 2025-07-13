@@ -121,8 +121,8 @@ export function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from auth routes
   if (AUTH_ROUTES.includes(pathname)) {
-    const isAdmin = ['ADMIN', 'SUB_ADMIN', 'SUPER_ADMIN'].includes(userRole);
-    const redirectPath = isAdmin ? '/dashboard' : '/my-dashboard';
+    // const isAdmin = ['ADMIN', 'SUB_ADMIN', 'SUPER_ADMIN'].includes(userRole);
+    const redirectPath = '/dashboard';
     return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 

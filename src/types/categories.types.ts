@@ -18,7 +18,6 @@ export interface SubCategoryTypes {
   userCategory: CategoryTypes;
   createdAt: Date;
 }
-
 export interface SubCategoryDataTypes {
   doc: SubCategoryTypes[];
 }

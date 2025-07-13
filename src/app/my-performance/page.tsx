@@ -1,5 +1,5 @@
 import DashboardLayout from '@/core/commons/layout/dashboardLayout';
-import { MyPerformance } from '@/modules/my-performnace/layouts/my-performance';
+import { MyPerformance } from '@/modules/my-performance/layouts/my-performance';
 
 const MyPerformancePage = () => {
   return (
