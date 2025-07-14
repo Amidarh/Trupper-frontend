@@ -1,14 +1,14 @@
 'use client';
 
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { useRouter } from 'next/navigation';
-import { Link, SquareArrowUpRight, SquareArrowOutUpRight } from 'lucide-react';
+// import { useRouter } from 'next/navigation';
+import { SquareArrowOutUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 
 export const NotificationsTable = () => {
-  const router = useRouter();
+  // const router = useRouter();
   return (
     <Card className='gap-0'>
       <CardHeader className='flex flex-row justify-between items-center'>

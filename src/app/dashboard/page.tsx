@@ -19,11 +19,19 @@ const DashboardPage = () => {
       </DashboardLayout>
     );
   }
+  if (user?.role === 'admin' || user?.role === 'ADMIN' || user?.role === 'SUB_ADMIN' || user?.role === 'SUPER_ADMIN') {
+    return (
+      <DashboardLayout pageTitle='Dashboard' subHeading=''>
+        <Dashboard />
+      </DashboardLayout>
+    );
+  }
+
   return (
-    <DashboardLayout pageTitle='Dashboard' subHeading=''>
-      <Dashboard />
-    </DashboardLayout>
-  );
+    <main className='text-center flex justify-center items-center w-full'>
+      <h1 className='text-3xl'>Loading up your data 🐥...</h1>
+    </main>
+  )
 };
 
 export default DashboardPage;
