@@ -9,6 +9,7 @@ export const useAltStore = create<AltStore>()(
       organization: null,
       organizationId: null,
       examState: null,
+      refreshToken: null,
       isExamOn: false,
       examDuration: 0,
       setIsExamOn: (isExamOn: boolean) => set({ isExamOn }),
@@ -16,6 +17,7 @@ export const useAltStore = create<AltStore>()(
       clearUser: () => set({ user: null }),
       setOrganization: (organization: IOrganization) => set({ organization }),
       setOrganizationId: (organizationId: string) => set({ organizationId }),
+      setRefreshToken: (refreshToken: string) => set({ refreshToken }),
       logout: () => set({ user: null }),
       isAuthenticated: false,
       setIsAuthenticated: (isAuthenticated: boolean) =>

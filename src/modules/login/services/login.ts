@@ -12,6 +12,7 @@ export function useLogin() {
   const [serverError, setServerError] = useState('');
   const setUser = useAltStore((state) => state.setUser);
   const organization = useAltStore((state) => state.organization);
+  const setRefreshToken = useAltStore((state) => state.setRefreshToken);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -44,6 +45,7 @@ export function useLogin() {
 
       // Update Zustand store
       setUser(user);
+      setRefreshToken(refreshToken)
 
       // if (user.role === 'USER' || user.role === 'user') {
       //   router.push('/my-dashboard');

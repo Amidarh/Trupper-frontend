@@ -1,10 +1,19 @@
 import axios from 'axios';
 import { useAltStore } from '@/lib/zustand/userStore';
+const { refreshToken, organization } = useAltStore.getState()
 
 // Create Axios instance
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
 });
+
+if(refreshToken){
+  const isProduction = process.env.NODE_ENV === 'production';
+  const secureFlag = isProduction ? '; secure' : '';
+  document.cookie = `${organization?.name}-refreshToken=${refreshToken}; path=/${secureFlag}; SameSite=Strict`;
+}
+
+console.log({refreshToken})
 
 // Request interceptor: Attach token and organization
 api.interceptors.request.use(
@@ -47,7 +56,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
+    
     if (
       (error.response?.status === 401 || error.response?.status === 403) &&
       !originalRequest._retry
@@ -59,12 +68,14 @@ api.interceptors.response.use(
           const { organization } = useAltStore.getState();
           const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
           const accessTokenKey = `${orgKey}-accessToken`;
-          const refreshTokenKey = `${orgKey}-refreshToken`;
+          // const refreshTokenKey = `${orgKey}-refreshToken`;
+          const { refreshToken } = useAltStore.getState();
+          console.log({refreshToken})
 
-          const refreshToken = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith(`${refreshTokenKey}=`))
-            ?.split('=')[1];
+          // const refreshToken = document.cookie
+          //   .split('; ')
+          //   .find((row) => row.startsWith(`${refreshTokenKey}=`))
+          //   ?.split('=')[1];
 
           const res = await axios.post(
             `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/token`,

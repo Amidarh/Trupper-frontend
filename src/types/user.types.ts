@@ -74,4 +74,6 @@ export interface AltStore {
   setCurrentQuestion: (currentQuestion: number | null) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;
+  refreshToken: string | null;
+  setRefreshToken: (token: string) => void;
 }
