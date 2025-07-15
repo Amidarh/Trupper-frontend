@@ -49,7 +49,7 @@ export const CreateQuestion = () => {
     },
     createQuestion,
     serverError,
-  } = useQuestionService();
+  } = useQuestionService({});
 
   const image = watch('image');
   const section = watch('section');

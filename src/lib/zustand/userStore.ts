@@ -1,11 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import {
-  IUser,
-  AltStore,
-  IOrganization,
-  examStateType,
-} from '@/types';
+import { IUser, AltStore, IOrganization, examStateType } from '@/types';
 
 export const useAltStore = create<AltStore>()(
   persist(

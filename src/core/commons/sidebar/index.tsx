@@ -96,14 +96,21 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
         )}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMenu className={cn('p-3 flex flex-col gap-4', (userRole?.toLowerCase() === "user") && "mt-5" )}>
+        <SidebarMenu
+          className={cn(
+            'p-3 flex flex-col gap-4',
+            userRole?.toLowerCase() === 'user' && 'mt-5'
+          )}
+        >
           {Object.entries(groupedMenuItems).map(([group, items]) => (
             <div key={group} className='flex flex-col gap-1'>
-              {(userRole?.toLowerCase() !== "user") && <div className='px-2 mb-2'>
-                <span className='text-xs font-medium text-muted-foreground'>
-                  {formatGroupName(group)}
-                </span>
-              </div>}
+              {userRole?.toLowerCase() !== 'user' && (
+                <div className='px-2 mb-2'>
+                  <span className='text-xs font-medium text-muted-foreground'>
+                    {formatGroupName(group)}
+                  </span>
+                </div>
+              )}
               {items.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton asChild className='rounded-2xl'>

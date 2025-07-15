@@ -12,7 +12,7 @@ const UserDetailsPage = () => {
     singleUserLoading,
     blockUser,
     unBlockUser,
-  } = useUserService();
+  } = useUserService({});
   useEffect(() => {
     getASingleUser();
   }, []);

@@ -4,70 +4,113 @@ import { useAltStore } from '@/lib/zustand/userStore';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
 import { usersData } from '../types/users.types';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
+import { toQueryString } from '@/utils';
 
-export const useUserService = () => {
+export const useUserService = (queryParams: Record<string, any>) => {
   const [singleUser, setSingleUser] = useState<IUser | null>(null);
   const [singleUserLoading, setSingleUserLoading] = useState<boolean>(false);
   const [singleUserError, setSingleUserError] = useState<string>('');
-  const { id } = useParams();
+  const { id } = useParams() as { id?: string };
 
   const organization = useAltStore((state) => state.organization);
-  const { data, error, isLoading } = useSWR<usersData | undefined>(
-    `/users/get_users_by_organization/${organization?.id}`,
+
+  // Only fetch if organization is available
+  const shouldFetch = !!organization?.id;
+
+  // Build query string from queryParams object
+  const queryString = toQueryString(queryParams);
+
+  // SWR key: null disables fetch, else use full url
+  const swrKey = shouldFetch
+    ? `/users/get_users_by_organization/${organization.id}${
+        queryString ? `?${queryString}` : ''
+      }`
+    : null;
+
+  const { data, error, isLoading, mutate } = useSWR<usersData | undefined>(
+    swrKey,
     fetcher
   );
 
-  const getASingleUser = async () => {
+  // Fetch a single user by id
+  const getASingleUser = useCallback(async () => {
+    if (!id) {
+      setSingleUserError('User ID is missing');
+      return;
+    }
     setSingleUserLoading(true);
+    setSingleUserError('');
     try {
       const res = await api.get(`/users/${id}`);
-      if (res.status === 200) {
+      if (res.status === 200 && res.data?.doc) {
         setSingleUser(res.data.doc);
+      } else {
+        setSingleUserError('User not found');
       }
-      setSingleUserLoading(false);
     } catch (err: any) {
-      setSingleUserLoading(false);
       const errorMessage =
-        err.response?.data?.message || err.message || 'Could not get User';
+        err?.response?.data?.message || err?.message || 'Could not get User';
       setSingleUserError(errorMessage);
+    } finally {
+      setSingleUserLoading(false);
     }
-  };
+  }, [id]);
 
-  const blockUser = async () => {
+  // Block user by id
+  const blockUser = useCallback(async () => {
+    if (!id) {
+      setSingleUserError('User ID is missing');
+      return;
+    }
     setSingleUserLoading(true);
+    setSingleUserError('');
     try {
       const res = await api.patch(`/users/block/${id}`);
-      if (res.status === 200) {
+      if (res.status === 200 && res.data?.doc) {
         setSingleUser(res.data.doc);
-        getASingleUser();
+        await getASingleUser();
+        mutate(); // refresh user list
+      } else {
+        setSingleUserError('Could not block user');
       }
-      setSingleUserLoading(false);
     } catch (err: any) {
-      setSingleUserLoading(false);
       const errorMessage =
-        err.response?.data?.message || err.message || 'Could not get User';
+        err?.response?.data?.message || err?.message || 'Could not block User';
       setSingleUserError(errorMessage);
+    } finally {
+      setSingleUserLoading(false);
     }
-  };
+  }, [id, getASingleUser, mutate]);
 
-  const unBlockUser = async () => {
+  // Unblock user by id
+  const unBlockUser = useCallback(async () => {
+    if (!id) {
+      setSingleUserError('User ID is missing');
+      return;
+    }
     setSingleUserLoading(true);
+    setSingleUserError('');
     try {
       const res = await api.patch(`/users/unblocked/${id}`);
-      if (res.status === 200) {
+      if (res.status === 200 && res.data?.doc) {
         setSingleUser(res.data.doc);
-        getASingleUser();
+        await getASingleUser();
+        mutate(); // refresh user list
+      } else {
+        setSingleUserError('Could not unblock user');
       }
-      setSingleUserLoading(false);
     } catch (err: any) {
-      setSingleUserLoading(false);
       const errorMessage =
-        err.response?.data?.message || err.message || 'Could not get User';
+        err?.response?.data?.message ||
+        err?.message ||
+        'Could not unblock User';
       setSingleUserError(errorMessage);
+    } finally {
+      setSingleUserLoading(false);
     }
-  };
+  }, [id, getASingleUser, mutate]);
 
   return {
     data: data?.doc,
@@ -79,5 +122,6 @@ export const useUserService = () => {
     getASingleUser,
     blockUser,
     unBlockUser,
+    mutate,
   };
 };

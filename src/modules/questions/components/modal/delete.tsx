@@ -21,7 +21,7 @@ export default function DeleteQuestionButton({
 }: {
   id: string | undefined;
 }) {
-  const { deleteQuestion, singleQuestionLoading } = useQuestionService();
+  const { deleteQuestion, singleQuestionLoading } = useQuestionService({});
 
   const handleDelete = useCallback(async () => {
     await deleteQuestion(id);

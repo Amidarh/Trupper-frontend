@@ -156,14 +156,14 @@ export const MockExams = () => {
                 </p>
               ) : (
                 examList?.map((exam) => (
-                  <div
+                  <Card
                     key={exam.id}
                     onClick={() => {
                       getExamCategories(exam.id);
                       setSelectedExam(exam);
                     }}
                     className={cn(
-                      'flex flex-col items-center cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-800',
+                      'flex flex-col items-center cursor-pointer p-2 hover:bg-accent hover:text-accent-foreground backdrop-blur-md bg-white/30 dark:bg-white/10 shadow-xl gap-0',
                       selectedExam?.id === exam.id
                         ? 'bg-gray-200 dark:bg-gray-700'
                         : ''
@@ -174,11 +174,11 @@ export const MockExams = () => {
                       width={60}
                       height={60}
                       alt={exam.name}
-                      className='object-contain rounded-md h-15 w-15 cursor-pointer'
+                      className='object-contain rounded-md h-20 w-20 cursor-pointer'
                       priority
                     />
                     <p className='text-xs mt-1'>{exam.acronym}</p>
-                  </div>
+                  </Card>
                 ))
               )}
             </div>

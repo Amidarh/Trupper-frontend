@@ -49,7 +49,8 @@ export function useLogout() {
           user?.role === 'admin' ||
           user?.role === 'SUB_ADMIN'
         ) {
-          router.push('/admin-controller/login');
+          // router.push('/admin-controller/login');
+          router.push('/login');
         } else {
           router.push('/login');
         }
@@ -57,19 +58,6 @@ export function useLogout() {
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
-      //  const orgName = (organization?.name || "default").replace(/\s+/g, "_");
-      //     const cookiesToClear = [
-      //         `${orgName}-accessToken`,
-      //         `${orgName}-refreshToken`,
-      //         'role',
-      //         'organizationId',
-      //       ];
-
-      //       // Clear each cookie by setting an expired date
-      //       cookiesToClear.forEach(cookieName => {
-      //         document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure; SameSite=Strict`;
-      //       });
-      // logoUser();
       const errorMessage =
         error.response?.data?.message || error.message || 'Logout Failed';
       setServerError(errorMessage);

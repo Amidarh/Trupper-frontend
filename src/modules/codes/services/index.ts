@@ -9,8 +9,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { toQueryString } from '@/utils';
 
-export const useCodeService = () => {
+export const useCodeService = (queryParams: Record<string, any>) => {
   const organization = useAltStore((state) => state.organization);
   const [singleCode, setSingleCode] = useState<codeType | null>(null);
   const [bulkCode, setBulkCode] = useState<codeType[]>([]);
@@ -21,11 +22,29 @@ export const useCodeService = () => {
   const [generatedCodeCount, setGeneratedCodeCount] = useState<number>(0);
   const [generatedCode, setGeneratedCode] = useState<string | null>(null);
   const router = useRouter();
+  const shouldFetch = !!organization?.id;
 
-  const { data, error, isLoading, mutate } = useSWR<CodeDataTypes>(
-    `/code/organization/${organization?.id}`,
+  // Build query string from queryParams object
+  const queryString = toQueryString(queryParams);
+
+  // SWR key: null disables fetch, else use full url
+  const swrKey = shouldFetch
+    ? `/code/organization/${organization.id}${
+        queryString ? `?${queryString}` : ''
+      }`
+    : null;
+
+  const { data, error, isLoading, mutate } = useSWR<CodeDataTypes | undefined>(
+    swrKey,
     fetcher
   );
+
+  // const { data, error, isLoading, mutate } = useSWR<CodeDataTypes>(
+  //   `/code/organization/${organization?.id}${
+  //     queryString ? `?${queryString}` : ''
+  //   }`,
+  //   fetcher
+  // );
 
   const form = useForm<CodeFormData>({
     resolver: zodResolver(codeSchema),
@@ -63,6 +82,7 @@ export const useCodeService = () => {
     setSingleCodeLoading(true);
     try {
       const res = await api.delete(`/code/${id}`);
+      mutate();
       if (res.status === 200) {
         setSingleCode(res.data.doc);
         mutate();

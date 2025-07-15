@@ -35,6 +35,13 @@ export interface QuestionType {
   id: string;
 }
 
+export interface QuestionMainDataTypes {
+  questions: QuestionType[];
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface QuestionDataType {
-  doc: QuestionType[];
+  doc: QuestionMainDataTypes;
 }

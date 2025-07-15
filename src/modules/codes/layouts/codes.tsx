@@ -9,16 +9,16 @@ import { handleExport } from '@/utils/exports/codes';
 import { useAltStore } from '@/lib/zustand/userStore';
 
 export const Codes = () => {
-  const { data } = useCodeService();
+  const { data } = useCodeService({ page: 1, limit: 1000000 });
   const organization = useAltStore((state) => state.organization);
   const handleExportCodes = async () => {
     if (data && organization) {
-      await handleExport('pdf', data, organization);
+      await handleExport('pdf', data.codes, organization);
     }
   };
   return (
     <Card>
-      <CardHeader className='flex flex-row justify-between'>
+      <CardHeader className='flex md:flex-row justify-between flex-col'>
         <h1>Authentication Code</h1>
         <div className='flex items-center gap-2'>
           <Button variant='outline' onClick={handleExportCodes}>
@@ -28,7 +28,7 @@ export const Codes = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <CodeTable codes={data} />
+        <CodeTable />
       </CardContent>
     </Card>
   );

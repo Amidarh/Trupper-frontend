@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useLogout } from '@/hooks/auth/logOut';
 import {
   SidebarMenuItem,
   SidebarMenu,
@@ -33,6 +34,7 @@ import { useAltStore } from '@/lib/zustand/userStore';
 export function MobileSidebar({ userRole, className }: AppSidebarProps) {
   const pathname = usePathname();
   const { setTheme } = useTheme();
+  const { logout, isLoading } = useLogout();
   const user = useAltStore((state) => state.user);
   const organization = useAltStore((state) => state.organization);
   typeof userRole === 'string';
@@ -174,6 +176,13 @@ export function MobileSidebar({ userRole, className }: AppSidebarProps) {
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
+                  <DropdownMenuItem
+                    onClick={() => logout()}
+                    disabled={isLoading}
+                    className='bg-destructive/60'
+                  >
+                    {isLoading ? 'Loading...' : 'Logout'}
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <div className='flex flex-col text-sm'>

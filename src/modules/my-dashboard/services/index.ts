@@ -4,7 +4,6 @@ import { fetcher } from '@/lib/fetcher';
 import { MyDashboardDataType } from '@/types';
 
 export const useMyDashboardService = () => {
-
   const { data, error, isLoading, mutate } = useSWR<MyDashboardDataType>(
     `/analytics/user`,
     fetcher

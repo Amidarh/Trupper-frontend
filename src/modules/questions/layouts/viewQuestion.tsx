@@ -57,7 +57,7 @@ export const ViewQuestion = () => {
     // singleQuestionLoading,
     // deleteQuestion,
     getQuestion,
-  } = useQuestionService();
+  } = useQuestionService({});
 
   const image = watch('image');
   const section = watch('section');

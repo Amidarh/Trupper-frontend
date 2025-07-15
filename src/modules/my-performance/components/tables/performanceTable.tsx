@@ -18,10 +18,10 @@ import { getStatusBadge } from '@/core/commons/components/badge/badge';
 
 export const PerformanceTable = ({
   data,
-  loading
+  loading,
 }: {
   data: ResultType[] | undefined;
-  loading: boolean
+  loading: boolean;
 }) => {
   const router = useRouter();
   return (
@@ -42,59 +42,59 @@ export const PerformanceTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        { loading ? 
-          <TableRow
-            className='cursor-pointer h-12'
-          >
+        {loading ? (
+          <TableRow className='cursor-pointer h-12'>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
             <TableCell align='center'>
-              <Skeleton className='h-10'/>
+              <Skeleton className='h-10' />
             </TableCell>
           </TableRow>
-        : data?.map((result) => (
-          <TableRow
-            key={result._id}
-            onClick={() => router.push(`/my-performance/${result._id}`)}
-            className='cursor-pointer h-12'
-          >
-            <TableCell>{result.exam.acronym}</TableCell>
-            <TableCell>{result.subject}</TableCell>
-            <TableCell>{result.totalQuestions}</TableCell>
-            <TableCell>{result.attempted}</TableCell>
-            <TableCell>{result.failed}</TableCell>
-            <TableCell>{result.passed}</TableCell>
-            <TableCell>{result.score}%</TableCell>
-            <TableCell>
-              {moment(result.createdAt).format('MMMM D, YYYY')}
-            </TableCell>
-            <TableCell align='center'>
-              {getStatusBadge(result.finished ? 'finished' : 'writing')}
-            </TableCell>
-          </TableRow>
-        ))}
+        ) : (
+          data?.map((result) => (
+            <TableRow
+              key={result._id}
+              onClick={() => router.push(`/my-performance/${result._id}`)}
+              className='cursor-pointer h-12'
+            >
+              <TableCell>{result.exam.acronym}</TableCell>
+              <TableCell>{result.subject}</TableCell>
+              <TableCell>{result.totalQuestions}</TableCell>
+              <TableCell>{result.attempted}</TableCell>
+              <TableCell>{result.failed}</TableCell>
+              <TableCell>{result.passed}</TableCell>
+              <TableCell>{result.score}%</TableCell>
+              <TableCell>
+                {moment(result.createdAt).format('MMMM D, YYYY')}
+              </TableCell>
+              <TableCell align='center'>
+                {getStatusBadge(result.finished ? 'finished' : 'writing')}
+              </TableCell>
+            </TableRow>
+          ))
+        )}
       </TableBody>
     </Table>
   );

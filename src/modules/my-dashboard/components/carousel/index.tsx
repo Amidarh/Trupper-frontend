@@ -1,7 +1,13 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { latestNews } from "@/constants/data";
-import { NewsCard } from "../cards/newsCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import { latestNews } from '@/constants/data';
+import { NewsCard } from '../cards/newsCard';
 
 export const NewsCarousel = () => (
   <Carousel
@@ -18,7 +24,7 @@ export const NewsCarousel = () => (
         </CarouselItem>
       ))}
     </CarouselContent>
-      <CarouselPrevious />
+    <CarouselPrevious />
     <CarouselNext />
     <CarouselPrevious />
     <CarouselNext />

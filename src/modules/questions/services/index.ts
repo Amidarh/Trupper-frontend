@@ -9,8 +9,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { toQueryString } from '@/utils';
 
-export const useQuestionService = () => {
+export const useQuestionService = (queryParams: Record<string, any>) => {
   const organization = useAltStore((state) => state.organization);
   const [singleQuestion, setSingleQuestion] = useState<QuestionType | null>(
     null
@@ -19,9 +20,20 @@ export const useQuestionService = () => {
     useState<boolean>(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const router = useRouter();
+  const shouldFetch = !!organization?.id;
+
+  // Build query string from queryParams object
+  const queryString = toQueryString(queryParams);
+
+  // SWR key: null disables fetch, else use full url
+  const swrKey = shouldFetch
+    ? `/questions/organization/${organization.id}${
+        queryString ? `?${queryString}` : ''
+      }`
+    : null;
 
   const { data, error, mutate, isLoading } = useSWR<QuestionDataType>(
-    `/questions/organization/${organization?.id}`,
+    swrKey,
     fetcher
   );
 

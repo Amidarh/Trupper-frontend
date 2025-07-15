@@ -12,6 +12,13 @@ export interface codeType {
   organization: string;
 }
 
+export interface CodeMainDataTypes {
+  codes: codeType[];
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface CodeDataTypes {
-  doc: codeType[];
+  doc: CodeMainDataTypes;
 }

@@ -22,7 +22,7 @@ export default function DeleteCodeModal({
   id: string;
   code: string;
 }) {
-  const { deleteCode, singleCodeLoading } = useCodeService();
+  const { deleteCode, singleCodeLoading } = useCodeService({});
 
   const handleDelete = useCallback(async () => {
     await deleteCode(id);

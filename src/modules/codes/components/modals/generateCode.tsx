@@ -47,7 +47,7 @@ export function GenerateCodeModal() {
     generatedCode,
     setGeneratedCodeCount,
     bulkCode,
-  } = useCodeService();
+  } = useCodeService({});
   const { data: categories, isLoading: categoriesLoading } =
     useCategoryService();
   const { getSubCategoryByCategory, subCategory, subCategoryLoading } =

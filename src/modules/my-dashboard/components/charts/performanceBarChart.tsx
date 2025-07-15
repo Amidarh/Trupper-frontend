@@ -32,7 +32,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function PerformanceBarChart({ data }: { data: ResultType[] | undefined }) {
+export function PerformanceBarChart({
+  data,
+}: {
+  data: ResultType[] | undefined;
+}) {
   return (
     <Card className='w-[80%] max-lg:w-full'>
       <CardHeader>

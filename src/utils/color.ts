@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * Quickly samples a down‑scaled copy of the image and decides
@@ -11,21 +11,21 @@ import { useEffect, useState } from "react";
 export function useDynamicTextColor(
   imgSrc: string,
   threshold = 140
-): "text-black" | "text-white" {
-  const [colorClass, setColorClass] = useState<"text-black" | "text-white">(
-    "text-white"
+): 'text-black' | 'text-white' {
+  const [colorClass, setColorClass] = useState<'text-black' | 'text-white'>(
+    'text-white'
   );
 
   useEffect(() => {
     if (!imgSrc) return;
 
     const img = new Image();
-    img.crossOrigin = "anonymous"; // works for same‑origin assets too
+    img.crossOrigin = 'anonymous'; // works for same‑origin assets too
     img.src = imgSrc;
 
     img.onload = () => {
-      const sampler = document.createElement("canvas");
-      const ctx = sampler.getContext("2d");
+      const sampler = document.createElement('canvas');
+      const ctx = sampler.getContext('2d');
       if (!ctx) return;
 
       // Shrink to 10×10 px so we only read 100 pixels (fast!)
@@ -49,7 +49,7 @@ export function useDynamicTextColor(
       }
 
       const avg = total / (data.length / 4);
-      setColorClass(avg > threshold ? "text-black" : "text-white");
+      setColorClass(avg > threshold ? 'text-black' : 'text-white');
     };
 
     // clean up object URL if one was created (not needed for public files)
