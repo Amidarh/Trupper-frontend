@@ -4,6 +4,11 @@ export const questionTypeData = [
   { name: 'theorem', label: 'Theorem' },
 ];
 
+export const questionCategoryData = [
+  { name: 'main', label: 'main' },
+  { name: 'practice', label: 'practice' },
+];
+
 export const questionObject = [
   { name: 'a', label: 'A' },
   { name: 'b', label: 'B' },

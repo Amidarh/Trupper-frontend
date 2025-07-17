@@ -13,7 +13,9 @@ const useInitialDataFetch = () => {
   // Helper to check if a cookie exists
   const cookieExists = (name: string) => {
     if (typeof document === 'undefined') return false;
-    return document.cookie.split('; ').some((row) => row.startsWith(`${name}=`));
+    return document.cookie
+      .split('; ')
+      .some((row) => row.startsWith(`${name}=`));
   };
 
   // Set cookies if missing
@@ -73,7 +75,6 @@ const useInitialDataFetch = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organization, setOrganization, user, refreshToken]);
-
 };
 
 export default useInitialDataFetch;

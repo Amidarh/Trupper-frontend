@@ -45,7 +45,7 @@ export function useLogin() {
 
       // Update Zustand store
       setUser(user);
-      setRefreshToken(refreshToken)
+      setRefreshToken(refreshToken);
 
       // if (user.role === 'USER' || user.role === 'user') {
       //   router.push('/my-dashboard');

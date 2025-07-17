@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 // import { ChevronLeft } from "lucide-react"
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import ImageUpload from '@/core/commons/components/imageUpload';
+import ImageUpload from '@/core/commons/components/upload';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useAltStore } from '@/lib/zustand/userStore';

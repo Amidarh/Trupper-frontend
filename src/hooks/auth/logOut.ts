@@ -58,19 +58,19 @@ export function useLogout() {
       setIsLoading(false);
     } catch (error: any) {
       logoUser();
-        const orgName = (organization?.name || 'default').replace(/\s+/g, '_');
-        const cookiesToClear = [
-          `${orgName}-accessToken`,
-          `${orgName}-refreshToken`,
-          'role',
-          'organizationId',
-        ];
+      const orgName = (organization?.name || 'default').replace(/\s+/g, '_');
+      const cookiesToClear = [
+        `${orgName}-accessToken`,
+        `${orgName}-refreshToken`,
+        'role',
+        'organizationId',
+      ];
 
-        // Clear each cookie by setting an expired date
-        cookiesToClear.forEach((cookieName) => {
-          document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure; SameSite=Strict`;
-        });
-        router.push('/login');
+      // Clear each cookie by setting an expired date
+      cookiesToClear.forEach((cookieName) => {
+        document.cookie = `${cookieName}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure; SameSite=Strict`;
+      });
+      router.push('/login');
       setIsLoading(false);
       const errorMessage =
         error.response?.data?.message || error.message || 'Logout Failed';

@@ -151,9 +151,12 @@ export const MockExams = () => {
                   <Skeleton className='h-20 w-20' />
                 </div>
               ) : examList?.length === 0 ? (
-                <p className='text-gray-500'>
-                  No exams available for this Exam type
-                </p>
+                // <p className='text-gray-500'>
+                //   No exams available for this Exam type
+                // </p>
+                <main className='text-center flex justify-center items-center w-full mt-5'>
+                  <h1 className='text-3xl'>No exam available 🐤...</h1>
+                </main>
               ) : (
                 examList?.map((exam) => (
                   <Card

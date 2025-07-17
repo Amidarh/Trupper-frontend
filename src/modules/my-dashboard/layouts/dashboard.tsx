@@ -13,10 +13,12 @@ import { useMyDashboardService } from '../services';
 import { EmptyNotification } from '../components/cards/emptyNotification';
 // import { NewsCarousel } from '../components/carousel';
 import { StartExamCard } from '../components/cards/start';
+import { useRouter } from 'next/navigation';
 // import { TopPerformersTable } from '../components/tables/topPerformers';
 
 export const MyDashboard = () => {
   const { data } = useMyDashboardService();
+  const router = useRouter();
   return (
     <main>
       <h1>Quick Overview</h1>
@@ -59,11 +61,11 @@ export const MyDashboard = () => {
           <Sparkles scale={16} />
           <p>AI Examiner</p>
         </Button> */}
-        <Button>
+        <Button onClick={() => router.push('/my-exams')}>
           <SquareLibrary scale={16} />
           <p>My Exams</p>
         </Button>
-        <Button>
+        <Button onClick={() => router.push('/mock-exams')}>
           <PenBox scale={16} />
           <p>Mock Exams</p>
         </Button>

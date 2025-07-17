@@ -35,11 +35,22 @@ export interface QuestionType {
   id: string;
 }
 
+export interface GenerateQuestionType {
+  examtype: string;
+  subject: string;
+  questionType: string;
+  noOfQuestions: number;
+  type: 'ai' | 'manual';
+  file: File;
+}
+
 export interface QuestionMainDataTypes {
   questions: QuestionType[];
   page: number;
   limit: number;
   totalPages: number;
+  totalOfOrganization: number;
+  totalAIOrganization: number;
 }
 
 export interface QuestionDataType {

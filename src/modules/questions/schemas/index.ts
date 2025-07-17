@@ -31,3 +31,40 @@ export const questionSchema = z.object({
 });
 
 export type QuestionFormData = z.infer<typeof questionSchema>;
+
+export const generateQuestionSchema = z.object({
+  exam: z.string().min(1, { message: 'Select an Exam' }),
+  subject: z.string().min(1, { message: 'Select Subject' }),
+  questionType: z.string().min(1, { message: 'Select Question type' }),
+  questionCategory: z.string().min(1, { message: 'Select Question type' }),
+  noOfQuestions: z.number().min(1, { message: 'Enter number of questions' }),
+  files: z
+    .union([
+      z
+        .instanceof(File)
+        .refine((file) => file.size <= 5 * 1024 * 1024, {
+          message: 'File size must be less than 5MB',
+        })
+        .refine(
+          (file) =>
+            [
+              'image/jpeg',
+              'image/png',
+              'application/pdf',
+              'application/msword',
+              'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+              'application/vnd.ms-excel',
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              'text/plain',
+            ].includes(file.type),
+          {
+            message:
+              'File must be an image (JPEG, PNG), PDF, Word, Excel, or Text file',
+          }
+        ),
+      z.string().url(),
+    ])
+    .optional(),
+});
+
+export type GenerateQuestionFormData = z.infer<typeof generateQuestionSchema>;

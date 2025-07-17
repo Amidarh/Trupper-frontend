@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import RichTextEditor from '@/core/commons/components/richTextEditor';
-import ImageUploadTwo from '@/core/commons/components/imageUpload/imageUploadTwo';
+import ImageUploadTwo from '@/core/commons/components/upload/imageUploadTwo';
 import DeleteQuestionButton from '../components/modal/delete';
 
 import { useExamService } from '@/modules/exams/services';

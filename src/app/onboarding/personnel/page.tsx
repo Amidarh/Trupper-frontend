@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
-import ImageUpload from '@/core/commons/components/imageUpload';
+import ImageUpload from '@/core/commons/components/upload';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useAltStore } from '@/lib/zustand/userStore';

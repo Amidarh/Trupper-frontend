@@ -24,7 +24,7 @@ import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
 import { useExamTypeService } from '@/modules/examTypes/services';
 import { ExamTypes } from '@/types/examTypes.types';
-import ImageUpload from '@/core/commons/components/imageUpload';
+import ImageUpload from '@/core/commons/components/upload';
 import Image from 'next/image';
 import DeleteExamButton from '@/modules/exams/components/modal/delete';
 import { CreateExamCategoryModal } from '@/modules/exams/components/modal/createExamCategory';

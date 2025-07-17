@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import ImageUpload from '@/core/commons/components/imageUpload';
+import ImageUpload from '@/core/commons/components/upload';
 import { useSettingService } from '../../services/settings';
 import { useCallback, useEffect } from 'react';
 import { UserPreferenceFormData } from '../../schema/settings';

@@ -22,7 +22,7 @@ import { useState, useCallback } from 'react';
 import { ExamFormData } from '@/modules/exams/schema';
 import { useExamTypeService } from '@/modules/examTypes/services';
 import { ExamTypes } from '@/types/examTypes.types';
-import ImageUpload from '@/core/commons/components/imageUpload';
+import ImageUpload from '@/core/commons/components/upload';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 

@@ -3,7 +3,12 @@ import useSWR from 'swr';
 import { useAltStore } from '@/lib/zustand/userStore';
 import { fetcher } from '@/lib/fetcher';
 import { useState } from 'react';
-import { questionSchema, QuestionFormData } from '../schemas';
+import {
+  questionSchema,
+  QuestionFormData,
+  GenerateQuestionFormData,
+  generateQuestionSchema,
+} from '../schemas';
 import { QuestionType, QuestionDataType } from '@/types/question.types';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,6 +46,10 @@ export const useQuestionService = (queryParams: Record<string, any>) => {
     resolver: zodResolver(questionSchema),
   });
 
+  const generateQuestionForm = useForm<GenerateQuestionFormData>({
+    resolver: zodResolver(generateQuestionSchema),
+  });
+
   const createQuestion = async (data: FormData) => {
     try {
       console.log(data);
@@ -52,6 +61,28 @@ export const useQuestionService = (queryParams: Record<string, any>) => {
       if (res.status === 201) {
         mutate();
         toast.success('Question added successfully!');
+        router.push('/questions');
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Could not create question';
+      setServerError(errorMessage);
+      toast.error(errorMessage);
+    }
+  };
+
+  const generateQuestion = async (data: FormData) => {
+    try {
+      const res = await api.post('/questions/ai-generate-questions', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (res.status === 200) {
+        mutate();
+        toast.success(res.data.message);
         router.push('/questions');
       }
     } catch (error: any) {
@@ -139,5 +170,7 @@ export const useQuestionService = (queryParams: Record<string, any>) => {
     serverError,
     isLoading,
     form,
+    generateQuestionForm,
+    generateQuestion,
   };
 };

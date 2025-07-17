@@ -9,7 +9,7 @@ export default function Navbar() {
   const route = useRouter();
   return (
     <main className='py-4 px-2 lg:px-5 w-full flex justify-center items-center h-fit fixed'>
-      <section className='w-full max-w-7xl bg-white-200 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border shadow-md p-4 flex justify-between items-center'>
+      <section className='w-full max-w-7xl bg-white-200 rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border shadow-md p-4 flex justify-between items-center'>
         <div
           className='flex flex-row items-center gap-1.5 cursor-pointer'
           onClick={() => route.push('/')}

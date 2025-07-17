@@ -147,7 +147,7 @@ export const useExamService = () => {
     try {
       const res = await api(`/exams/exam-type/${id}`);
       if (res.status === 200) {
-        toast.success(res.data.message);
+        // toast.success(res.data.message);
         setExamList(res.data.doc);
         setExamListLoading(false);
       }
@@ -185,7 +185,7 @@ export const useExamService = () => {
     try {
       const res = await api(`/exam-category/exam/${id}`);
       if (res.status === 200) {
-        toast.success(res.data.message);
+        // toast.success(res.data.message);
         setExamCategoryList(res.data.doc);
       }
       setExamCategoryLoading(false);

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import ImageUpload from '@/core/commons/components/imageUpload';
+import ImageUpload from '@/core/commons/components/upload';
 import { useAltStore } from '@/lib/zustand/userStore';
 import { toast } from 'sonner';
 // import { CirclePlus } from "lucide-react";
