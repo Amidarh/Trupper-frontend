@@ -33,6 +33,7 @@ export interface QuestionType {
   updatedAt?: Date;
   exam: ExamType;
   id: string;
+  _id: string;
 }
 
 export interface GenerateQuestionType {

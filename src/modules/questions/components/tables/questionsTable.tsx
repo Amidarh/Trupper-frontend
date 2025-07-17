@@ -65,7 +65,7 @@ export const QuestionTable = () => {
           ) : (
             data?.questions?.map((question) => (
               <TableRow
-                onClick={() => router.push(`/questions/${question.id}`)}
+                onClick={() => router.push(`/questions/${question._id}`)}
                 className='cursor-pointer'
               >
                 <TableCell>{question.questionType}</TableCell>
@@ -74,7 +74,7 @@ export const QuestionTable = () => {
                 <TableCell className='flex justify-end items-end'>
                   <Button
                     className='cursor-pointer'
-                    onClick={() => router.push(`/questions/${question.id}`)}
+                    onClick={() => router.push(`/questions/${question._id}`)}
                   >
                     Edit
                   </Button>
