@@ -24,7 +24,7 @@ export function useLogin() {
     try {
       const res = await api.post('/auth/login', data);
 
-      if (res.status === 203) {
+      if (res.status === 203) { 
         router.push(`/2fa?token=${res.data.doc.token}`);
         return;
       }

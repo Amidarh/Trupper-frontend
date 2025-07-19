@@ -4,7 +4,7 @@ import { IUser } from '@/types/user.types';
 import { getStatusBadge } from '@/core/commons/components/badge/badge';
 import moment from 'moment';
 
-export const UserProfile = ({ user }: { user: IUser | null }) => {
+export const UserProfile = ({ user }: { user: IUser | undefined }) => {
   return (
     <main className='flex flex-col gap-5'>
       <Card className='mt-5 px-5'>
@@ -37,11 +37,11 @@ export const UserProfile = ({ user }: { user: IUser | null }) => {
             </div>
             <div className='flex flex-row items-center justify-between gap-2 w-full'>
               <p className='font-bold'>Category One:</p>
-              <p>Tap</p>
+              <p>{user?.category?.name}</p>
             </div>
             <div className='flex flex-row items-center justify-between gap-2 w-full'>
               <p className='font-bold'>Category Two :</p>
-              <p>Taptip</p>
+              <p>{user?.subCategory?.name}</p>
             </div>
             <div className='flex flex-row items-center justify-between gap-2 w-full'>
               <p className='font-bold'>Verification :</p>

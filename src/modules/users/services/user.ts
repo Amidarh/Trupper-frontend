@@ -1,5 +1,6 @@
 import api from '@/core/services/api';
-import { IUser } from '@/types/user.types';
+// import { IUser } from '@/types';
+import { userMainData } from '../types/users.types';
 import { useAltStore } from '@/lib/zustand/userStore';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/fetcher';
@@ -9,7 +10,7 @@ import { useParams } from 'next/navigation';
 import { toQueryString } from '@/utils';
 
 export const useUserService = (queryParams: Record<string, any>) => {
-  const [singleUser, setSingleUser] = useState<IUser | null>(null);
+  const [singleUser, setSingleUser] = useState<userMainData | null>(null);
   const [singleUserLoading, setSingleUserLoading] = useState<boolean>(false);
   const [singleUserError, setSingleUserError] = useState<string>('');
   const { id } = useParams() as { id?: string };
@@ -43,6 +44,7 @@ export const useUserService = (queryParams: Record<string, any>) => {
     setSingleUserLoading(true);
     setSingleUserError('');
     try {
+      console.log(id)
       const res = await api.get(`/users/${id}`);
       if (res.status === 200 && res.data?.doc) {
         setSingleUser(res.data.doc);

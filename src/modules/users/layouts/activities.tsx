@@ -1,5 +1,5 @@
 import { StatsCard } from '@/modules/dashboard/components/card/statsCard';
-import { User } from 'lucide-react';
+import { User, User2 } from 'lucide-react';
 import { ResultChart } from '../components/charts/result';
 import {
   Card,
@@ -11,6 +11,9 @@ import {
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ResultTable } from '../components/results/resultTable';
+import { MyDashboardStatsType, ResultType } from '@/types';
+import { PerformanceBarChart } from '@/modules/my-dashboard/components/charts/performanceBarChart';
+import { PerformanceLineChart } from '../components/charts/line';
 import {
   ArrowUpRight,
   CalendarDays,
@@ -19,19 +22,35 @@ import {
   UserPlus,
 } from 'lucide-react';
 
-export const UserActivities = () => {
+export const UserActivities = ({ data, results } : { data: MyDashboardStatsType | undefined, results: ResultType[] | undefined }) => {
   return (
     <main>
       <h1>Analytics</h1>
-      <div className='grid md:grid-cols-4 grid-cols-1 gap-2 mt-4'>
-        <StatsCard Icon={User} title='Average Score' stat={1000} />
-        <StatsCard Icon={User} title='Total Users' stat={1000} />
-        <StatsCard Icon={User} title='Total Users' stat={1000} />
-        <StatsCard Icon={User} title='Total Users' stat={1000} />
-      </div>
+      <section className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 max-lg:mb-5">
+        <StatsCard
+          Icon={User2}
+          stat={data?.totalExams ?? 0}
+          title="Total Exam Taken"
+        />
+        <StatsCard
+          Icon={User2}
+          stat={`${Math.round(data?.averageScore ?? 0)}%`}
+          title="Average Score"
+        />
+        <StatsCard
+          Icon={User2}
+          stat={Math.round(data?.totalAttemptedQuestions ?? 0)}
+          title="Tried Questions"
+        />
+        <StatsCard
+          Icon={User2}
+          stat={data?.totalPassedQuestions ?? 0}
+          title="Correct Questions"
+        />
+      </section>
 
-      <section className='grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-5'>
-        <Card className='lg:col-span-4'>
+      <section className='mt-5'>
+        {/* <Card className='lg:col-span-4'>
           <CardHeader>
             <CardTitle>Student Statistics</CardTitle>
             <CardDescription>
@@ -41,9 +60,10 @@ export const UserActivities = () => {
           <CardContent className='pl-2'>
             <ResultChart />
           </CardContent>
-        </Card>
+        </Card> */}
+        <PerformanceLineChart data={results} />
 
-        <Card className='lg:col-span-3'>
+        {/* <Card className='lg:col-span-3'>
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
             <CardDescription>Latest updates and notifications</CardDescription>
@@ -107,7 +127,7 @@ export const UserActivities = () => {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </section>
 
       <Card className='mt-5'>

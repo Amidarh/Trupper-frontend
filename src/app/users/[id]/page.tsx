@@ -19,7 +19,7 @@ const UserDetailsPage = () => {
   return (
     <DashboardLayout
       pageTitle={
-        singleUser ? `${singleUser.firstName} ${singleUser.lastName}` : ''
+        singleUser ? `${singleUser?.user?.firstName} ${singleUser.user.lastName}` : ''
       }
       subHeading='Manage your users here'
     >

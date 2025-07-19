@@ -6,7 +6,7 @@ import { UserActivities } from './activities';
 import { Button } from '@/components/ui/button';
 import { BackButton } from '@/core/commons/navigation/backButton';
 import { Skeleton } from '@/components/ui/skeleton';
-import { IUser } from '@/types/user.types';
+import { userMainData } from '../types/users.types';
 
 export const User = ({
   userData,
@@ -14,7 +14,7 @@ export const User = ({
   blockUser,
   unBlockUser,
 }: {
-  userData: IUser | null;
+  userData: userMainData | null;
   loading: boolean;
   blockUser: () => void;
   unBlockUser: () => void;
@@ -28,7 +28,7 @@ export const User = ({
             <Button variant='ghost' className='cursor-pointer'>
               Checking Data...
             </Button>
-          ) : !userData?.isBlocked ? (
+          ) : !userData?.user.isBlocked ? (
             <Button
               variant='destructive'
               className='cursor-pointer'
@@ -56,11 +56,11 @@ export const User = ({
           {loading ? (
             <Skeleton className='h-[400px]' />
           ) : (
-            <UserProfile user={userData} />
+            <UserProfile user={userData?.user} />
           )}
         </TabsContent>
         <TabsContent value='activities'>
-          <UserActivities />
+          <UserActivities data={userData?.stats} results={userData?.results} />
         </TabsContent>
       </Tabs>
     </main>

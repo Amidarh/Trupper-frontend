@@ -66,14 +66,14 @@ api.interceptors.response.use(
           const { organization } = useAltStore.getState();
           const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
           const accessTokenKey = `${orgKey}-accessToken`;
-          // const refreshTokenKey = `${orgKey}-refreshToken`;
-          const { refreshToken } = useAltStore.getState();
-          console.log({ refreshToken });
+          const refreshTokenKey = `${orgKey}-refreshToken`;
+          // const { refreshToken } = useAltStore.getState();
+          // console.log({ refreshToken });
 
-          // const refreshToken = document.cookie
-          //   .split('; ')
-          //   .find((row) => row.startsWith(`${refreshTokenKey}=`))
-          //   ?.split('=')[1];
+          const refreshToken = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith(`${refreshTokenKey}=`))
+            ?.split('=')[1];
 
           const res = await axios.post(
             `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/token`,
