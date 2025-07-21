@@ -37,23 +37,24 @@ export const ExamModeTable = () => {
         </TableBody>
         <TableBody>
           {data?.map((mode) => (
-            <TableRow key={mode.id} className='cursor-pointer'>
-              <TableCell>{mode.name}</TableCell>
-              <TableCell>{mode.exam.name}</TableCell>
-              <TableCell>{mode.createdBy.email}</TableCell>
+            <TableRow key={mode?.id} className='cursor-pointer'>
+              <TableCell>{mode?.name}</TableCell>
+              <TableCell>{mode?.exam?.name}</TableCell>
+              <TableCell>{mode?.createdBy?.email}</TableCell>
               <TableCell>
-                {moment(mode.createdAt).format('MMMM D, YYYY')}
+                {moment(mode?.createdAt).format('MMMM D, YYYY')}
               </TableCell>
-              <TableCell>{mode.exam.noOfQuestions}</TableCell>
+              <TableCell>{mode?.exam?.noOfQuestions}</TableCell>
               <TableCell>
-                {getStatusBadge(mode.status ? 'active' : 'inactive')}
+                {getStatusBadge(mode?.status ? 'active' : 'inactive')}
               </TableCell>
               <TableCell className='flex justify-end items-center gap-2'>
                 <EnableExamModeModal
-                  id={mode.id}
-                  validFrom={mode.validFrom}
-                  validTill={mode.validTill}
-                  status={mode.status}
+                  id={mode?.id}
+                  validFrom={mode?.validFrom}
+                  validTill={mode?.validTill}
+                  status={mode?.status}
+                  examId={mode?.exam?.id}
                 />
                 <DeleteExamModeModeButton id={mode.id} />
               </TableCell>

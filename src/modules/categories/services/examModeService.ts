@@ -20,6 +20,9 @@ export const useExamModeService = () => {
   const [singleExamMode, setSingleExamMode] = useState<examModeType | null>(
     null
   );
+  const [activeExamMode, setActiveExamMode] = useState<examModeType | null>(
+    null
+  );
   const [singleExamModeLoading, setSingleExamModeLoading] =
     useState<boolean>(false);
   const [serverError, setServerError] = useState('');
@@ -137,6 +140,22 @@ export const useExamModeService = () => {
     }
   };
 
+  const getActiveExamMode = async () => {
+    try {
+      const res = await api.get('/exam-mode/sub-category-user');
+      if (res.status === 200) {
+        setActiveExamMode(res.data.doc);
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Could not get active exam mode';
+      setServerError(errorMessage);
+      toast.error(errorMessage);
+    }
+  };
+
   return {
     form,
     data: data?.doc,
@@ -152,5 +171,7 @@ export const useExamModeService = () => {
     updateSingleExamMode,
     updateForm,
     enableExamMode,
+    getActiveExamMode,
+    activeExamMode,
   };
 };

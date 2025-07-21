@@ -47,7 +47,7 @@ export default function SingleExamDetailsButton({
   const [error, setError] = useState('');
   const searchParams = useSearchParams();
   const cat = searchParams.get('cat');
-  const catId = searchParams.get('catId');
+  // const catId = searchParams.get('catId');
 
   const { startExam, loading } = useMockExamsService();
 
@@ -63,7 +63,6 @@ export default function SingleExamDetailsButton({
   };
 
   const handleStartExam = () => {
-    console.log('clicked me');
     startExam(id, {
       examCardIdTwo: data.id,
       duration: selectedDuration,

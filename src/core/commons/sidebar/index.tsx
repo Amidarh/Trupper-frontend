@@ -23,8 +23,10 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { useAltStore } from '@/lib/zustand/userStore';
+import { useRouter } from 'next/navigation';
 
 export default function AppSidebar({ userRole, className }: AppSidebarProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const user = useAltStore((state) => state.user);
   const organization = useAltStore((state) => state.organization);
@@ -79,7 +81,9 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
 
   return (
     <Sidebar className={`w-60 ${className || ''}`}>
-      <SidebarHeader className='p-0 pl-5'>
+      <SidebarHeader className='p-0 pl-5 cursor-pointer'
+      onClick={() => router.push('/dashboard')}
+      >
         {organization?.logo ? (
           <div className='flex flex-row items-center gap-1'>
             <Image

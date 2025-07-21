@@ -13,9 +13,14 @@ import { Calendar24 } from '@/core/commons/components/calendar';
 import { useExamModeService } from '../../services/examModeService';
 import { toast } from 'sonner';
 import { UpdateExamModeFormData } from '../../schema/categoriesSchema';
+import { useSubjectService } from '@/modules/subjects/services';
+import { MultiSelect } from '@/components/ui/multiSelect';
+import { Label } from '@/components/ui/label';
+import { SubjectType } from '@/types';
 
 interface CustomModalProps {
   id: string;
+  examId: string;
   status: boolean;
   validFrom: Date | null | undefined; // Allow null/undefined
   validTill: Date | null | undefined; // Allow null/undefined
@@ -26,9 +31,11 @@ export function EnableExamModeModal({
   validFrom,
   validTill,
   status,
+  examId,
 }: CustomModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { getSubjectByExam, subjectList } = useSubjectService();
+  const [selected, setSelected] = useState<string[]>([]);
   const {
     updateForm: {
       formState: { errors, isSubmitting },
@@ -41,6 +48,7 @@ export function EnableExamModeModal({
 
   useEffect(() => {
     if (id) {
+      getSubjectByExam(examId);
       reset({
         status,
         validFrom:
@@ -53,11 +61,25 @@ export function EnableExamModeModal({
             : undefined,
       });
     }
-  }, [id, status, validFrom, validTill, reset]);
+  }, [id, status, validFrom, validTill, reset, examId]);
+
+  function mapSubjectsToOptions(subjects: SubjectType[]) {
+    return subjects.map((subject) => ({
+      value: subject.id,
+      label: subject.name,
+    }));
+  }
 
   const handleEnableExamMode = async (data: UpdateExamModeFormData) => {
     try {
-      await enableExamMode(id, data);
+      await enableExamMode(id, {
+        status: data.status,
+        validFrom: data.validFrom,
+        validTill: data.validTill,
+        subjects: (subjectList ?? [])
+          .filter((subject) => selected.includes(subject.id))
+          .map((subject) => ({ value: subject.name, id: subject.id })),
+      });
       setIsOpen(false);
       toast.success('Exam mode updated.');
     } catch (error) {
@@ -95,6 +117,21 @@ export function EnableExamModeModal({
             className='flex flex-col gap-5'
             onSubmit={handleSubmit(handleEnableExamMode)}
           >
+            <div className='mb-4'>
+            <Label htmlFor='subjectToBeWritten' className='mb-2'>
+              Subjects (select category subjects)
+            </Label>
+            <MultiSelect
+              name='Select Subjects'
+              options={mapSubjectsToOptions(subjectList ?? [])}
+              onChange={(e) => {
+                setSelected(e);
+                const mappedSubjects = e.map((id) => ({ value: id, id }));
+                setValue('subjects', mappedSubjects, { shouldValidate: true });
+              }}
+              value={selected}
+            />
+          </div>
             <div>
               <Calendar24
                 label='Valid From'

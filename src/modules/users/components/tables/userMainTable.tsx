@@ -152,7 +152,7 @@ export const UserTable = () => {
   return (
     <Card>
       <CardHeader>
-        <div className='flex flex-row justify-between items-center'>
+        <div className='flex flex-row justify-between max-lg:flex-col max-lg:gap-2 lg:items-center'>
           <div className='flex flex-row gap-2 items-center'>
             <Select
               value={filterType}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Download, FileText, Users, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,6 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { BackButton } from '@/core/commons/navigation/backButton';
+import { useExamModeResultService } from '@/modules/user-results/services';
 
 // Mock data types
 interface Subject {
@@ -290,6 +291,11 @@ const EmptyState = () => (
 export function ViewResultContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const { getSingleExamModeResult, examModeResult, singleExamModeResultLoading } = useExamModeResultService();
+
+  useEffect(() => {
+    getSingleExamModeResult();
+  }, []);
 
   const itemsPerPage = 10;
 
@@ -367,7 +373,7 @@ export function ViewResultContent() {
                 <div className='text-sm font-medium text-gray-500'>
                   Total Students
                 </div>
-                <div className='text-2xl font-bold'>{stats.total}</div>
+                <div className='text-2xl font-bold'>{examModeResult?.resultList?.length ?? 0}</div>
               </CardContent>
             </Card>
             <Card>

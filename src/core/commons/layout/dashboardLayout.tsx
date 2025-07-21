@@ -1,4 +1,7 @@
+'use client';
+
 import NavBar from '../navigation/navigation';
+import { ExamModeModal } from '../mode/examMode';
 
 export default function DashboardLayout({
   children,
@@ -15,6 +18,7 @@ export default function DashboardLayout({
       <div className='pl-[25px] max-[500px]:px-[10px] md:pl-[260px] pt-[75px] pr-[25px] pb-[25px]'>
         {children}
       </div>
+      <ExamModeModal />
     </main>
   );
 }

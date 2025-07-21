@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Eye } from 'lucide-react';
+import moment from 'moment';
 import {
   Table,
   TableBody,
@@ -12,10 +13,14 @@ import {
 } from '@/components/ui/table';
 import { getStatusBadge } from '@/core/commons/components/badge/badge';
 import { useRouter } from 'next/navigation';
+import { useExamModeResultService } from '@/modules/user-results/services';
+import { isTimeActive } from '@/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 // import { ExamType } from '@/types/exam.types';
 
 export const ExamResultTable = () => {
   const router = useRouter();
+  const { data, isLoading, error } = useExamModeResultService();
   return (
     <Table className='w-full rounded-sm'>
       <TableHeader className='bg-muted rounded-sm'>
@@ -35,54 +40,94 @@ export const ExamResultTable = () => {
         <TableRow></TableRow>
       </TableBody>
       <TableBody>
-        <TableRow
-          onClick={() => router.push(`/user-results/2334`)}
+        {isLoading ? (
+          <>
+           <TableRow
+              className='cursor-pointer'
+            >
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+            </TableRow>
+           <TableRow
+              className='cursor-pointer'
+            >
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+            </TableRow>
+           <TableRow
+              className='cursor-pointer'
+            >
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+              <TableCell>
+                <Skeleton className='h-[20px]' />
+              </TableCell>
+            </TableRow>
+          </>
+        ) : (
+          data?.map(result => (
+          <TableRow
+          onClick={() => router.push(`/user-results/${result.id}`)}
           className='cursor-pointer'
         >
-          <TableCell>Waec</TableCell>
-          <TableCell>March 20, 2025</TableCell>
-          <TableCell>March 20, 2025</TableCell>
-          <TableCell>200</TableCell>
+          <TableCell>{result.exam.acronym}</TableCell>
+          <TableCell>{moment(result.startedAt).format('MMMM D, YYYY, h:mm A')}</TableCell>
+          <TableCell>{moment(result.finishedAt).format('MMMM D, YYYY, h:mm A')}</TableCell>
+          <TableCell>{result.resultList.length}</TableCell>
           {/* <TableCell>{exam.noOfQuestions} Question</TableCell> */}
-          <TableCell>{getStatusBadge('running')}</TableCell>
+          <TableCell>{getStatusBadge(isTimeActive({validFrom: result.startedAt, validTill: result?.finishedAt}) ? 'active' : 'finished')}</TableCell>
           <TableCell className='flex justify-end items-end'>
             <Button className='cursor-pointer'>
               <Eye />
             </Button>
           </TableCell>
         </TableRow>
-        <TableRow
-          onClick={() => router.push(`/user-results/2334`)}
-          className='cursor-pointer'
-        >
-          <TableCell>Waec</TableCell>
-          <TableCell>March 20, 2025</TableCell>
-          <TableCell>March 20, 2025</TableCell>
-          <TableCell>200</TableCell>
-          {/* <TableCell>{exam.noOfQuestions} Question</TableCell> */}
-          <TableCell>{getStatusBadge('running')}</TableCell>
-          <TableCell className='flex justify-end items-end'>
-            <Button className='cursor-pointer'>
-              <Eye />
-            </Button>
-          </TableCell>
-        </TableRow>
-        <TableRow
-          onClick={() => router.push(`/user-results/2334`)}
-          className='cursor-pointer'
-        >
-          <TableCell>Waec</TableCell>
-          <TableCell>March 20, 2025</TableCell>
-          <TableCell>March 20, 2025</TableCell>
-          <TableCell>200</TableCell>
-          {/* <TableCell>{exam.noOfQuestions} Question</TableCell> */}
-          <TableCell>{getStatusBadge('running')}</TableCell>
-          <TableCell className='flex justify-end items-end'>
-            <Button className='cursor-pointer'>
-              <Eye />
-            </Button>
-          </TableCell>
-        </TableRow>
+        )))}
       </TableBody>
     </Table>
   );

@@ -1,6 +1,7 @@
 import { ExamType } from './exam.types';
 import { ExamCardType } from './examCards.types';
 import { examModeType } from './examMode.types';
+import { IUser } from './user.types';
 
 export interface ResultType {
   id: string;
@@ -17,6 +18,7 @@ export interface ResultType {
   totalQuestions: number;
   finished: boolean;
   examMode: examModeType;
+  user: IUser;
 }
 
 export interface ResultMainDataType {
@@ -32,4 +34,25 @@ export interface ResultMainDataType {
 
 export interface ResultDataTypes {
   doc: ResultMainDataType;
+}
+
+export interface SingleExamModeResultStatsType {
+  total: number;
+  average: number;
+  highest: number;
+  lowest: number;
+}
+
+export interface ExamModeResultMainDataType {
+  doc: ExamModeResultType[];
+}
+
+export interface ExamModeResultType {
+  id: string;
+  _id: string;
+  exam: ExamType;
+  startedAt: Date;
+  finishedAt: Date;
+  resultList: ResultType[];
+  stats: SingleExamModeResultStatsType;
 }

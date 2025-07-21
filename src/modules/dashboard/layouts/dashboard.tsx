@@ -14,7 +14,7 @@ export const Dashboard = () => {
     <main>
       <p>Overview of entire school management platform</p>
 
-      <section className='mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 '>
+      <section className='mt-4 grid grid-cols-2 md:grid-cols-3 gap-4 max-lg:mb-5'>
         <StatsCard Icon={Users} title='Total Users' stat={data?.userCount} />
         <StatsCard Icon={Users} title='Total Admins' stat={data?.AdminCount} />
         <StatsCard

@@ -99,11 +99,12 @@ export const Preference = () => {
         <Separator className='my-5' />
         <main className='grid sm:grid-cols-2 grid-cols-1 gap-5'>
           <div className='mb-4'>
-            <Label className='mb-2'>Organization Name</Label>
+            <Label className='mb-2'>Organization Name (contact support to change)</Label>
             <Input
               placeholder='Enter Organization Name'
               className='h-12'
-              disabled={!edit || isSubmitting}
+              // disabled={!edit || isSubmitting}
+              disabled
               {...register('name')}
             />
             {errors.name && (

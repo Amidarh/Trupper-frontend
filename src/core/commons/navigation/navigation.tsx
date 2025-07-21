@@ -110,7 +110,9 @@ export default function NavBar({
       {/* Mobile Navigation */}
       <main className='w-full justify-between items-center flex flex-row lg:hidden'>
         <MobileSidebar userRole={user?.role || null} />
-        <h1 className='text-xl'>{organization?.name}</h1>
+        <h1 className='text-xl'
+          onClick={() => router.push('/dashboard')}
+        >{organization?.name}</h1>
         <Bell className='cursor-pointer' />
       </main>
     </nav>
