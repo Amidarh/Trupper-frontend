@@ -8,6 +8,7 @@ import { usersData } from '../types/users.types';
 import { useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { toQueryString } from '@/utils';
+import { toast } from 'sonner';
 
 export const useUserService = (queryParams: Record<string, any>) => {
   const [singleUser, setSingleUser] = useState<userMainData | null>(null);
@@ -81,6 +82,7 @@ export const useUserService = (queryParams: Record<string, any>) => {
       const errorMessage =
         err?.response?.data?.message || err?.message || 'Could not block User';
       setSingleUserError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setSingleUserLoading(false);
     }
@@ -109,6 +111,7 @@ export const useUserService = (queryParams: Record<string, any>) => {
         err?.message ||
         'Could not unblock User';
       setSingleUserError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setSingleUserLoading(false);
     }
