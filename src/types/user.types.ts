@@ -3,6 +3,10 @@ import { UserRole } from '../core/constants/sidebar';
 import { CategoryTypes } from './categories.types';
 import { SubCategoryTypes } from './categories.types';
 import { QuestionType } from './question.types';
+import {
+  OnboardingOrganizationType,
+  OnboardingPersonnelType,
+} from './onboarding.types';
 import { IOrganization } from './organization.types';
 
 export interface IUser {
@@ -76,4 +80,10 @@ export interface AltStore {
   previousQuestion: () => void;
   refreshToken: string | null;
   setRefreshToken: (token: string) => void;
+  onBoardingEmail: boolean;
+  setOnBoardingEmail: (email: boolean) => void;
+  onboardingPersonnel: OnboardingPersonnelType | null;
+  setOnboardingPersonnel: (personnel: OnboardingPersonnelType) => void;
+  onboardingOrganization: OnboardingOrganizationType | null;
+  setOnboardingOrganization: (organization: OnboardingOrganizationType) => void;
 }

@@ -22,30 +22,36 @@ import {
   UserPlus,
 } from 'lucide-react';
 
-export const UserActivities = ({ data, results } : { data: MyDashboardStatsType | undefined, results: ResultType[] | undefined }) => {
+export const UserActivities = ({
+  data,
+  results,
+}: {
+  data: MyDashboardStatsType | undefined;
+  results: ResultType[] | undefined;
+}) => {
   return (
     <main>
       <h1>Analytics</h1>
-      <section className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 max-lg:mb-5">
+      <section className='mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 max-lg:mb-5'>
         <StatsCard
           Icon={User2}
           stat={data?.totalExams ?? 0}
-          title="Total Exam Taken"
+          title='Total Exam Taken'
         />
         <StatsCard
           Icon={User2}
           stat={`${Math.round(data?.averageScore ?? 0)}%`}
-          title="Average Score"
+          title='Average Score'
         />
         <StatsCard
           Icon={User2}
           stat={Math.round(data?.totalAttemptedQuestions ?? 0)}
-          title="Tried Questions"
+          title='Tried Questions'
         />
         <StatsCard
           Icon={User2}
           stat={data?.totalPassedQuestions ?? 0}
-          title="Correct Questions"
+          title='Correct Questions'
         />
       </section>
 

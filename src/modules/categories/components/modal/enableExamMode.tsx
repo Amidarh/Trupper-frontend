@@ -118,20 +118,22 @@ export function EnableExamModeModal({
             onSubmit={handleSubmit(handleEnableExamMode)}
           >
             <div className='mb-4'>
-            <Label htmlFor='subjectToBeWritten' className='mb-2'>
-              Subjects (select category subjects)
-            </Label>
-            <MultiSelect
-              name='Select Subjects'
-              options={mapSubjectsToOptions(subjectList ?? [])}
-              onChange={(e) => {
-                setSelected(e);
-                const mappedSubjects = e.map((id) => ({ value: id, id }));
-                setValue('subjects', mappedSubjects, { shouldValidate: true });
-              }}
-              value={selected}
-            />
-          </div>
+              <Label htmlFor='subjectToBeWritten' className='mb-2'>
+                Subjects (select category subjects)
+              </Label>
+              <MultiSelect
+                name='Select Subjects'
+                options={mapSubjectsToOptions(subjectList ?? [])}
+                onChange={(e) => {
+                  setSelected(e);
+                  const mappedSubjects = e.map((id) => ({ value: id, id }));
+                  setValue('subjects', mappedSubjects, {
+                    shouldValidate: true,
+                  });
+                }}
+                value={selected}
+              />
+            </div>
             <div>
               <Calendar24
                 label='Valid From'

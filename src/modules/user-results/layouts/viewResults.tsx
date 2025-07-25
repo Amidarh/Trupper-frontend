@@ -291,7 +291,11 @@ const EmptyState = () => (
 export function ViewResultContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const { getSingleExamModeResult, examModeResult, singleExamModeResultLoading } = useExamModeResultService();
+  const {
+    getSingleExamModeResult,
+    examModeResult,
+    singleExamModeResultLoading,
+  } = useExamModeResultService();
 
   useEffect(() => {
     getSingleExamModeResult();
@@ -373,7 +377,9 @@ export function ViewResultContent() {
                 <div className='text-sm font-medium text-gray-500'>
                   Total Students
                 </div>
-                <div className='text-2xl font-bold'>{examModeResult?.resultList?.length ?? 0}</div>
+                <div className='text-2xl font-bold'>
+                  {examModeResult?.resultList?.length ?? 0}
+                </div>
               </CardContent>
             </Card>
             <Card>

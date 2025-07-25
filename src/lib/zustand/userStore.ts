@@ -1,6 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IUser, AltStore, IOrganization, examStateType } from '@/types';
+import {
+  IUser,
+  AltStore,
+  IOrganization,
+  examStateType,
+  OnboardingPersonnelType,
+  OnboardingOrganizationType,
+} from '@/types';
 
 export const useAltStore = create<AltStore>()(
   persist(
@@ -37,6 +44,16 @@ export const useAltStore = create<AltStore>()(
             state.currentQuestion !== null ? state.currentQuestion - 1 : 0,
         })),
       setExamDuration: (examDuration: number) => set({ examDuration }),
+      onBoardingEmail: false,
+      setOnBoardingEmail: (onBoardingEmail: boolean) =>
+        set({ onBoardingEmail }),
+      onboardingPersonnel: null,
+      setOnboardingPersonnel: (onboardingPersonnel: OnboardingPersonnelType) =>
+        set({ onboardingPersonnel }),
+      onboardingOrganization: null,
+      setOnboardingOrganization: (
+        onboardingOrganization: OnboardingOrganizationType
+      ) => set({ onboardingOrganization }),
     }),
     {
       name: 'Alt-store',

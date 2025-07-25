@@ -127,7 +127,7 @@ export default function OnboardingPage() {
             </div>
 
             <Button className='mt-5' type='submit' disabled={isSubmitting}>
-              {isSubmitting ? 'Loading' : 'Next'}
+              {isSubmitting ? 'Loading' : 'Finish'}
             </Button>
           </form>
         </section>

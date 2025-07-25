@@ -26,15 +26,18 @@ export default function FloatingParticles() {
       speedX: (Math.random() - 0.5) * 0.5,
       speedY: (Math.random() - 0.5) * 0.5,
       opacity: Math.random() * 0.5 + 0.1,
-      type: ['circle', 'square', 'triangle'][Math.floor(Math.random() * 3)] as 'circle' | 'square' | 'triangle',
+      type: ['circle', 'square', 'triangle'][Math.floor(Math.random() * 3)] as
+        | 'circle'
+        | 'square'
+        | 'triangle',
     }));
 
     setParticles(initialParticles);
 
     // Animation loop
     const animate = () => {
-      setParticles(prevParticles =>
-        prevParticles.map(particle => {
+      setParticles((prevParticles) =>
+        prevParticles.map((particle) => {
           let newX = particle.x + particle.speedX;
           let newY = particle.y + particle.speedY;
 
@@ -80,7 +83,8 @@ export default function FloatingParticles() {
               width: `${particle.size}px`,
               height: `${particle.size}px`,
               borderRadius: '50%',
-              background: 'linear-gradient(45deg, rgba(147, 51, 234, 0.6), rgba(59, 130, 246, 0.6))',
+              background:
+                'linear-gradient(45deg, rgba(147, 51, 234, 0.6), rgba(59, 130, 246, 0.6))',
               boxShadow: '0 0 10px rgba(147, 51, 234, 0.3)',
             }}
           />
@@ -93,7 +97,8 @@ export default function FloatingParticles() {
               ...baseStyle,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
-              background: 'linear-gradient(45deg, rgba(236, 72, 153, 0.6), rgba(147, 51, 234, 0.6))',
+              background:
+                'linear-gradient(45deg, rgba(236, 72, 153, 0.6), rgba(147, 51, 234, 0.6))',
               boxShadow: '0 0 10px rgba(236, 72, 153, 0.3)',
               transform: 'rotate(45deg)',
             }}
@@ -120,8 +125,8 @@ export default function FloatingParticles() {
   };
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className='fixed inset-0 pointer-events-none z-0 overflow-hidden'>
       {particles.map(renderParticle)}
     </div>
   );
-} 
+}

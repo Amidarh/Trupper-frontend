@@ -13,9 +13,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { OnboardingPersonnelType } from '@/types';
 
 export const useOnboardingService = () => {
   const organization = useAltStore((state) => state.organization);
+  const setOnBoardingEmail = useAltStore((state) => state.setOnBoardingEmail);
+  const setOnboardingPersonnel = useAltStore(
+    (state) => state.setOnboardingPersonnel
+  );
+  const setOnboardingOrganization = useAltStore(
+    (state) => state.setOnboardingOrganization
+  );
   const setOrganization = useAltStore((state) => state.setOrganization);
   const setUser = useAltStore((state) => state.setUser);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -41,7 +49,7 @@ export const useOnboardingService = () => {
         console.log({ updatedOrganization });
         setOrganization(updatedOrganization);
         toast.success(res.data.message);
-        router.push(`/onboarding/details`);
+        router.push(`/dashboard`);
       }
     } catch (error: any) {
       const errorMessage =
@@ -61,6 +69,14 @@ export const useOnboardingService = () => {
         const isProduction = process.env.NODE_ENV === 'production';
         const secureFlag = isProduction ? '; secure' : '';
         const orgName = (organization?.name || 'default').replace(/\s+/g, '_');
+        setOnBoardingEmail(false);
+        setOnboardingPersonnel({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+        });
 
         // Set cookies client-side
         document.cookie = `${orgName}-accessToken=${token}; path=/${secureFlag}; SameSite=Strict`;
@@ -74,9 +90,12 @@ export const useOnboardingService = () => {
         // Update Zustand store
         setUser(user);
 
-        router.push(`/onboarding/org`);
+        router.push(`/onboarding/details`);
       }
     } catch (err: any) {
+      if (err.response?.status === 400) {
+        setOnBoardingEmail(true);
+      }
       const errorMessage =
         err.response?.data?.message ||
         err.message ||
@@ -93,7 +112,14 @@ export const useOnboardingService = () => {
         console.log({ updatedOrganization });
         setOrganization(updatedOrganization);
         toast.success(res.data.message);
-        router.push('/dashboard');
+        setOnboardingOrganization({
+          description: data.description,
+          userRange: data.usersRange,
+          staffsRange: data.staffRange,
+          mobile: data.phone,
+          country: data.country,
+        });
+        router.push('/onboarding/org');
       }
     } catch (error: any) {
       const errorMessage =

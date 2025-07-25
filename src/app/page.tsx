@@ -17,7 +17,7 @@ export default function HomePage() {
       router.push('/onboarding/personnel');
     }
   }, [organization]);
-  
+
   return (
     <main className='w-full relative'>
       <FloatingParticles />

@@ -13,7 +13,13 @@ export function toQueryString(params: Record<string, any>): string {
     .join('&');
 }
 
-export function isTimeActive({validFrom, validTill}: { validFrom?: Date; validTill?: Date }) {
+export function isTimeActive({
+  validFrom,
+  validTill,
+}: {
+  validFrom?: Date;
+  validTill?: Date;
+}) {
   if (!validFrom || !validTill) return false;
   const now = new Date();
   const from = new Date(validFrom);

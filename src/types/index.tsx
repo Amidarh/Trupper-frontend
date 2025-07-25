@@ -12,3 +12,4 @@ export * from './question.types';
 export * from './result.types';
 export * from './subject.types';
 export * from './user.types';
+export * from './onboarding.types';

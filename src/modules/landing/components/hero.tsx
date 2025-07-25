@@ -52,7 +52,7 @@ export default function Hero() {
             </radialGradient>
           </defs>
           <rect width='100%' height='100%' fill='url(#grid)' />
-          
+
           {/* Floating geometric shapes */}
           <circle
             cx='200'
@@ -111,22 +111,24 @@ export default function Hero() {
           </div>
 
           {/* Main heading */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight animate-fade-in-up">
-            <span className="block bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className='text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight animate-fade-in-up'>
+            <span className='block bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'>
               Exam Management System
             </span>
-            <span className="block bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mt-2">
+            <span className='block bg-gradient-to-r from-purple-300 via-pink-300 to-blue-300 bg-clip-text text-transparent text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mt-2'>
               for Schools
             </span>
-            <span className="block bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2">
+            <span className='block bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-2'>
               at Every Level
             </span>
           </h1>
 
           {/* Description */}
           <p className='text-xl md:text-2xl text-white/80 max-w-4xl mx-auto leading-relaxed animate-fade-in-up'>
-            Simplify exam creation, management, and grading with our all-in-one platform. 
-            Empower your school to conduct secure, efficient, and insightful assessments—online or offline—tailored for every grade and subject.
+            Simplify exam creation, management, and grading with our all-in-one
+            platform. Empower your school to conduct secure, efficient, and
+            insightful assessments—online or offline—tailored for every grade
+            and subject.
           </p>
 
           {/* CTA Buttons */}
@@ -140,7 +142,7 @@ export default function Hero() {
               <span className='relative z-10'>Get Started Today</span>
               <div className='absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300'></div>
             </Button>
-            
+
             {/* <Button
               variant='outline'
               className='px-8 py-4 text-lg font-semibold rounded-full border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300'
@@ -184,30 +186,41 @@ export default function Hero() {
 
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px); opacity: 0.3; }
-          50% { transform: translateY(-20px); opacity: 0.8; }
+          0%,
+          100% {
+            transform: translateY(0px);
+            opacity: 0.3;
+          }
+          50% {
+            transform: translateY(-20px);
+            opacity: 0.8;
+          }
         }
-        
+
         @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
-        
+
         @keyframes fade-in-up {
-          from { 
-            opacity: 0; 
-            transform: translateY(30px); 
+          from {
+            opacity: 0;
+            transform: translateY(30px);
           }
-          to { 
-            opacity: 1; 
-            transform: translateY(0); 
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
-        
+
         .animate-fade-in {
           animation: fade-in 1s ease-out;
         }
-        
+
         .animate-fade-in-up {
           animation: fade-in-up 0.8s ease-out;
         }

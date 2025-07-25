@@ -45,7 +45,7 @@ export const useUserService = (queryParams: Record<string, any>) => {
     setSingleUserLoading(true);
     setSingleUserError('');
     try {
-      console.log(id)
+      console.log(id);
       const res = await api.get(`/users/${id}`);
       if (res.status === 200 && res.data?.doc) {
         setSingleUser(res.data.doc);

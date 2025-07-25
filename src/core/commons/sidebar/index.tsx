@@ -81,8 +81,9 @@ export default function AppSidebar({ userRole, className }: AppSidebarProps) {
 
   return (
     <Sidebar className={`w-60 ${className || ''}`}>
-      <SidebarHeader className='p-0 pl-5 cursor-pointer'
-      onClick={() => router.push('/dashboard')}
+      <SidebarHeader
+        className='p-0 pl-5 cursor-pointer'
+        onClick={() => router.push('/dashboard')}
       >
         {organization?.logo ? (
           <div className='flex flex-row items-center gap-1'>

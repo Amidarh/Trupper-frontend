@@ -23,10 +23,10 @@ export default function Navbar() {
 
   return (
     <main className='py-4 px-2 lg:px-5 w-full flex justify-center items-center h-fit fixed top-0 z-50 transition-all duration-300'>
-      <section 
+      <section
         className={`w-full max-w-7xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-md border shadow-lg p-4 flex justify-between items-center transition-all duration-300 ${
-          scrolled 
-            ? 'bg-white/20 border-white/30 shadow-xl' 
+          scrolled
+            ? 'bg-white/20 border-white/30 shadow-xl'
             : 'bg-white/10 border-white/20 shadow-md'
         }`}
       >
@@ -70,7 +70,7 @@ export default function Navbar() {
           >
             About
           </Button> */}
-          <Button 
+          <Button
             onClick={() => route.push('/login')}
             className='bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25'
           >

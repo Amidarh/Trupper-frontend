@@ -7,37 +7,43 @@ const features = [
   {
     icon: '🎯',
     title: 'Personalized Learning',
-    description: 'AI-powered adaptive learning that adjusts to your pace and learning style for optimal results.',
+    description:
+      'AI-powered adaptive learning that adjusts to your pace and learning style for optimal results.',
     gradient: 'from-purple-500 to-pink-500',
   },
   {
     icon: '📊',
     title: 'Real-time Analytics',
-    description: 'Track your progress with detailed analytics and insights to identify areas for improvement.',
+    description:
+      'Track your progress with detailed analytics and insights to identify areas for improvement.',
     gradient: 'from-blue-500 to-cyan-500',
   },
   {
     icon: '🤖',
     title: 'AI Examiner',
-    description: 'Advanced AI that creates personalized exams and provides intelligent feedback on your performance.',
+    description:
+      'Advanced AI that creates personalized exams and provides intelligent feedback on your performance.',
     gradient: 'from-green-500 to-emerald-500',
   },
   {
     icon: '📱',
     title: 'Mobile First',
-    description: 'Learn anywhere, anytime with our responsive design that works perfectly on all devices.',
+    description:
+      'Learn anywhere, anytime with our responsive design that works perfectly on all devices.',
     gradient: 'from-orange-500 to-red-500',
   },
   {
     icon: '🔒',
     title: 'Secure & Private',
-    description: 'Enterprise-grade security ensures your data and learning progress remain completely private.',
+    description:
+      'Enterprise-grade security ensures your data and learning progress remain completely private.',
     gradient: 'from-indigo-500 to-purple-500',
   },
   {
     icon: '🌍',
     title: 'Global Community',
-    description: 'Connect with learners worldwide and participate in collaborative learning experiences.',
+    description:
+      'Connect with learners worldwide and participate in collaborative learning experiences.',
     gradient: 'from-teal-500 to-blue-500',
   },
 ];
@@ -62,7 +68,8 @@ export default function Features() {
             </span>
           </h2>
           <p className='text-xl text-white/80 max-w-3xl mx-auto leading-relaxed'>
-            Experience the future of education with cutting-edge features designed to enhance your learning journey
+            Experience the future of education with cutting-edge features
+            designed to enhance your learning journey
           </p>
         </div>
 
@@ -72,7 +79,9 @@ export default function Features() {
             <div
               key={index}
               className={`group relative p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-500 hover:scale-105 hover:bg-white/10 ${
-                hoveredIndex === index ? 'shadow-2xl shadow-purple-500/25' : 'shadow-lg'
+                hoveredIndex === index
+                  ? 'shadow-2xl shadow-purple-500/25'
+                  : 'shadow-lg'
               }`}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
@@ -85,7 +94,9 @@ export default function Features() {
               {/* Icon */}
               <div className='relative z-10 mb-6'>
                 <div className='text-4xl mb-4'>{feature.icon}</div>
-                <div className={`w-12 h-1 bg-gradient-to-r ${feature.gradient} rounded-full`}></div>
+                <div
+                  className={`w-12 h-1 bg-gradient-to-r ${feature.gradient} rounded-full`}
+                ></div>
               </div>
 
               {/* Content */}
@@ -106,13 +117,11 @@ export default function Features() {
 
         {/* CTA section */}
         <div className='text-center mt-16'>
-          <Button
-            className='px-8 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-purple-500/25'
-          >
+          <Button className='px-8 py-4 text-lg font-semibold rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-purple-500/25'>
             Explore All Features
           </Button>
         </div>
       </div>
     </section>
   );
-} 
+}

@@ -21,12 +21,26 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { staffRange, usersRange } from '@/constants/onboarding';
-import { BackButton } from '@/core/commons/navigation/backButton';
+// import { BackButton } from '@/core/commons/navigation/backButton';
 import { useRouter } from 'next/navigation';
 
 export default function OnboardingPage() {
   const router = useRouter();
   const organization = useAltStore((state) => state.organization);
+  const onboardingOrganization = useAltStore(
+    (state) => state.onboardingOrganization
+  );
+
+  // Initialize form state from onboardingOrganization if available
+  const [formData, setFormData] = useState({
+    description: '',
+    phone: '',
+    country: '',
+    usersRange: '',
+    staffRange: '',
+  });
+
+  // These are for select components
   const [selectedStaffRange, setSelectedStaffRange] = useState<
     string | undefined
   >(undefined);
@@ -51,6 +65,26 @@ export default function OnboardingPage() {
     }
   }, [organization]);
 
+  // Load onboardingOrganization data into form and selects
+  useEffect(() => {
+    if (onboardingOrganization) {
+      setFormData({
+        description: onboardingOrganization.description || '',
+        phone: onboardingOrganization.mobile || '',
+        country: onboardingOrganization.country || '',
+        usersRange: onboardingOrganization.userRange || '',
+        staffRange: onboardingOrganization.staffsRange || '',
+      });
+      setValue('description', onboardingOrganization.description || '');
+      setValue('phone', onboardingOrganization.mobile || '');
+      setValue('country', onboardingOrganization.country || '');
+      setValue('usersRange', onboardingOrganization.userRange || '');
+      setValue('staffRange', onboardingOrganization.staffsRange || '');
+      setSelectedUserRange(onboardingOrganization.userRange || '');
+      setSelectedStaffRange(onboardingOrganization.staffsRange || '');
+    }
+  }, [onboardingOrganization, setValue]);
+
   return (
     <div className='lg:px-10 px-4 py-5'>
       <div>
@@ -60,8 +94,8 @@ export default function OnboardingPage() {
       </div>
       <main className=' py-1 w-full flex flex-row gap-2'>
         <section className='w-full lg:max-w-xl'>
-          <Progress value={90} className='w-full my-2' />
-          <BackButton title='back' />
+          <Progress value={66.66} className='w-full my-2' />
+          {/* <BackButton title='back' /> */}
           <div className='mt-4 flex flex-col gap-3'>
             <h1 className='text-3xl font-semibold '>
               Let&apos;s Know your Organization
@@ -81,6 +115,7 @@ export default function OnboardingPage() {
               <Textarea
                 placeholder='Describe your organization your way'
                 className='mt-2'
+                defaultValue={formData.description}
                 {...register('description')}
               />
               {errors.description && (
@@ -94,8 +129,9 @@ export default function OnboardingPage() {
               <Label>Organization mobile no</Label>
               <PhoneInput
                 className='mt-2'
+                value={formData.phone}
                 onChange={(e) => {
-                  console.log(e);
+                  setFormData((prev) => ({ ...prev, phone: e }));
                   setValue('phone', e, { shouldValidate: true });
                 }}
               />
@@ -110,8 +146,9 @@ export default function OnboardingPage() {
               <Label>Organization Location</Label>
               <div className='mt-2'>
                 <CountrySelect
+                  defaultValue={formData.country}
                   onChange={(e) => {
-                    console.log({ e });
+                    setFormData((prev) => ({ ...prev, country: e.name }));
                     setValue('country', e.name, { shouldValidate: true });
                   }}
                 />
@@ -120,14 +157,15 @@ export default function OnboardingPage() {
 
             <div className='mt-4'>
               <Label htmlFor='user range' className='mb-1'>
-                Your user range
+                Your user(s) range
               </Label>
               <Select
                 onValueChange={(value) => {
                   setSelectedUserRange(value);
+                  setFormData((prev) => ({ ...prev, usersRange: value }));
                   setValue('usersRange', value, { shouldValidate: true });
                 }}
-                value={selectedUsersRange}
+                value={selectedUsersRange ?? formData.usersRange}
               >
                 <SelectTrigger className='w-full h-12'>
                   <SelectValue placeholder='Select your users range' />
@@ -151,14 +189,15 @@ export default function OnboardingPage() {
 
             <div className='mt-4'>
               <Label htmlFor='user range' className='mb-1'>
-                Your staff range
+                Your staff(s) range
               </Label>
               <Select
                 onValueChange={(value) => {
                   setSelectedStaffRange(value);
+                  setFormData((prev) => ({ ...prev, staffRange: value }));
                   setValue('staffRange', value, { shouldValidate: true });
                 }}
-                value={selectedStaffRange}
+                value={selectedStaffRange ?? formData.staffRange}
               >
                 <SelectTrigger className='w-full h-12'>
                   <SelectValue placeholder='Select your users range' />
@@ -181,7 +220,7 @@ export default function OnboardingPage() {
             </div>
 
             <Button className='mt-5' type='submit' disabled={isSubmitting}>
-              {isSubmitting ? 'Loading...' : 'Finish'}
+              {isSubmitting ? 'Loading...' : 'Next'}
             </Button>
           </form>
         </section>

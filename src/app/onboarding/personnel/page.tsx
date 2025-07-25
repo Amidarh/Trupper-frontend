@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 export default function OnboardingPage() {
   const router = useRouter();
   const organization = useAltStore((state) => state.organization);
+  const onBoardingEmail = useAltStore((state) => state.onBoardingEmail);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -106,7 +107,7 @@ export default function OnboardingPage() {
                 placeholder='Enter your email'
                 className='h-12'
                 {...register('email')}
-                disabled
+                disabled={!onBoardingEmail}
               />
               {errors.email && (
                 <p className='text-red-500 text-sm'>{errors.email.message}</p>
