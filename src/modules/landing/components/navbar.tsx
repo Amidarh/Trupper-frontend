@@ -72,7 +72,7 @@ export default function Navbar() {
           </Button> */}
           <Button
             onClick={() => route.push('/login')}
-            className='bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25'
+            className='bg-gradient-to-r bg-white text-black px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-purple-500/25'
           >
             Login
           </Button>
