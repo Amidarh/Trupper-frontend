@@ -64,7 +64,6 @@ const PERMISSIONS: Record<keyof typeof VALID_ROLES, string[]> = {
 
 const ROUTE_PERMISSIONS: Record<string, string> = {
   '/dashboard': 'dashboard',
-  // '/my-dashboard': 'my-dashboard',
   '/users': 'users',
   '/categories': 'categories',
   '/sub-admins': 'sub-admins',
@@ -105,13 +104,21 @@ export function middleware(request: NextRequest) {
     | keyof typeof VALID_ROLES
     | undefined;
 
+  // Allow unauthenticated access to /kyc-complete and its subroutes
+  if (pathname.startsWith('/kyc-complete')) {
+    console.log(`Allowing access to ${pathname} without authentication`);
+    return NextResponse.next();
+  }
+
   // Redirect unauthenticated users on protected routes
   const isProtected = Object.keys(ROUTE_PERMISSIONS).some((route) =>
     pathname.startsWith(route)
   );
   if (!userRole || !VALID_ROLES[userRole]) {
-    console.log(userRole);
     if (isProtected) {
+      console.log(
+        `Redirecting unauthenticated user from ${pathname} to /login`
+      );
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('callbackUrl', encodeURIComponent(request.url));
       return NextResponse.redirect(loginUrl);
@@ -121,9 +128,10 @@ export function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from auth routes
   if (AUTH_ROUTES.includes(pathname)) {
-    // const isAdmin = ['ADMIN', 'SUB_ADMIN', 'SUPER_ADMIN'].includes(userRole);
-    const redirectPath = '/dashboard';
-    return NextResponse.redirect(new URL(redirectPath, request.url));
+    console.log(
+      `Redirecting authenticated user from ${pathname} to /dashboard`
+    );
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
   // Authorization check
@@ -134,8 +142,10 @@ export function middleware(request: NextRequest) {
     const requiredPermission = ROUTE_PERMISSIONS[permissionKey];
     const allowedPermissions = PERMISSIONS[userRole] || [];
     if (!allowedPermissions.includes(requiredPermission)) {
-      const forbiddenUrl = new URL('/dashboard', request.url);
-      return NextResponse.rewrite(forbiddenUrl); // FIXED: Use rewrite for 403, not redirect
+      console.log(
+        `User role ${userRole} lacks permission ${requiredPermission} for ${pathname}`
+      );
+      return NextResponse.rewrite(new URL('/dashboard', request.url));
     }
   }
 

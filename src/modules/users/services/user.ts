@@ -9,13 +9,17 @@ import { useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { toQueryString } from '@/utils';
 import { toast } from 'sonner';
+import { CreateUserWithLinkSchema, createUserWithLinkSchema } from '../schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 export const useUserService = (queryParams: Record<string, any>) => {
   const [singleUser, setSingleUser] = useState<userMainData | null>(null);
   const [singleUserLoading, setSingleUserLoading] = useState<boolean>(false);
   const [singleUserError, setSingleUserError] = useState<string>('');
   const { id } = useParams() as { id?: string };
-
+  const router = useRouter();
   const organization = useAltStore((state) => state.organization);
 
   // Only fetch if organization is available
@@ -35,6 +39,10 @@ export const useUserService = (queryParams: Record<string, any>) => {
     swrKey,
     fetcher
   );
+
+  const linkForm = useForm<CreateUserWithLinkSchema>({
+    resolver: zodResolver(createUserWithLinkSchema),
+  });
 
   // Fetch a single user by id
   const getASingleUser = useCallback(async () => {
@@ -60,6 +68,29 @@ export const useUserService = (queryParams: Record<string, any>) => {
       setSingleUserLoading(false);
     }
   }, [id]);
+
+  const createUserWithLink = useCallback(
+    async (data: CreateUserWithLinkSchema) => {
+      try {
+        console.log({ data });
+        const res = await api.post('/auth/add-user', data);
+        if (res.status === 201) {
+          toast.success('User created successfully');
+          linkForm.reset();
+          router.push('/users');
+        } else {
+          throw new Error('Failed to create user with link');
+        }
+      } catch (err: any) {
+        const errorMessage =
+          err?.response?.data?.message ||
+          err?.message ||
+          'Failed to create user with link';
+        toast.error(errorMessage);
+      }
+    },
+    [linkForm, router]
+  );
 
   // Block user by id
   const blockUser = useCallback(async () => {
@@ -128,5 +159,7 @@ export const useUserService = (queryParams: Record<string, any>) => {
     blockUser,
     unBlockUser,
     mutate,
+    linkForm,
+    createUserWithLink,
   };
 };

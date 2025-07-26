@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  // Plus,
-  EllipsisVertical,
-} from 'lucide-react';
+import { Plus, EllipsisVertical } from 'lucide-react';
 import { getStatusBadge } from '@/core/commons/components/badge/badge';
 import { useUserService } from '../../services/user';
 import { useEffect, useState } from 'react';
@@ -173,17 +170,20 @@ export const UserTable = () => {
           </div>
           <div className='flex flex-row gap-2 items-center'>
             <Button
-              variant='outline'
+              variant='glass'
               className='cursor-pointer h-10'
               onClick={handleExportCodes}
               disabled={isLoading}
             >
               Export Data
             </Button>
-            {/* <Button className="cursor-pointer">
-                <Plus className="h-4 w-4" />
-                <p>Add New User</p>
-            </Button> */}
+            <Button
+              className='cursor-pointer'
+              onClick={() => router.push('/users/new-link')}
+            >
+              <Plus className='h-4 w-4' />
+              <p>Add New User</p>
+            </Button>
           </div>
         </div>
       </CardHeader>
