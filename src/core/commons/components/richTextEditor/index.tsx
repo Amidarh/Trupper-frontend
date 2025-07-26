@@ -9,7 +9,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 
 interface RichTextEditorProps {
-  content: string;
+  content: string | undefined;
   onChange: (content: string) => void;
   className?: string;
   disabled?: boolean;
@@ -54,7 +54,11 @@ export default function RichTextEditor({
 
   // Update editor content when the `content` prop changes
   useEffect(() => {
-    if (editor && content !== editor.getHTML()) {
+    if (
+      editor &&
+      typeof content === 'string' &&
+      content !== editor.getHTML()
+    ) {
       editor.commands.setContent(content, false); // false prevents emitting an update event
     }
   }, [editor, content]);

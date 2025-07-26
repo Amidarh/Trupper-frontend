@@ -5,7 +5,7 @@ export const questionSchema = z.object({
   question: z.string().min(1, { message: 'Enter Question' }),
   subject: z.string().min(1, { message: 'Select Subject' }),
   questionType: z.string().min(1, { message: 'Select Question type' }),
-  section: z.string().min(1, { message: 'Enter section' }),
+  section: z.string().min(1, { message: 'Enter section' }).optional(),
   image: z
     .union([
       z

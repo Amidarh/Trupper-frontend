@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/pagination';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const QuestionTable = () => {
+export const QuestionTable = ({ filters, isLoading }: { filters: Record<string, any>, isLoading: boolean }) => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
@@ -31,7 +31,7 @@ export const QuestionTable = () => {
     page: currentPage,
     limit: usersPerPage,
   };
-  const { data, isLoading } = useQuestionService(queryParams);
+  const { data } = useQuestionService({ ...queryParams, ...filters });
   const totalPages =
     data && typeof data.totalPages === 'number' ? data.totalPages : 1;
   return (
@@ -42,6 +42,7 @@ export const QuestionTable = () => {
             <TableHead className='truncate text-ellipsis'>
               Question Type
             </TableHead>
+            <TableHead>Exam</TableHead>
             <TableHead>Subject</TableHead>
             <TableHead>Status</TableHead>
             <TableHead align='right' className='text-right'>
@@ -53,28 +54,51 @@ export const QuestionTable = () => {
           <TableRow></TableRow>
         </TableBody>
         <TableBody>
-          {/* Add your table rows here */}
-          {data?.questions?.length === 0 ? (
+          {isLoading ? (
+            // Show skeleton rows while loading
+            Array.from({ length: 5 }).map((_, idx) => (
+              <TableRow key={idx}>
+                <TableCell>
+                  <Skeleton className="h-4 w-24" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-16" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-14" />
+                </TableCell>
+                <TableCell className="flex justify-end items-end">
+                  <Skeleton className="h-8 w-16" />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : data?.questions?.length === 0 || !data?.questions ? (
             <TableRow>
-              {isLoading ? (
-                <Skeleton className='h-12 w-full' />
-              ) : (
-                'No questions found'
-              )}
+              <TableCell colSpan={5} className="text-center">
+                No questions found
+              </TableCell>
             </TableRow>
           ) : (
             data?.questions?.map((question) => (
               <TableRow
+                key={question._id}
                 onClick={() => router.push(`/questions/${question._id}`)}
                 className='cursor-pointer'
               >
                 <TableCell>{question.questionType}</TableCell>
+                <TableCell>{question.exam.acronym}</TableCell>
                 <TableCell>{question.subject.name}</TableCell>
                 <TableCell>{getStatusBadge('active')}</TableCell>
                 <TableCell className='flex justify-end items-end'>
                   <Button
                     className='cursor-pointer'
-                    onClick={() => router.push(`/questions/${question._id}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/questions/${question._id}`);
+                    }}
                   >
                     Edit
                   </Button>
