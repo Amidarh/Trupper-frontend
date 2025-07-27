@@ -54,11 +54,7 @@ export default function RichTextEditor({
 
   // Update editor content when the `content` prop changes
   useEffect(() => {
-    if (
-      editor &&
-      typeof content === 'string' &&
-      content !== editor.getHTML()
-    ) {
+    if (editor && typeof content === 'string' && content !== editor.getHTML()) {
       editor.commands.setContent(content, false); // false prevents emitting an update event
     }
   }, [editor, content]);

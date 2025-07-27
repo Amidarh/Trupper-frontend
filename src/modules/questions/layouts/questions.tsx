@@ -8,20 +8,31 @@ import { useRouter } from 'next/navigation';
 import { StatsCard } from '@/modules/dashboard/components/card/statsCard';
 import { ChartSpline } from 'lucide-react';
 import { useQuestionService } from '../services';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { questionTypeData } from '@/constants/question';
 import { useExamService } from '@/modules/exams/services';
 
 export const Questions = () => {
   const router = useRouter();
 
-  const { data:examList, isLoading:loading } = useExamService()
+  const { data: examList, isLoading: loading } = useExamService();
 
   // Filter state
   const [search, setSearch] = useState('');
   // Default to undefined, but use 'all' as the value for "All Types"
-  const [questionType, setQuestionType] = useState<string | undefined>(undefined);
-  const [selectedExam, setSelectedExam] = useState<string | undefined>(undefined);
+  const [questionType, setQuestionType] = useState<string | undefined>(
+    undefined
+  );
+  const [selectedExam, setSelectedExam] = useState<string | undefined>(
+    undefined
+  );
 
   // Compose filter params
   const filterParams = useMemo(() => {
@@ -65,18 +76,22 @@ export const Questions = () => {
               onChange={e => setSearch(e.target.value)}
             />
           </div> */}
-          <div className="flex flex-col">
-            <Label htmlFor="type" className='mb-2'>Type</Label>
+          <div className='flex flex-col'>
+            <Label htmlFor='type' className='mb-2'>
+              Type
+            </Label>
             <Select
               value={questionType ?? 'all'}
-              onValueChange={val => setSelectedExam(val === 'all' ? undefined : val)}
+              onValueChange={(val) =>
+                setSelectedExam(val === 'all' ? undefined : val)
+              }
             >
-              <SelectTrigger className="h-8 w-40" id="type">
-                <SelectValue placeholder="All Types" />
+              <SelectTrigger className='h-8 w-40' id='type'>
+                <SelectValue placeholder='All Types' />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value='all'>All Types</SelectItem>
                   {examList?.map((type) => (
                     <SelectItem key={type.id} value={type.id}>
                       {type.acronym}

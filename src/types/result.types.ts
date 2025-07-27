@@ -37,10 +37,11 @@ export interface ResultDataTypes {
 }
 
 export interface SingleExamModeResultStatsType {
-  total: number;
-  average: number;
-  highest: number;
-  lowest: number;
+  totalStudents: number;
+  averageSchool: number;
+  averageScore: number;
+  highestScore: number;
+  lowestScore: number;
 }
 
 export interface ExamModeResultMainDataType {

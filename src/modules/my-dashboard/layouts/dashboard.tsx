@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 // import { NotificationsTable } from '../components/tables/notifications';
 import { useMyDashboardService } from '../services';
 import { EmptyNotification } from '../components/cards/emptyNotification';
-// import { NewsCarousel } from '../components/carousel';
+import { NewsCarousel } from '../components/carousel';
 import { StartExamCard } from '../components/cards/start';
 import { useRouter } from 'next/navigation';
 // import { TopPerformersTable } from '../components/tables/topPerformers';

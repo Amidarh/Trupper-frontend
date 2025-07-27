@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Download, FileText, Users, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,198 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { BackButton } from '@/core/commons/navigation/backButton';
-import { useExamModeResultService } from '@/modules/user-results/services';
-
-// Mock data types
-interface Subject {
-  name: string;
-  code: string;
-}
-
-interface StudentResult {
-  id: string;
-  name: string;
-  studentId: string;
-  class: string;
-  subjects: Record<string, number>;
-  totalScore: number;
-  averageScore: number;
-  position: number;
-}
-
-interface Exam {
-  id: string;
-  name: string;
-  term: string;
-  year: string;
-  subjects: Subject[];
-}
-
-// Mock data
-const mockExams: Exam[] = [
-  {
-    id: '1',
-    name: 'First Term Examination',
-    term: 'First Term',
-    year: '2025',
-    subjects: [
-      { name: 'Mathematics', code: 'MATH' },
-      { name: 'English Language', code: 'ENG' },
-      { name: 'Mathematics', code: 'MATH' },
-      { name: 'Physics', code: 'PHY' },
-      { name: 'English Language', code: 'ENG' },
-      { name: 'Chemistry', code: 'CHEM' },
-      { name: 'Biology', code: 'BIO' },
-      { name: 'Physics', code: 'PHY' },
-      { name: 'Biology', code: 'BIO' },
-      { name: 'English Language', code: 'ENG' },
-      { name: 'Biology', code: 'BIO' },
-      { name: 'Mathematics', code: 'MATH' },
-      { name: 'Biology', code: 'BIO' },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Second Term Examination',
-    term: 'Second Term',
-    year: '2025',
-    subjects: [
-      { name: 'Mathematics', code: 'MATH' },
-      { name: 'English Language', code: 'ENG' },
-      { name: 'Physics', code: 'PHY' },
-      { name: 'Chemistry', code: 'CHEM' },
-      { name: 'English Language', code: 'ENG' },
-      { name: 'Biology', code: 'BIO' },
-      { name: 'Biology', code: 'BIO' },
-      { name: 'Chemistry', code: 'CHEM' },
-      { name: 'Biology', code: 'BIO' },
-      { name: 'Biology', code: 'BIO' },
-    ],
-  },
-];
-
-const mockStudentResults: StudentResult[] = [
-  {
-    id: '1',
-    name: 'Alice Johnson',
-    studentId: 'STU001',
-    class: 'SS3A',
-    subjects: { MATH: 95, ENG: 88, PHY: 92, CHEM: 89, BIO: 91 },
-    totalScore: 455,
-    averageScore: 91.0,
-    position: 1,
-  },
-  {
-    id: '2',
-    name: 'Bob Smith',
-    studentId: 'STU002',
-    class: 'SS3A',
-    subjects: { MATH: 87, ENG: 92, PHY: 85, CHEM: 88, BIO: 86 },
-    totalScore: 438,
-    averageScore: 87.6,
-    position: 2,
-  },
-  {
-    id: '3',
-    name: 'Carol Davis',
-    studentId: 'STU003',
-    class: 'SS3B',
-    subjects: { MATH: 89, ENG: 85, PHY: 88, CHEM: 90, BIO: 84 },
-    totalScore: 436,
-    averageScore: 87.2,
-    position: 3,
-  },
-  {
-    id: '4',
-    name: 'David Wilson',
-    studentId: 'STU004',
-    class: 'SS3A',
-    subjects: { MATH: 82, ENG: 79, PHY: 85, CHEM: 83, BIO: 80 },
-    totalScore: 409,
-    averageScore: 81.8,
-    position: 4,
-  },
-  {
-    id: '5',
-    name: 'Emma Brown',
-    studentId: 'STU005',
-    class: 'SS3B',
-    subjects: { MATH: 78, ENG: 82, PHY: 76, CHEM: 79, BIO: 81 },
-    totalScore: 396,
-    averageScore: 79.2,
-    position: 5,
-  },
-  {
-    id: '6',
-    name: 'Frank Miller',
-    studentId: 'STU006',
-    class: 'SS3A',
-    subjects: { MATH: 75, ENG: 77, PHY: 73, CHEM: 76, BIO: 78 },
-    totalScore: 379,
-    averageScore: 75.8,
-    position: 6,
-  },
-  {
-    id: '7',
-    name: 'Grace Taylor',
-    studentId: 'STU007',
-    class: 'SS3B',
-    subjects: { MATH: 73, ENG: 75, PHY: 71, CHEM: 74, BIO: 76 },
-    totalScore: 369,
-    averageScore: 73.8,
-    position: 7,
-  },
-  {
-    id: '8',
-    name: 'Henry Anderson',
-    studentId: 'STU008',
-    class: 'SS3A',
-    subjects: { MATH: 70, ENG: 72, PHY: 68, CHEM: 71, BIO: 73 },
-    totalScore: 354,
-    averageScore: 70.8,
-    position: 8,
-  },
-  {
-    id: '9',
-    name: 'Ivy Martinez',
-    studentId: 'STU009',
-    class: 'SS3B',
-    subjects: { MATH: 68, ENG: 70, PHY: 66, CHEM: 69, BIO: 71 },
-    totalScore: 344,
-    averageScore: 68.8,
-    position: 9,
-  },
-  {
-    id: '10',
-    name: 'Jack Thompson',
-    studentId: 'STU010',
-    class: 'SS3A',
-    subjects: { MATH: 65, ENG: 67, PHY: 63, CHEM: 66, BIO: 68 },
-    totalScore: 329,
-    averageScore: 65.8,
-    position: 10,
-  },
-  {
-    id: '11',
-    name: 'Kate Lewis',
-    studentId: 'STU011',
-    class: 'SS3B',
-    subjects: { MATH: 62, ENG: 64, PHY: 60, CHEM: 63, BIO: 65 },
-    totalScore: 314,
-    averageScore: 62.8,
-    position: 11,
-  },
-  {
-    id: '12',
-    name: 'Liam Garcia',
-    studentId: 'STU012',
-    class: 'SS3A',
-    subjects: { MATH: 58, ENG: 61, PHY: 57, CHEM: 60, BIO: 62 },
-    totalScore: 298,
-    averageScore: 59.6,
-    position: 12,
-  },
-];
+import { ExamModeResultType } from '@/types';
 
 const GradeBadge = ({ score }: { score: number }) => {
   const getGradeInfo = (score: number) => {
@@ -223,7 +32,7 @@ const GradeBadge = ({ score }: { score: number }) => {
   const { grade, color } = getGradeInfo(score);
   return (
     <Badge variant='secondary' className={`${color} font-medium`}>
-      {score}%{/* {score} ({grade}) */}
+      {score}%
     </Badge>
   );
 };
@@ -288,56 +97,87 @@ const EmptyState = () => (
   </Card>
 );
 
-export function ViewResultContent() {
+export function ViewResultContent({
+  examModeResult,
+}: {
+  examModeResult: ExamModeResultType | null;
+}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    getSingleExamModeResult,
-    examModeResult,
-    singleExamModeResultLoading,
-  } = useExamModeResultService();
-
-  useEffect(() => {
-    getSingleExamModeResult();
-  }, []);
 
   const itemsPerPage = 10;
 
-  // Simulate loading when exam changes
-  const filteredResults = useMemo(() => {
-    return mockStudentResults;
-  }, []);
+  // Get resultList from examModeResult
+  const resultList = Array.isArray(examModeResult?.resultList)
+    ? examModeResult.resultList
+    : [];
 
+  // Sort resultList by score descending for ranking
+  const sortedResults = useMemo(() => {
+    return [...resultList]
+      .map((item, idx) => ({
+        ...item,
+        // Add position (rank) based on sorted order
+        position: idx + 1,
+      }))
+      .sort((a, b) => b.score - a.score);
+  }, [resultList]);
+
+  // Add position after sorting
+  const rankedResults = useMemo(() => {
+    let lastScore: number | null = null;
+    let lastRank = 0;
+    let sameRankCount = 0;
+    return sortedResults.map((item, idx) => {
+      if (item.score === lastScore) {
+        sameRankCount++;
+        return { ...item, position: lastRank };
+      } else {
+        lastScore = item.score;
+        lastRank = idx + 1;
+        sameRankCount = 1;
+        return { ...item, position: lastRank };
+      }
+    });
+  }, [sortedResults]);
+
+  // Pagination
   const paginatedResults = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredResults.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredResults, currentPage]);
+    return rankedResults.slice(startIndex, startIndex + itemsPerPage);
+  }, [rankedResults, currentPage]);
 
-  const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
-  const uniqueClasses = [...new Set(mockStudentResults.map((s) => s.class))];
+  const totalPages = Math.ceil(rankedResults.length / itemsPerPage);
 
   const handleExport = (format: 'csv' | 'pdf') => {
     // Mock export functionality
     alert(`Exporting results as ${format.toUpperCase()}...`);
   };
 
-  const getStatistics = () => {
-    if (!filteredResults.length)
-      return { total: 0, average: 0, highest: 0, lowest: 0 };
-
-    const scores = filteredResults.map((s) => s.averageScore);
-    return {
-      total: filteredResults.length,
-      average: scores.reduce((a, b) => a + b, 0) / scores.length,
-      highest: Math.max(...scores),
-      lowest: Math.min(...scores),
-    };
+  // Helper to get user full name
+  const getUserName = (user: any) => {
+    if (!user) return '';
+    return `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
   };
 
-  const stats = getStatistics();
+  // Helper to get user id
+  const getUserId = (user: any) => {
+    if (!user) return '';
+    return user.id || user._id || '';
+  };
+
+  // Helper to get user class (subCategory name)
+  const getUserClass = (user: any) => {
+    if (!user) return '';
+    return user.subCategory?.name || '';
+  };
+
+  // Helper to get subject code from subject id
+  // (Assume you have a subject map if needed, but here we just show subject id)
+  // If you have subject details, you can map id to code/name
 
   return (
-    <div className='max-w-7xl mx-auto space-y-6'>
+    <div className='space-y-6'>
       {/* Header */}
       <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
         <div>
@@ -366,7 +206,7 @@ export function ViewResultContent() {
 
       {isLoading ? (
         <LoadingSkeleton />
-      ) : filteredResults.length === 0 ? (
+      ) : rankedResults.length === 0 ? (
         <EmptyState />
       ) : (
         <>
@@ -378,7 +218,7 @@ export function ViewResultContent() {
                   Total Students
                 </div>
                 <div className='text-2xl font-bold'>
-                  {examModeResult?.resultList?.length ?? 0}
+                  {examModeResult?.stats?.totalStudents ?? 0}
                 </div>
               </CardContent>
             </Card>
@@ -388,7 +228,7 @@ export function ViewResultContent() {
                   Class Average
                 </div>
                 <div className='text-2xl font-bold text-blue-600'>
-                  {stats.average.toFixed(1)}%
+                  {examModeResult?.stats?.averageSchool?.toFixed(1) ?? '0.0'}%
                 </div>
               </CardContent>
             </Card>
@@ -398,7 +238,7 @@ export function ViewResultContent() {
                   Highest Score
                 </div>
                 <div className='text-2xl font-bold text-green-600'>
-                  {stats.highest.toFixed(1)}%
+                  {examModeResult?.stats?.highestScore?.toFixed(1) ?? '0.0'}%
                 </div>
               </CardContent>
             </Card>
@@ -408,7 +248,7 @@ export function ViewResultContent() {
                   Lowest Score
                 </div>
                 <div className='text-2xl font-bold text-red-600'>
-                  {stats.lowest.toFixed(1)}%
+                  {examModeResult?.stats?.lowestScore?.toFixed(1) ?? '0.0'}%
                 </div>
               </CardContent>
             </Card>
@@ -418,9 +258,9 @@ export function ViewResultContent() {
           <Card>
             <CardHeader>
               <CardTitle className='text-lg'>
-                First Term 2025 Examination Results
+                {examModeResult?.exam?.acronym} Examination Results
                 <span className='text-sm font-normal text-gray-600 ml-2'>
-                  ({filteredResults.length} students)
+                  ({examModeResult?.stats?.totalStudents} students)
                 </span>
               </CardTitle>
             </CardHeader>
@@ -431,52 +271,68 @@ export function ViewResultContent() {
                     <TableRow>
                       <TableHead className='w-12'>Rank</TableHead>
                       <TableHead className='min-w-48'>Student</TableHead>
-                      {/* <TableHead>Class</TableHead> */}
-                      {mockExams[0].subjects.map((subject) => (
-                        <TableHead
-                          key={subject.code}
-                          className='text-center min-w-24'
-                        >
-                          {subject.code}
-                        </TableHead>
-                      ))}
-                      <TableHead className='text-center'>Total</TableHead>
-                      <TableHead className='text-center'>Average</TableHead>
+                      <TableHead className='min-w-32'>Class</TableHead>
+                      {/* If you want to show per-subject scores, you can add columns here */}
+                      {/* <TableHead className='text-center min-w-24'>Subject</TableHead> */}
+                      <TableHead className='text-center'>
+                        Attempted Questions
+                      </TableHead>
+                      <TableHead className='text-center'>
+                        Correct Questions
+                      </TableHead>
+                      <TableHead className='text-center'>
+                        Wrong Questions
+                      </TableHead>
+                      <TableHead className='text-center'>Score</TableHead>
+                      <TableHead className='text-center'>Percentage</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {paginatedResults.map((student) => (
-                      <TableRow key={student.id}>
+                    {paginatedResults.map((result, idx) => (
+                      <TableRow key={result.id || idx}>
                         <TableCell>
-                          <PositionBadge position={student.position} />
+                          <PositionBadge position={result.position} />
                         </TableCell>
                         <TableCell>
                           <div>
-                            <div className='font-medium'>{student.name}</div>
+                            <div className='font-medium'>
+                              {getUserName(result.user)}
+                            </div>
                             <div className='text-sm text-gray-500'>
-                              {student.studentId}
+                              {getUserId(result.user)}
                             </div>
                           </div>
                         </TableCell>
-                        {/* <TableCell>
-                            <Badge variant="outline">{student.class}</Badge>
-                          </TableCell> */}
-                        {mockExams[0].subjects.map((subject) => (
-                          <TableCell key={subject.code} className='text-center'>
-                            <GradeBadge
-                              score={student.subjects[subject.code]}
-                            />
-                          </TableCell>
-                        ))}
+                        <TableCell>
+                          <Badge variant='outline'>
+                            {getUserClass(result.user)}
+                          </Badge>
+                        </TableCell>
+                        {/* If you want to show per-subject scores, you can add here */}
+                        {/* <TableCell className='text-center'>
+                          {result.subject ? result.subject : '-'}
+                        </TableCell> */}
                         <TableCell className='text-center font-medium'>
-                          {student.totalScore}
+                          {result.attempted}
+                        </TableCell>
+                        <TableCell className='text-center font-medium'>
+                          {result.passed}
+                        </TableCell>
+                        <TableCell className='text-center font-medium'>
+                          {result.failed}
+                        </TableCell>
+                        <TableCell className='text-center font-medium'>
+                          {result.score}
                         </TableCell>
                         <TableCell className='text-center'>
                           <Badge
                             variant='secondary'
                             className='bg-blue-100 text-blue-800 font-medium'
                           >
-                            {student.averageScore.toFixed(1)}%
+                            {typeof result.score === 'number'
+                              ? result.score.toFixed(1)
+                              : '0.0'}
+                            %
                           </Badge>
                         </TableCell>
                       </TableRow>
@@ -490,11 +346,8 @@ export function ViewResultContent() {
                 <div className='flex items-center justify-between mt-6'>
                   <div className='text-sm text-gray-500'>
                     Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-                    {Math.min(
-                      currentPage * itemsPerPage,
-                      filteredResults.length
-                    )}{' '}
-                    of {filteredResults.length} results
+                    {Math.min(currentPage * itemsPerPage, rankedResults.length)}{' '}
+                    of {rankedResults.length} results
                   </div>
                   <div className='flex gap-2'>
                     <Button

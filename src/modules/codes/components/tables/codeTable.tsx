@@ -61,70 +61,72 @@ export const CodeTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading
-            ? Array.from({ length: 5 }).map((_, idx) => (
-                <TableRow key={`skeleton-${idx}`}>
-                  <TableCell>
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                  <TableCell className="flex justify-end gap-2 items-end">
-                    <Skeleton className='h-9' />
-                  </TableCell>
-                </TableRow>
-              ))
-            : Array.isArray(data?.codes) && data.codes.length > 0 ? (
-                data.codes.map((code) => (
-                  <TableRow
-                    key={code.code}
-                    className='cursor-pointer'
-                    // onClick={() => router.push(`/codes/${code.code}`)}
+          {isLoading ? (
+            Array.from({ length: 5 }).map((_, idx) => (
+              <TableRow key={`skeleton-${idx}`}>
+                <TableCell>
+                  <Skeleton className='h-9' />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className='h-9' />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className='h-9' />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className='h-9' />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className='h-9' />
+                </TableCell>
+                <TableCell className='text-center'>
+                  <Skeleton className='h-9' />
+                </TableCell>
+                <TableCell className='flex justify-end gap-2 items-end'>
+                  <Skeleton className='h-9' />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : Array.isArray(data?.codes) && data.codes.length > 0 ? (
+            data.codes.map((code) => (
+              <TableRow
+                key={code.code}
+                className='cursor-pointer'
+                // onClick={() => router.push(`/codes/${code.code}`)}
+              >
+                <TableCell>{code.code}</TableCell>
+                <TableCell>Authentication</TableCell>
+                <TableCell>{code.category.name}</TableCell>
+                <TableCell>{code.subCategory.name}</TableCell>
+                <TableCell>{getStatusBadge(code.status)}</TableCell>
+                <TableCell className='text-center'>
+                  {moment(code.createdAt).format('YYYY-MM-DD')}
+                </TableCell>
+                <TableCell className='flex justify-end gap-2 items-end'>
+                  <DeleteCodeModal id={code.id} code={code.code} />
+                  <Button
+                    className='cursor-pointer bg-green-700 text-white'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCopy(code.code);
+                    }}
                   >
-                    <TableCell>{code.code}</TableCell>
-                    <TableCell>Authentication</TableCell>
-                    <TableCell>{code.category.name}</TableCell>
-                    <TableCell>{code.subCategory.name}</TableCell>
-                    <TableCell>{getStatusBadge(code.status)}</TableCell>
-                    <TableCell className='text-center'>
-                      {moment(code.createdAt).format('YYYY-MM-DD')}
-                    </TableCell>
-                    <TableCell className='flex justify-end gap-2 items-end'>
-                      <DeleteCodeModal id={code.id} code={code.code} />
-                      <Button
-                        className='cursor-pointer bg-green-700 text-white'
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCopy(code.code);
-                        }}
-                      >
-                        <Copy className='h-4 w-4' />
-                        <p className='text-sm'>Copy</p>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} className="text-center text-muted-foreground">
-                    No codes found.
-                  </TableCell>
-                </TableRow>
-              )
-          }
+                    <Copy className='h-4 w-4' />
+                    <p className='text-sm'>Copy</p>
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={7}
+                className='text-center text-muted-foreground'
+              >
+                No codes found.
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
       {totalPages > 1 && (

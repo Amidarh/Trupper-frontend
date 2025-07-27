@@ -24,8 +24,7 @@ export const useExamModeResultService = () => {
     try {
       setSingleExamModeResultLoading(true);
       const response = await api(`/exam-mode-result/single/${id}`);
-      setExamModeResult(response.data);
-      console.log('response', response.data);
+      setExamModeResult(response.data.doc);
     } catch (error) {
       setServerError(error as string);
     } finally {
