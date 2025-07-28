@@ -17,7 +17,8 @@ export const startExamSchema = z.object({
   examCardID: z.string({ message: 'select and exam' }).optional(),
   examCardIdTwo: z.string({ message: 'select and exam' }).optional(),
   duration: z.string().optional(),
-  examMode: z.string().optional(),
+  examMode: z.boolean().optional(),
+  examModeId: z.string().optional(),
 });
 
 export type StartExamFormData = z.infer<typeof startExamSchema>;

@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { useExamModeService } from '@/modules/categories/services/examModeService';
 import { useAltStore } from '@/lib/zustand/userStore';
 import { isTimeActive } from '@/utils';
+import { useMockExamsService } from '@/modules/mock-exams/services';
 
 // Define interfaces for type safety
 interface Exam {
@@ -60,6 +61,7 @@ export const ExamModeModal = () => {
   const [selectedDuration, setSelectedDuration] = useState('');
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const { startExam, loading } = useMockExamsService();
 
   // Fetch active exam mode with error handling
   useEffect(() => {
@@ -144,11 +146,6 @@ export const ExamModeModal = () => {
     setShowInstructions(true);
   };
 
-  const handleStartExam = () => {
-    // TODO: Implement exam start logic (e.g., navigation, API call, etc.)
-    setOpen(false);
-  };
-
   // Guard clause to prevent rendering if conditions aren't met
   if (
     !user ||
@@ -158,6 +155,13 @@ export const ExamModeModal = () => {
   ) {
     return null;
   }
+
+  const handleStartExam = () => {
+    startExam(examData.category, {
+      examMode: true,
+      examModeId: activeExamMode?.id,
+    });
+  };
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -193,16 +197,20 @@ export const ExamModeModal = () => {
                     minutes
                   </span>
                 </div>
+                {Array.isArray((examData as any).subjects) && (
+                  <div className='flex flex-col sm:flex-row justify-between w-full gap-1'>
+                    <span className='font-semibold'>Subject(s):</span>
+                    <span className='font-light text-sm'>
+                      {'subjects' in examData &&
+                      Array.isArray((examData as any).subjects)
+                        ? (examData as any).subjects.join(', ')
+                        : 'subject' in examData && (examData as any).subject
+                          ? (examData as any).subject
+                          : 'N/A'}
+                    </span>
+                  </div>
+                )}
                 <div className='flex flex-col sm:flex-row justify-between w-full gap-1'>
-                  <span className='font-semibold'>Subject(s):</span>
-                  <span className='font-light text-sm'>
-                    {'subjects' in examData &&
-                    Array.isArray((examData as any).subjects)
-                      ? (examData as any).subjects.join(', ')
-                      : 'subject' in examData && (examData as any).subject
-                        ? (examData as any).subject
-                        : 'N/A'}
-                  </span>
                   <p>
                     <b>Note:</b> The minimum time allowed for this exam is{' '}
                     <b>10 minutes</b>. The maximum is{' '}
