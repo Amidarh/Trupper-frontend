@@ -35,7 +35,9 @@ export function useLogin() {
       const orgName = (organization?.name || 'default').replace(/\s+/g, '_');
 
       // Calculate expiry for 7 days from now
-      const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+      const expires = new Date(
+        Date.now() + 7 * 24 * 60 * 60 * 1000
+      ).toUTCString();
       // Set cookies client-side
       document.cookie = `${orgName}-accessToken=${token}; path=/${secureFlag}; SameSite=Strict`;
       document.cookie = `${orgName}-refreshToken=${refreshToken}; path=/${secureFlag}; SameSite=Strict; expires=${expires}`;

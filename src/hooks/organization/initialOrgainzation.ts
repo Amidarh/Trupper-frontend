@@ -60,26 +60,25 @@ const useInitialDataFetch = () => {
     const orgName = (organization?.name || 'default').replace(/\s+/g, '_');
     const accessTokenKey = `${orgName}-accessToken`;
 
-
     // Use refreshToken from store if it's valid (not null/undefined/empty string)
     if (refreshToken) {
       try {
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/admin-token`,
-          { refreshToken },
+          { refreshToken }
         );
-        console.log('test refreshToken')
+        console.log('test refreshToken');
         console.log(res.data);
         const newAccessToken = res.data.doc.token;
         const isProduction = process.env.NODE_ENV === 'production';
         const secureFlag = isProduction ? '; secure' : '';
         document.cookie = `${accessTokenKey}=${newAccessToken}; path=/;${secureFlag} SameSite=Strict`;
       } catch (err) {
-        console.log({err})
+        console.log({ err });
         // Optionally handle error (e.g., clear cookies, redirect, etc.)
         // console.error('Failed to refresh access token:', err);
       }
-    } else{
+    } else {
       router.push('/login');
     }
   };
@@ -103,7 +102,7 @@ const useInitialDataFetch = () => {
     if (organization) {
       ensureCookies();
       getNewAccessTokenIfRefreshTokenExists();
-      console.log('test organization')
+      console.log('test organization');
     }
   }, [organization]);
 
