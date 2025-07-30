@@ -55,57 +55,57 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      (error.response?.status === 401 || error.response?.status === 403) &&
-      !originalRequest._retry
-    ) {
-      originalRequest._retry = true;
+    // if (
+    //   (error.response?.status === 401 || error.response?.status === 403) &&
+    //   !originalRequest._retry
+    // ) {
+    //   originalRequest._retry = true;
 
-      try {
-        if (typeof window !== 'undefined') {
-          const { organization } = useAltStore.getState();
-          const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
-          const accessTokenKey = `${orgKey}-accessToken`;
-          const refreshTokenKey = `${orgKey}-refreshToken`;
-          // const { refreshToken } = useAltStore.getState();
-          // console.log({ refreshToken });
+    //   try {
+    //     if (typeof window !== 'undefined') {
+    //       const { organization } = useAltStore.getState();
+    //       const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
+    //       const accessTokenKey = `${orgKey}-accessToken`;
+    //       const refreshTokenKey = `${orgKey}-refreshToken`;
+    //       // const { refreshToken } = useAltStore.getState();
+    //       // console.log({ refreshToken });
 
-          const refreshToken = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith(`${refreshTokenKey}=`))
-            ?.split('=')[1];
+    //       const refreshToken = document.cookie
+    //         .split('; ')
+    //         .find((row) => row.startsWith(`${refreshTokenKey}=`))
+    //         ?.split('=')[1];
 
-          const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/token`,
-            { refreshToken },
-            { withCredentials: true }
-          );
+    //       const res = await axios.post(
+    //         `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/token`,
+    //         { refreshToken },
+    //         { withCredentials: true }
+    //       );
 
-          const newAccessToken = res.data.doc.token;
-          document.cookie = `${accessTokenKey}=${newAccessToken}; path=/; secure; HttpOnly`;
+    //       const newAccessToken = res.data.doc.token;
+    //       document.cookie = `${accessTokenKey}=${newAccessToken}; path=/; secure; HttpOnly`;
 
-          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+    //       originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
-          // For FormData: Do NOT override Content-Type
-          if (originalRequest.data instanceof FormData) {
-            delete originalRequest.headers['Content-Type'];
-          } else {
-            originalRequest.headers['Content-Type'] = 'application/json';
-          }
+    //       // For FormData: Do NOT override Content-Type
+    //       if (originalRequest.data instanceof FormData) {
+    //         delete originalRequest.headers['Content-Type'];
+    //       } else {
+    //         originalRequest.headers['Content-Type'] = 'application/json';
+    //       }
 
-          return api(originalRequest);
-        }
-      } catch (refreshError) {
-        console.error('Token refresh failed:', refreshError);
-        if (typeof window !== 'undefined') {
-          const { organization } = useAltStore.getState();
-          const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
-          document.cookie = `${orgKey}-accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-          window.location.href = '/login';
-        }
-        return Promise.reject(refreshError);
-      }
-    }
+    //       return api(originalRequest);
+    //     }
+    //   } catch (refreshError) {
+    //     console.error('Token refresh failed:', refreshError);
+    //     if (typeof window !== 'undefined') {
+    //       const { organization } = useAltStore.getState();
+    //       const orgKey = `${(organization?.name || '').replace(/\s+/g, '_')}`;
+    //       document.cookie = `${orgKey}-accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    //       window.location.href = '/login';
+    //     }
+    //     return Promise.reject(refreshError);
+    //   }
+    // }
 
     return Promise.reject(error);
   }
