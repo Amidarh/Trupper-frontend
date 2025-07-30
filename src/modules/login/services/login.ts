@@ -44,9 +44,6 @@ export function useLogin() {
       document.cookie = `role=${user.role.toUpperCase()}; path=/${secureFlag}; SameSite=Strict`;
       document.cookie = `organizationId=${organization?.id || 'default'}; path=/${secureFlag}; SameSite=Strict`;
 
-      // Debug cookies
-      console.log('Cookies after setting:', document.cookie);
-
       // Update Zustand store
       setUser(user);
       setRefreshToken(refreshToken);
